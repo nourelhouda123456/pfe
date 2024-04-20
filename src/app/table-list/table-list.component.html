@@ -1,0 +1,57 @@
+<div class="main-content">
+   
+    <div class="container-fluid">
+       <div class="row">
+        <div class="col-md-3">
+             
+                <form class="navbar-form"  >
+                    <div class="input-group no-border">
+                        <input (keyup)="onSearch()" type="text" [(ngModel)]="searchQuery" class="form-control" placeholder="Rechercher par Exercice...">
+                        <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
+                            <i class="material-icons">search</i>
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </form>
+             
+            
+        </div>
+       </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Declaration Table</h4>
+                        <p class="card-category">Here is a subtitle for this table</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="text-primary">
+                                    <th>Exercice</th>
+                                    <th>Type Déclaration</th>
+                                    <th>DateDébut</th>
+                                    <th>DateFin</th>
+                                    <th>Actions</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let declaration of declarations">
+                                        <td>{{ declaration.exercice }}</td>
+                                        <td>{{ declaration.typedeclaration }}</td>
+                                        <td>{{ declaration.dateDebut }}</td>
+                                        <td>{{ declaration.dateFin }}</td>
+                                        <td>
+                                            <button *ngIf="declaration.typedeclaration === 'P'"   (click)="deleteDeclaration(declaration.id)">Delete</button>
+                                            <button mat-raised-button (click)="getDeclarationByIdAndNavigate(declaration.id)">View Details</button>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

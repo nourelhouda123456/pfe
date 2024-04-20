@@ -1,0 +1,400 @@
+<div class="row">
+  <div class="col-md-8 ml-auto mr-auto">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">IV. Informations sur les opérations réalisées par l’entreprise déclarante avec les
+          entreprises liées résidentes ou établies à l’étranger : Informations Valeurs Exploitation</h4>
+        <p class="card-category"> Montant des transactions avec les entreprises liées résidentes ou établies à
+          l’étranger et méthode de détermination des prix de transfert appliquée</p>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="stepFourForm" (ngSubmit)="stepFourSubmit()" autocomplete="off" novalidate #formRef="ngForm">
+
+
+
+
+
+
+          <div class="row">
+            <mat-label class="label-margin">Identifiant Entreprise</mat-label>
+            <mat-radio-group aria-label="Choisir une option" (change)="onOptionChange($event)">
+                <mat-radio-button checked class="label-margin" [checked]="selectedOption === 'MatriculeFiscal'" value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
+                <mat-radio-button class="label-margin" [checked]="selectedOption === 'Identifiant'" value="Identifiant">Identifiant</mat-radio-button>
+                <mat-radio-button class="label-margin" [checked]="selectedOption === 'EtatTerritoire'" value="EtatTerritoire">Etat Territoire</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+
+        <!-- Input field for "MatriculeFiscal" -->
+        <div class="row">
+          <mat-form-field class="example-full-width" *ngIf="selectedOption1 === 'MatriculeFiscal'">
+               
+              <input  matInput placeholder="MatriculeFiscal"   placeholder="Entrez le MatriculeFiscal" [(ngModel)]="matriculeFiscalValue"
+                      formControlName="MatriculeFiscal"   >
+                      
+                     
+          </mat-form-field>
+      </div>
+
+    <!-- Input field for "Identifiant" -->
+    <div class="row">
+      <mat-form-field class="example-full-width" *ngIf="selectedOption1 === 'Identifiant'">
+          <input matInput placeholder="Entrez l'Identifiant" [(ngModel)]="identifiantValue" 
+          formControlName="Id">
+
+          
+      </mat-form-field>
+  </div>
+  
+
+  <div class="row" *ngIf="selectedOption1 === 'EtatTerritoire'">
+    <mat-form-field class="example-full-width">
+        <mat-select placeholder="Nationalite">
+            <mat-option *ngFor="let country of countries" [value]="country.code">
+                {{ country.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+ 
+
+
+
+
+
+
+
+
+
+          <div class="row">
+
+            <div class="col-md-4">
+
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Operation</mat-label>
+                <mat-select formControlName="NatureOperation" #selectCtrl (selectionChange)="onSelectionChange($event)">
+                  <mat-option value="1">Matière première</mat-option>
+                  <mat-option value="2">Produits finis ou semi-finis</mat-option>
+                  <mat-option value="3">Marchandises</mat-option>
+                  <mat-option value="Autre">Autre</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Total Achat" type="text">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Total Ventes Revenus">
+              </mat-form-field>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div *ngIf="isAutreSelected">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Autre Nature Operation ici" formControlName="autreNatureOperation">
+                </mat-form-field>
+              </div>
+
+
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Achats / Dépenses">
+              </mat-form-field>
+            </div>
+
+
+
+
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Ventes/ Revenus">
+              </mat-form-field>
+            </div>
+
+
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="État ou territoire de résidence fiscale ">
+              </mat-form-field>
+            </div>
+          </div>
+
+
+
+
+
+          <div class="row">
+
+            <div class="col-md-4">
+             
+              
+            
+           
+            
+           
+            
+            
+
+
+
+
+   
+
+
+
+
+
+
+
+
+            </div>
+
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Raison Sociale ">
+              </mat-form-field>
+            </div>
+          </div>
+
+
+
+          <hr>
+
+
+
+
+          <div class="row">
+            <section class="example-section">
+              <h3 class="noir">Qualité</h3>
+
+              <!-- First row of checkboxes -->
+              <div class="checkbox-row">
+
+                <div class="col-md">
+                  <mat-checkbox value="1" class="example-margin" (change)="onCheckboxChange($event)">Entité mère
+                    ultime</mat-checkbox>
+                  <mat-checkbox value="2" class="example-margin" (change)="onCheckboxChange($event)">Entité mère non
+                    ultime</mat-checkbox>
+                  <mat-checkbox value="3" class="example-margin" (change)="onCheckboxChange($event)">Entreprise
+                    holding</mat-checkbox>
+                </div>
+
+                <div class="col-md">
+                  <mat-checkbox value="4" class="example-margin" (change)="onCheckboxChange($event)">Entreprise
+                    filiale</mat-checkbox>
+                  <mat-checkbox value="5" class="example-margin" (change)="onCheckboxChange($event)">Établissement
+                    stable</mat-checkbox>
+                  <mat-checkbox value="autreQualite" class="example-margin" (change)="onCheckboxChange($event)">Autre
+                    Qualite</mat-checkbox>
+                </div>
+
+              </div>
+
+            </section>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-12">
+              <div *ngIf="showInput">
+
+
+                <mat-form-field matInput placeholder="Autre Qualite" class="example-margin" class="example-full-width">
+                  <input matInput placeholder="Autre qualité ici" type="text" formControlName="descriptionAutreQualite">
+
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+
+
+
+
+
+ 
+           
+
+
+
+
+          <hr>
+
+
+
+
+
+
+
+
+          <div class="row">
+            <section class="example-section">
+              <h3 class="noir">Méthode Determination Prix Transfert</h3>
+
+              <!-- First row of checkboxes -->
+              <div class="checkbox-row">
+
+
+
+
+                <div class="col-md-5">
+                  <mat-checkbox value="CUP" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du prix
+                    comparable sur le marché libre</mat-checkbox>
+                  <mat-checkbox value="MPR" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du prix
+                    de revente</mat-checkbox>
+                  <mat-checkbox value="MPRM" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du prix
+                    de revient majoré</mat-checkbox>
+                </div>
+
+                <div class="col-md-7">
+                  <mat-checkbox value="MTMN" class="example-margin" (change)="onCheckboxChange2($event)">Méthode
+                    transactionnelle de la marge nette</mat-checkbox>
+                  <mat-checkbox value="MPB" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du
+                    partage des bénéfices</mat-checkbox>
+                  <mat-checkbox value="AutreMethode" class="example-margin" (change)="onCheckboxChange2($event)"> Autre
+                    Methode Determination Prix Transfert</mat-checkbox>
+                </div>
+
+              </div>
+
+            </section>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-12">
+              <div *ngIf="showInput2">
+
+
+                <mat-form-field matInput placeholder="Autre méthode détermination Prix Transfert" class="example-margin"
+                  class="example-full-width">
+                  <input matInput placeholder="Autre méthode détermination Prix Transfert ici" type="text"
+                    formControlName="autre3">
+
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+
+
+
+  <hr>
+
+
+
+
+
+
+
+
+  <div class="row">
+    <section class="example-section">
+      <h3 class="noir">Changement Méthode Prix Transfert</h3>
+
+      <!-- First row of checkboxes -->
+      <div class="checkbox-row">
+
+
+
+
+        <div class="col-md-5">
+          <mat-checkbox value="CUP" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du prix
+            comparable sur le marché libre</mat-checkbox>
+          <mat-checkbox value="MPR" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du prix
+            de revente</mat-checkbox>
+          <mat-checkbox value="MPRM" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du prix
+            de revient majoré</mat-checkbox>
+        </div>
+
+        <div class="col-md-7">
+          <mat-checkbox value="MTMN" class="example-margin" (change)="onCheckboxChange2($event)">Méthode
+            transactionnelle de la marge nette</mat-checkbox>
+          <mat-checkbox value="MPB" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du
+            partage des bénéfices</mat-checkbox>
+          <mat-checkbox value="AutreMethode" class="example-margin" (change)="onCheckboxChange2($event)"> Autre
+            Methode Determination Prix Transfert</mat-checkbox>
+        </div>
+
+      </div>
+
+    </section>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngIf="showInput2">
+
+
+        <mat-form-field matInput placeholder="Autre méthode détermination Prix Transfert" class="example-margin"
+          class="example-full-width">
+          <input matInput placeholder="Autre méthode détermination Prix Transfert ici" type="text"
+            formControlName="autre3">
+
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+
+
+       
+
+  
+  <div class="buttons">
+    <div class="button">
+      <button mat-raised-button type="submit"  cdkStepperNext class="btn btn-info pull-left"cdkStepperPrevious>Previous</button>
+    </div>
+    <div class="button">
+      <button mat-raised-button type="submit"  cdkStepperNext class="btn btn-info pull-right" cdkStepperNext>Suivant</button>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

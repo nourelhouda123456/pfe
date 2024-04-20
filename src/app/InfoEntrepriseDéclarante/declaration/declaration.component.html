@@ -1,0 +1,149 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title"> Déclaration</h4>
+
+        </div>
+        <div class="card-body">
+          <form [formGroup]="stepOneForm" (ngSubmit)="stepOneSubmit()" autocomplete="off" novalidate #formRef="ngForm">
+
+            <br>
+            <div class="row">
+              <div class="col-md-4">
+                <h3> Type de déclaration</h3>
+              </div>
+
+
+
+          
+
+              <div class="col-md-4">
+               
+                <mat-radio-group aria-label="Type de déclaration" class="radio-group"  formControlName="Declaration">
+                  <mat-radio-button value="P" checked >provisoire</mat-radio-button>
+                  <mat-radio-button value="D">définitive</mat-radio-button>
+                </mat-radio-group>
+                
+                
+              </div>
+
+
+
+
+
+
+
+
+              
+              
+ 
+          </div>
+
+
+            <div class="row">
+
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Chiffre d'Affaire Annuel en (DT)" type="number" formControlName="chiffreAffaireAnnuel">
+                  <mat-error *ngIf="f['chiffreAffaireAnnuel'].invalid && (f['chiffreAffaireAnnuel'].dirty || f['chiffreAffaireAnnuel'].touched)">
+                    <div *ngIf="f['chiffreAffaireAnnuel'].errors?.required">Chiffre d 'Affaire Annuel est obligatoire.</div>
+                    <div *ngIf="f['chiffreAffaireAnnuel'].errors?.pattern || f['chiffreAffaireAnnuel'].errors?.max || f['chiffreAffaireAnnuel'].errors?.min">
+                      Le chiffre d'affaires doit être un nombre valide avec un maximum de 16 chiffres au total, dont les 3 derniers sont des décimales.
+                    </div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              
+              
+
+
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Exercice" type="number" formControlName="Exercice">
+                  <mat-error *ngIf="f['Exercice'].errors && (f['Exercice'].dirty || f['Exercice'].touched)">
+                    <div *ngIf="f['Exercice'].errors.required">L' année est obligatoire.</div>
+                    <div *ngIf="f['Exercice'].errors.min || f['Exercice'].errors.max || f['Exercice'].errors.pattern">
+                      Un nombre entier entre 1000 et 9999.
+                    </div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+            </div>
+            <br>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Date de Début (DD/MM/YYYY)" type="text" formControlName="dateDebut" required>
+                  <mat-error *ngIf="f['dateDebut'].errors && (f['dateDebut'].dirty || f['dateDebut'].touched)">
+                    <div *ngIf="f['dateDebut'].errors?.required">Date de Début est obligatoire.</div>
+                    <div *ngIf="f['dateDebut'].errors?.pattern">Date au format DD/MM/YYYY (Les années sont comprises entre 2020 et 2099).</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+
+              <div class="col-md-6">
+                 
+                <div class="row">
+
+                  <mat-form-field class="example-full-width">
+                 
+                    <mat-select formControlName="natureDateFin" placeholder="Nature Date Fin">
+                      
+                      <mat-option value="1">Clôture de l’exercice</mat-option>
+                      <mat-option value="2">Cession de l’entreprise</mat-option>
+                      <mat-option value="3">Cessation d’activité</mat-option>
+                      <mat-option value="4">Fusion</mat-option>
+                      <mat-option value="5">Scission</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f['natureDateFin'].invalid && (f['natureDateFin'].dirty || f['natureDateFin'].touched)">
+                      Sélectionnez Nature Date Fin.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+
+                <div class="row">
+
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Date Fin Exercice (DD/MM/YYYY)" type="text" formControlName="dateFinExercice" required>
+                 
+                <mat-error *ngIf="f['dateFinExercice'].invalid && (f['dateFinExercice'].dirty || f['dateFinExercice'].touched)">
+                  <div *ngIf="f['dateFinExercice'].errors.required">Ce champ est obligatoire.</div>
+                  <div *ngIf="f['dateFinExercice'].errors.pattern">Date au format DD/MM/YYYY (Les
+                    années sont comprises entre 2020 et
+                    2099).</div>
+                </mat-error>
+              </mat-form-field>
+              
+                </div>
+
+
+              </div>
+
+
+            </div>
+
+
+            
+           
+
+
+            
+
+            <button mat-raised-button type="submit" cdkStepperNext class="btn btn-info pull-right">Suivant</button>
+            <div class="clearfix"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

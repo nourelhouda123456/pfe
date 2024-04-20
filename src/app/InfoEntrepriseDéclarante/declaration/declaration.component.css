@@ -1,0 +1,11 @@
+
+.radio-group {
+    display: flex;
+    justify-content: space-between; /* This will add space between the radio buttons */
+  }
+  
+  .mat-radio-button {
+    flex: 1; /* This will allow the radio buttons to take equal width */
+    margin: 0 50px; /* Adjust this value to control the spacing */
+  }
+  

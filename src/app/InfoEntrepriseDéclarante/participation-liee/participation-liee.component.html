@@ -1,0 +1,157 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 ml-auto mr-auto">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title"> II. Informations sur l’entreprise déclarante</h4>
+  
+          </div>
+          <div class="card-body">
+  
+            <form [formGroup]="stepTwoForm" (ngSubmit)="Submit()" autocomplete="off" novalidate #formRef="ngForm">
+  
+
+
+                <div class="row">
+                    
+                    <div class="col-md">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="MatriculeFiscal" type="text"
+                            formControlName="MatriculeFiscal">
+                          <mat-error
+                            *ngIf="f['MatriculeFiscal'].errors && (f['MatriculeFiscal'].dirty || f['MatriculeFiscal'].touched)">
+                            <div *ngIf="f['MatriculeFiscal'].errors['required']">Ce champ est obligatoire.</div>
+        
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+
+                      <div class="col-md">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Raison Sociale" type="text"
+                            formControlName="RaisonSociale">
+                          <mat-error
+                            *ngIf="f['RaisonSociale'].errors && (f['RaisonSociale'].dirty || f['RaisonSociale'].touched)">
+                            <div *ngIf="f['RaisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                            <div *ngIf="f['RaisonSociale'].errors['maxlength']">La valeur doit avoir au maximum 20 caractères.</div>
+                            <div *ngIf="f['RaisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+                        </mat-error>
+                        </mat-form-field>
+                      </div>
+
+
+                      
+                </div>
+
+                <div class="row">
+                    <div class="col-md">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="PourcentageDetentionCapital" type="text"
+                                   formControlName="PourcentageDetentionCapital">
+                            <mat-error *ngIf="f.PourcentageDetentionCapital.invalid && 
+                                              (f.PourcentageDetentionCapital.dirty || f.PourcentageDetentionCapital.touched)">
+                              <div *ngIf="f.PourcentageDetentionCapital.errors?.pattern">
+                                Un nombre décimal : 2 chiffres au maximum pour la partie entière et 2 chiffres au maximum pour la partie décimale.
+                              </div>
+                            </mat-error>
+                          </mat-form-field>
+                </div>
+
+
+
+                <div class="col-md">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="PourcentageDetentionDroitsVote" type="text"
+                               formControlName="PourcentageDetentionDroitsVote">
+                        <mat-error *ngIf="f.PourcentageDetentionDroitsVote.invalid && 
+                                          (f.PourcentageDetentionDroitsVote.dirty || f.PourcentageDetentionDroitsVote.touched)">
+                          <div *ngIf="f.PourcentageDetentionDroitsVote.errors?.pattern">
+                            Un nombre décimal : 2 chiffres au maximum pour la partie entière et 2 chiffres au maximum pour la partie décimale.
+                          </div>
+                        </mat-error>
+                      </mat-form-field>
+            </div>
+                </div>
+  
+         <div class="row">
+    <section class="example-section">
+      <h3 class="noir">Qualité</h3>
+    
+      <!-- First row of checkboxes -->
+      <div class="checkbox-row">
+  
+        <div class="col-md">
+          <mat-checkbox  value="1" class="example-margin" (change)="onCheckboxChange($event)">Entité mère ultime</mat-checkbox>
+          <mat-checkbox  value="2" class="example-margin" (change)="onCheckboxChange($event)">Entité mère non ultime</mat-checkbox>
+          <mat-checkbox  value="3" class="example-margin" (change)="onCheckboxChange($event)">Entreprise holding</mat-checkbox>
+        </div>
+  
+        <div class="col-md">
+          <mat-checkbox  value="4" class="example-margin" (change)="onCheckboxChange($event)">Entreprise filiale</mat-checkbox>
+          <mat-checkbox  value="5" class="example-margin" (change)="onCheckboxChange($event)">Établissement stable</mat-checkbox>
+          <mat-checkbox  value="autreQualite" class="example-margin" (change)="onCheckboxChange($event)">Autre Qualite</mat-checkbox>
+        </div>
+        
+      </div>
+    
+    </section>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+          <div class="row">
+            <div class="col-md-12">
+              <div *ngIf="showInput">
+               
+  
+                <mat-form-field matInput placeholder="Autre Qualite" class="example-margin" class="example-full-width">
+                  <input matInput placeholder="Autre Qualite" type="text" formControlName="descriptionAutreQualite">
+                 
+                </mat-form-field>
+              </div>
+            </div>
+           </div>
+  
+  
+      
+  
+  
+        
+   
+ 
+            
+  
+            <div class="buttons">
+              <div class="button">
+                <button mat-raised-button type="submit"    class="btn btn-info pull-left"cdkStepperPrevious>Previous</button>
+              </div>
+              <div class="button">
+                <button mat-raised-button type="submit"    class="btn btn-info pull-right" cdkStepperNext>Suivant</button>
+              </div>
+            </div>
+        
+  
+    
+          </form>
+        </div>
+  
+  
+  
+      </div>
+  
+    </div>
+  </div>

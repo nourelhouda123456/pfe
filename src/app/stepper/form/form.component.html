@@ -1,0 +1,20 @@
+<div class="main">
+    <div class="header">
+      <h1> Prix de transfert</h1>  
+
+    </div>
+   
+    <mat-horizontal-stepper #cdkStepper [linear]="true">  
+        
+    
+        <mat-step [stepControl]="stepTwo.stepTwoForm" [optional]="false">
+            <ng-template matStepLabel>
+              <div class="step-bullet">2</div>
+              <div class="step-title">dentification Entreprise Déclarante <span class="required">*</span></div>
+            </ng-template>
+            <app-step2 #stepTwo></app-step2>
+          </mat-step>
+    </mat-horizontal-stepper>
+    
+  
+       

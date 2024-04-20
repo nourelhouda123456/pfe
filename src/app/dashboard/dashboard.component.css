@@ -1,0 +1,11 @@
+.color{
+    color: rgb(92, 102, 102);
+ }
+
+ .checkbox-space {
+    margin-right: 200px;
+}
+
+mat-horizontal-stepper{
+    background-color: #eee; /* Set your desired color */
+  }

@@ -1,0 +1,237 @@
+<div class="main-content">
+  <div class="container-fluid"> <br><br><br>
+      <div class="row">
+       <div class="col-md-8 ml-auto mr-auto">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title"> Compte Entreprise</h4>
+                      
+                  </div>
+                  <div class="card-body">
+                      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                          <div class="row">
+                               <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Company (disabled)" disabled>
+                                  </mat-form-field>
+                              </div>
+
+
+
+
+
+                              <div class="col-md-3">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="MatriculeFiscal" type="text"
+                                      formControlName="MatriculeFiscal">
+                                    <mat-error
+                                      *ngIf="f['MatriculeFiscal'].errors && (f['MatriculeFiscal'].dirty || f['MatriculeFiscal'].touched)">
+                                      <div *ngIf="f['MatriculeFiscal'].errors['required']">Ce champ est obligatoire.</div>
+                  
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Raison Sociale" type="text"
+                                      formControlName="RaisonSociale">
+                                    <mat-error
+                                      *ngIf="f['RaisonSociale'].errors && (f['RaisonSociale'].dirty || f['RaisonSociale'].touched)">
+                                      <div *ngIf="f['RaisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                                      <div *ngIf="f['RaisonSociale'].errors['maxlength']">La valeur doit avoir au maximum 20 caractères.</div>
+                                      <div *ngIf="f['RaisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+                                  </mat-error>
+                                  </mat-form-field>
+                                </div>
+                                
+                               
+                               
+                          </div>
+                          <div class="row">
+
+
+                              <div class="col-md-3">
+                                  <mat-form-field class="example-full-width">
+                                    <mat-select placeholder="Nationalite" formControlName="Nationalite">
+                                      <mat-option *ngFor="let country of countries" [value]="country.code">
+                                        {{ country.name }}
+                                      </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                      *ngIf="f['Nationalite'].errors && (f['Nationalite'].dirty || f['Nationalite'].touched)">
+                                      <div *ngIf="f['Nationalite'].errors['required']">Sélectionnez une nationalité.</div>
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Forme Juridique" type="text" 
+                                      formControlName="FormeJuridique">
+                                    <mat-error
+                                      *ngIf="f['FormeJuridique'].errors && (f['FormeJuridique'].dirty || f['FormeJuridique'].touched)">
+                                      <div *ngIf="f['FormeJuridique'].errors['required']">Ce champ est obligatoire.</div>
+                                      <div *ngIf="f['FormeJuridique'].errors['maxlength']">La valeur doit avoir au maximum 20 caractères.</div>
+                                      <div *ngIf="f['FormeJuridique'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+                                
+
+
+
+                                <div class="col-md-5">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="AdresseSiegeSocialEtablissementTunisie" type="text"
+                                      formControlName="Adresse">
+                                    <mat-error
+                                      *ngIf="f['Adresse'].errors && (f['Adresse'].dirty || f['Adresse'].touched)">
+                                      <div *ngIf="f['Adresse'].errors['required']">Ce champ est obligatoire.</div>
+                                      <div *ngIf="f['Adresse'].errors['maxlength']">La valeur doit avoir au maximum 20 caractères.</div>
+                                      <div *ngIf="f['Adresse'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+
+
+                              
+                                
+
+                          </div>
+                           
+                          <div class="row">
+
+                              <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="CodePostal" type="number" formControlName="CodePostal" required>
+                                    <mat-error *ngIf="f['CodePostal'].invalid && (f['CodePostal'].dirty || f['CodePostal'].touched)">
+                                      <div *ngIf="f['CodePostal'].errors?.required">Ce champ est obligatoire.</div>
+                                      <div *ngIf="f['CodePostal'].errors?.pattern">Le code postal doit être composé de 4 chiffres.</div>
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+                                
+
+
+
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <mat-select placeholder="Code Acte" formControlName="CodeActe">
+                                      <mat-option value="0">Initiale</mat-option>
+                                      <mat-option value="1">Rectificative</mat-option>
+                                      <mat-option value="4">Cessation d’activité</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="f['CodeActe'].errors && (f['CodeActe'].dirty || f['CodeActe'].touched)">
+                                      <div *ngIf="f['CodeActe'].errors['required']">Ce champ est obligatoire.</div>
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+                                
+
+
+                                
+                                
+
+
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <mat-label>Code TVA</mat-label>
+                                    <mat-select formControlName="CodeTVA">
+                                      <mat-option value="A">Assujetti obligatoire à la TVA</mat-option>
+                                      <mat-option value="B">Assujetti par option à la TVA</mat-option>
+                                      <mat-option value="P">Assujetti partiel à la TVA</mat-option>
+                                      <mat-option value="D">Assujetti partiel par option à la TVA</mat-option>
+                                      <mat-option value="N">Non Assujetti à la TVA</mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                      *ngIf="f['CodeTVA'].errors && (f['CodeTVA'].dirty || f['CodeTVA'].touched)">
+                                      <div *ngIf="f['CodeTVA'].errors['required']">Sélectionner un code TVA.</div>
+                                       
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+                                
+                              
+                          </div>
+
+                          <br>
+
+
+                          <div class="row">
+
+                              
+                                  <div class="col-md-12">
+                                      <mat-form-field class="example-full-width">
+                                        <mat-label>Code Catégorie</mat-label>
+                                        <mat-select formControlName="CodeCategorie">
+                                          <mat-option value="M">Personne morale</mat-option>
+                                          <mat-option value="N">Personne Morale Employeurs non soumis à l’Impôt Direct</mat-option>
+                                          <mat-option value="C">Personne Physique une activité commerciale, industrielle ou de prestation de services</mat-option>
+                                          <mat-option value="P">Personne Physique exerçant une activité non commerciale (Profession libérale)</mat-option>
+                                          <mat-option value="E">Etablissement secondaire</mat-option>
+                                        </mat-select>
+                                        <mat-error
+                                          *ngIf="f['CodeCategorie'].errors && (f['CodeCategorie'].dirty || f['CodeCategorie'].touched)">
+                                          <div *ngIf="f['CodeCategorie'].errors['required']">Sélectionnez un code categorie.</div>
+                                          <div *ngIf="f['CodeCategorie'].errors?.pattern">Code Catégorie invalide.</div>
+                                        </mat-error>
+                                      </mat-form-field>
+                                    </div>
+                              
+
+                          
+                          </div>
+                          <div class="row">
+
+
+
+                              <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="ActivitePrincipale" type="text"
+                                      formControlName="ActivitePrincipale">
+                                    <mat-error
+                                      *ngIf="f['ActivitePrincipale'].errors && (f['ActivitePrincipale'].dirty || f['ActivitePrincipale'].touched)">
+                                      <div *ngIf="f['ActivitePrincipale'].errors['required']">Ce champ est obligatoire.</div>
+                                      <div *ngIf="f['ActivitePrincipale'].errors['maxlength']">La valeur doit avoir au maximum 20 caractères.</div>
+                                      <div *ngIf="f['ActivitePrincipale'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+
+
+                              <div class="col-md-6">
+                                 
+
+                                
+                               
+
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="ActiviteSecondaire" type="text"
+                                    formControlName="ActiviteSecondaire">
+                                  <mat-error
+                                    *ngIf="f['ActiviteSecondaire'].errors && (f['ActiviteSecondaire'].dirty || f['ActivitePrincipale'].touched)">
+                                
+                                    <div *ngIf="f['ActiviteSecondaire'].errors['maxlength']">La valeur doit avoir au maximum 20 caractères.</div>
+                                    <div *ngIf="f['ActiviteSecondaire'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+                                  </mat-error>
+                                </mat-form-field>
+                                
+
+
+                          </div>
+
+                          </div>
+                          <button mat-raised-button type="submit" class="btn btn-info pull-right">Terminer</button>
+                          <div class="clearfix"></div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+           
+      </div>
+  </div>
+</div>
+

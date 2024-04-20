@@ -1,0 +1,155 @@
+   
+      <div class="row">
+        <div class="col-md-8 ml-auto mr-auto">
+               <div class="card">
+                   <div class="card-header card-header-danger">
+                       <h4 class="card-title">Déclaration</h4>
+                       <p class="card-category">Prix De Transfert</p>
+                   </div>
+ 
+                   <div class="card-body">
+                       <form  [formGroup]="stepOneForm"
+                       (ngSubmit)="stepOneSubmit()"
+                       autocomplete="off"
+                       novalidate
+                       #formRef="ngForm">
+ 
+                           <div class="row">
+                               <div class="col-md-6">
+                                 <mat-form-field class="example-full-width">
+                                     <input matInput placeholder="Company (disabled)" disabled>
+                                   </mat-form-field>
+                               </div>
+                               <div class="col-md-6">
+                                   <mat-form-field class="example-full-width">
+                                     <input matInput placeholder="Chiffre d’affaires annuel">
+                                   </mat-form-field>
+                               </div>
+                             </div>             
+ 
+ 
+ 
+                            <h3>QualiteEntreprise</h3> 
+                             
+                                 
+                                <div class="example-full-width">
+
+                                  <div class="row">
+
+
+                                    <div class="col-md">
+                                 <input type="checkbox" id="1" name="1" value="Entité mère ultime">
+                                 <label class="color"class="color" for="1">Entité mère ultime</label>
+                                    </div>
+                                  
+                                      <div class="col-md">
+                               
+
+                                 <input type="checkbox" id="2" name="2" value="Entité mère non ultime">
+                                 <label  class="color"  for="2">Entité mère non ultime</label>
+                                      </div>
+                                      
+                                      <div class="col-md">
+
+                                 <input type="checkbox" id="3" name="3" value="Entreprise holding">
+                                 <label  class="color"  for="3">Entreprise holding</label>
+                                </div>
+                                 
+                               
+                                  
+                             </div>
+
+
+                             <div class="row">
+                              <div class="col-md ">
+                                <input type="checkbox" id="4" name="4" value="Entreprise filiale">
+                                <label   class="color"  for="4">Entreprise filiale</label>
+                               </div>
+                                 
+                                <div class="col-md">
+                                <input type="checkbox" id="5" name="5" value="Établissement stable">
+                                <label  class="color"  for="5">Établissement stable</label>
+                                </div>
+                                <div class="col-md">
+
+                                <input type="checkbox" id="6" name="6" value="Autres">
+                                <label  class="color"  for="6">Autres</label>
+
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Autres (à préciser)" type="text">
+                                </mat-form-field>
+                               </div>
+
+
+                             </div>
+                                    </div>
+                                  
+                             <div class="row">
+                                    <div class="col-md-12">
+                                 
+                                      <mat-form-field class="example-full-width">
+                                         <textarea matInput placeholder="Description des activités principales de l’entreprise déclarante"></textarea>
+                                       </mat-form-field>
+                                    </div>
+     
+                              </div>
+        
+                         
+ 
+
+                              <h3>Des changements significatifs d’activité sont-ils intervenus au cours de l’exercice ?</h3> 
+                             
+                                 
+
+
+                              
+                              <input type="radio" id="oui" name="fav_language" value="Oui" (change)="toggleTextarea($event)">
+                              <label class="color" for="oui">Oui</label>
+                              <span class="checkbox-space"></span>
+                              <input type="radio" id="non" name="fav_language" value="Non" (change)="toggleTextarea($event)">
+                              <label class="color" for="non">Non</label><br>
+                                                            
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <mat-form-field class="example-full-width">
+                                    <textarea matInput placeholder="Décrivez brièvement ces changements" [disabled]="isTextareaDisabled"></textarea>
+                                  </mat-form-field>
+                                </div>
+                              </div>
+                              
+                              
+ 
+ 
+ 
+ 
+ 
+                           
+                            
+ 
+                            
+
+ 
+ 
+                           
+                                
+                           
+                           <button mat-raised-button type="submit"  cdkStepperNext class="btn btn-info pull-right">Suivant</button>
+                           <div class="clearfix"></div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+            
+       </div>
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+        

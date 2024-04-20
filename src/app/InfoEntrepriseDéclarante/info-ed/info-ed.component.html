@@ -1,0 +1,133 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title"> II. Informations sur l’entreprise déclarante</h4>
+
+        </div>
+        <div class="card-body">
+
+          <form [formGroup]="stepTwoForm" (ngSubmit)="stepTwoSubmit()" autocomplete="off" novalidate #formRef="ngForm">
+
+
+
+       <div class="row">
+  <section class="example-section">
+    <h3 class="noir">Qualité</h3>
+  
+    <!-- First row of checkboxes -->
+    <div class="checkbox-row">
+
+      <div class="col-md">
+        <mat-checkbox  value="1" class="example-margin" (change)="onCheckboxChange($event)">Entité mère ultime</mat-checkbox>
+        <mat-checkbox  value="2" class="example-margin" (change)="onCheckboxChange($event)">Entité mère non ultime</mat-checkbox>
+        <mat-checkbox  value="3" class="example-margin" (change)="onCheckboxChange($event)">Entreprise holding</mat-checkbox>
+      </div>
+
+      <div class="col-md">
+        <mat-checkbox  value="4" class="example-margin" (change)="onCheckboxChange($event)">Entreprise filiale</mat-checkbox>
+        <mat-checkbox  value="5" class="example-margin" (change)="onCheckboxChange($event)">Établissement stable</mat-checkbox>
+        <mat-checkbox  value="autreQualite" class="example-margin" (change)="onCheckboxChange($event)">Autre Qualite</mat-checkbox>
+      </div>
+      
+    </div>
+  
+  </section>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <div *ngIf="showInput">
+             
+
+              <mat-form-field matInput placeholder="Autre Qualite" class="example-margin" class="example-full-width">
+                <input matInput placeholder="Autre Qualite" type="text" formControlName="descriptionAutreQualite">
+               
+              </mat-form-field>
+            </div>
+          </div>
+         </div>
+
+
+        <div class="row">
+
+          <div class="col-md-12">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Description des activités principales de l’entreprise déclarante" type="text" formControlName="description">
+             
+
+              <mat-error
+              *ngIf="f['description'].errors && (f['description'].dirty || f['description'].touched)">
+              <div *ngIf="f['description'].errors['required']">Ce champ est obligatoire.</div>
+              <div *ngIf="f['description'].errors['maxlength']">La valeur doit avoir au maximum 20 caractères.</div>
+              <div *ngIf="f['description'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+            </mat-error>
+            </mat-form-field>
+          </div> 
+
+          
+      </div>
+
+
+
+      
+
+        <div class="row">
+          <h3> Des changements significatifs d’activité sont-ils intervenus au cours de l’exercice ?</h3>
+        </div>
+
+        
+        <div class="row">
+ 
+          <mat-radio-group aria-label="Des changements significatifs d’activité sont-ils intervenus au cours de l’exercice ?" [(ngModel)]="textAreaValue">
+            <mat-radio-button   value="O" (change)="toggleTextArea()">Oui</mat-radio-button >
+            <mat-radio-button checked value="N" (change)="toggleTextArea()">Non</mat-radio-button>
+        </mat-radio-group>
+         </div>
+        
+         <div *ngIf="showTextArea" appearance="fill">
+
+          <mat-form-field matInput placeholder="Description ici" class="example-margin" class="example-full-width">
+            <input matInput placeholder="Autre Qualite" type="text" formControlName="descriptionAutreQualite">
+           
+          </mat-form-field>
+        </div>
+        
+          
+     
+          <div class="buttons">
+            <div class="button">
+              <button mat-raised-button type="submit"    class="btn btn-info pull-left"cdkStepperPrevious>Previous</button>
+            </div>
+            <div class="button">
+              <button mat-raised-button type="submit"    class="btn btn-info pull-right"  >Suivant</button>
+            </div>
+          </div>
+      
+
+  
+        </form>
+      </div>
+
+
+
+    </div>
+
+  </div>
+</div>

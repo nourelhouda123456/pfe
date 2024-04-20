@@ -1,0 +1,215 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="login-reg-panel">
+	<div class="login-info-box">
+		<h2>Have an account?</h2>
+		<p>Lorem ipsum dolor sit amet</p>
+		<label id="label-register" for="log-reg-show">Login</label>
+		<input type="radio" name="active-log-panel" id="log-reg-show" checked="checked">
+	</div>
+
+	<div class="register-info-box">
+		<h2>Don't have an account?</h2>
+		<p>Lorem ipsum dolor sit amet</p>
+		<label id="label-login" for="log-login-show">Register</label>
+		<input type="radio" name="active-log-panel" id="log-login-show">
+	</div>
+
+
+
+
+	<div class="white-panel">
+
+		<form (ngSubmit)="registerUser(newUser)" [formGroup]="form" (ngSubmit)="onSubmit()" class="register-show">
+			<h2 class="smaller ">REGISTER</h2>
+
+
+			<div class="row">
+				<div class="col">
+					<input [(ngModel)]="newUser.firstName" firstName placeholder="Nom" type="text"
+						formControlName="firstName">
+					 
+				</div>
+			</div>
+
+
+
+			<div class="row">
+				<div class="col">
+					<input [(ngModel)]="newUser.lastName" matInput class="form" placeholder="Prénom" type="text"
+					lastName formControlName="lastName">
+					<mat-error class="smaller-text"
+						*ngIf="f['lastName'].errors && (f['lastName'].dirty || f['lastName'].touched)">
+						<div *ngIf="f['lastName'].errors['required']">Ce champ est obligatoire.</div>
+
+					</mat-error>
+				</div>
+
+			</div>
+
+
+			<div class="row">
+				<div class="col">
+					<input [(ngModel)]="newUser.login" matInput class="form" placeholder="Adresse E-mail" type="text"
+					login formControlName="login">
+					 
+				</div>
+			</div>
+
+
+
+			<div class="row">
+
+				<div class="col-9">
+					<input matInput [type]="hide ? 'password' : 'text'" formControlName="password" [(ngModel)]="newUser.password" password
+						placeholder="Mot de Passe">
+				</div>
+				<div class="col">
+					<button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+						[attr.aria-pressed]="hide">
+						<mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+					</button>
+				</div>
+				 
+
+			</div>
+
+
+
+ <!-- Error message for Unknown user -->
+ 
+ <div class="color" *ngIf="errorMessage === 'Login already exists'">
+	Ce login existe déjà. Veuillez choisir un autre login.
+  </div>
+  
+  <mat-error class="smaller-text"
+  *ngIf="f['firstName'].errors?.required || 
+		 f['lastName'].errors?.required || 
+		 f['login'].errors?.required || 
+		 f['password'].errors?.required">
+
+Remplir tous les champs.
+
+</mat-error>
+
+<div class="smaller-text"
+  *ngIf="errorMessage === 'Unknown user' || 
+		 errorMessage === 'Invalid password' || 
+		 errorMessage === 'Veuillez remplir tous les champs.'">
+
+{{ errorMessage }}
+
+</div>
+
+			 
+
+
+
+			<input type="submit" value="Register">
+		</form>
+
+
+
+
+
+
+
+
+
+
+
+		<form (ngSubmit)="loginUser(newUser2)" [formGroup]="form" (ngSubmit)="onSubmit()" class="login-show">
+		 
+			<h2>LOGIN</h2>
+ 
+
+
+			 
+
+
+
+
+
+
+
+
+			<div class="row">
+				<div class="col">
+					<input [(ngModel)]="newUser2.login" matInput class="form" placeholder="Adresse E-mail" type="text"
+						firstName formControlName="login">
+					 
+						 
+				</div>
+			</div>
+
+
+
+			<div class="row">
+
+				<div class="col-9">
+					<input [(ngModel)]="newUser2.password"  matInput [type]="hide ? 'password' : 'text'" formControlName="password" type="password"
+						placeholder="Mot de Passe">
+				</div>
+				<div class="col">
+					<button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+						[attr.aria-pressed]="hide">
+						<mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+					</button>
+				</div>
+			 
+
+			</div>
+
+ 
+
+			<div class="smaller-text" class="color"
+			*ngIf="(f['firstName'].errors?.required || 
+					f['lastName'].errors?.required || 
+					f['login'].errors?.required || 
+					f['password'].errors?.required || 
+					f['login'].errors?.email)">
+	   
+		  
+		 
+	   </div>
+	   
+	   <div class="smaller-text" class="color"
+	   *ngIf="errorMessage === 'Unknown user' || errorMessage === 'Invalid password'">
+	
+	{{ errorMessage === 'Unknown user' ? 'Email ou mot de passe incorrecte.' : 'Email ou Mot de passe incorrect. Veuillez réessayer.' }}
+	
+  </div>
+  
+	   
+	   <div class="smaller-text" class="color"
+			*ngIf="errorMessage === 'Veuillez remplir tous les champs.'">
+		 
+		 Veuillez remplir tous les champs.
+		 
+	   </div>
+	   
+	   <div class="smaller-text" class="color"
+			*ngIf="errorMessage === 'Invalid email format.'">
+		 
+		 Format d'email invalide. Veuillez vérifier votre adresse email.
+		 
+	   </div>
+	   
+			
+			
+			<input type="submit" value="Login">
+			 
+		</form>
+
+
+
+
+
+
+
+
+	</div>
+</div>

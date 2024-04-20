@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <mat-checkbox formControlName="agreeTerms">I agree to the terms and conditions</mat-checkbox>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <mat-radio-group formControlName="choice">
+        <mat-radio-button value="oui">Oui</mat-radio-button>
+        <mat-radio-button value="non">Non</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  
+    <form [formGroup]="stepTwoForm"
+            (ngSubmit)="stepTwoSubmit()"
+            autocomplete="off"
+            novalidate
+            #formRef="ngForm">
+
+
+           
+            
+      <div class="row">
+        <div class="col-6">
+          <div class="input">
+            <label for="MatriculeFiscal">Matricule Fiscal<span>*</span></label>
+            <input type="text" id="MatriculeFiscal" placeholder="Matricule Fiscal" formControlName="MatriculeFiscal" />
+            <span class="error"
+              *ngIf="stepTwoForm.controls['MatriculeFiscal'].hasError('required') && formRef.submitted">Matricule Fiscal is a
+              required field
+            </span>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="input">
+            <label for="EtatTerritoire">Etat Territoire<span>*</span></label>
+            <input type="text" id="EtatTerritoire" placeholder="Etat Territoire" formControlName="EtatTerritoire" />
+            <span class="error" *ngIf="stepTwoForm.controls['EtatTerritoire'].hasError('required') && formRef.submitted">Etat
+              Territoire is a required field
+            </span>
+          </div>
+        </div>
+      </div>
+      
+  
+      
+  
+      <div class="row">
+        <div class="col-6">
+      <div class="input">
+        <label for="RaisonSociale">Raison Sociale<span>*</span></label>
+        <input type="text" id="RaisonSociale" placeholder="Raison Sociale" formControlName="RaisonSociale" />
+        <span class="error" *ngIf="stepTwoForm.controls['RaisonSociale'].hasError('required') && formRef.submitted">Raison
+          Sociale is a required field
+        </span>
+      </div>
+    </div>
+  
+    <div class="col-6">
+      <div class="input">
+        <label for="qualiteEntreprise">Qualité Entreprise<span>*</span></label>
+      <select id="qualiteEntreprise" formControlName="qualiteEntreprise">
+        <option value="Entité mère ultime">Entité mère ultime</option>
+        <option value="Entité mère non ultime">Entité mère non ultime</option>
+        <option value="Entreprise holding">Entreprise holding</option>
+        <option value="Entreprise filiale">Entreprise filiale</option>
+        <option value="Etablissement stable">Etablissement stable</option>
+        <option value="Autres">Autres</option>
+      </select>
+      <input *ngIf="showInputField" type="text" formControlName="autresInput"  > 
+      
+      <span class="error" *ngIf="stepTwoForm.controls['autresInput'].hasError('required') && formRef.submitted">Qualité is a required field
+      </span>
+      
+      </div>
+    </div>
+      </div>
+    <div class="row">
+      <div class="col-6">
+      <div class="input">
+        <label for="PDC">Pourcentage Détention Capital<span>*</span></label>
+        <input type="text" id="PDC" placeholder="Pourcentage Détention Capital"
+          formControlName="PDC" />
+        <span class="error" *ngIf="stepTwoForm.controls['PDC'].hasError('required') && formRef.submitted">Pourcentage
+          Detention Capital is a required field
+        </span>
+      </div>
+  
+      </div>
+      <div class="col-6">
+      <div class="input">
+        <label for="PDD">Pourcentage Détention Droits Vote<span>*</span></label>
+        <input type="text" id="PDD" placeholder="Pourcentage Détention Droits Vote"
+          formControlName="PDD" />
+        <span class="error" *ngIf="stepTwoForm.controls['PDD'].hasError('required') && formRef.submitted">Pourcentage
+          Detention Droits Vote is a required field
+        </span>
+      </div>
+      </div>
+    </div>
+  
+      <div class="button">
+        <button class="button" cdkStepperNext>Next</button>
+      </div>
+  
+    </form>
+  </div>
+

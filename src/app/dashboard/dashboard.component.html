@@ -1,0 +1,45 @@
+<div class="main">
+  <div class="header">
+    <h1>  </h1>  
+
+  </div>
+ 
+
+  <mat-horizontal-stepper #cdkStepper [linear]="true" >  
+     
+    
+    
+     
+  
+
+    
+
+   
+
+    
+    <mat-step [stepControl]="stepTwo.stepTwoForm" [optional]="false">
+      <ng-template matStepLabel>
+        <div class="step-bullet">2</div>
+        <div class="step-title">Informations sur l'Entreprise Déclarante <span class="required">*</span></div>
+      </ng-template>
+      <app-info-ed #stepTwo></app-info-ed>
+    </mat-step>
+     
+  
+      
+    <mat-step [stepControl]="stepFour.stepFourForm" [optional]="true">
+      <ng-template matStepLabel>
+        <div class="step-bullet">3</div>
+        <div class="step-title">Informations sur les opérations  <span class="required">*</span></div>
+      </ng-template>
+      <app-info-op #stepFour></app-info-op>
+    </mat-step>
+
+        
+       
+  </mat-horizontal-stepper>
+  
+
+     
+
+

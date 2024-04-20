@@ -1,0 +1,13 @@
+/* YourComponent.css */
+:host {
+    display: block;
+    max-width: 600px; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Center the component horizontally */
+  }
+  
+  .mat-horizontal-stepper {
+    width: 100%; /* Ensure the stepper takes the full width of its container */
+    max-width: 300px; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Center the stepper horizontally */
+  }
+  

@@ -1,0 +1,124 @@
+   
+      <div class="row">
+        <div class="col-md-8 ml-auto mr-auto">
+               <div class="card">
+                   <div class="card-header card-header-danger">
+                       <h4 class="card-title"> III.Informations sur Groupe Entreprise</h4>
+                       <p class="card-category"> Informations sur le groupe d’entreprises dont l’entreprise déclarante fait partie</p>
+                      
+                   </div>
+ 
+                   <div class="card-body">
+                    <form [formGroup]="stepThreeForm"
+                    (ngSubmit)="stepThreeSubmit()"
+                    autocomplete="off"
+                    novalidate
+                    #formRef="ngForm">
+ 
+                           <div class="row">
+                               <div class="col-md-6">
+                                 <mat-form-field class="example-full-width">
+                                     <input matInput placeholder="État ou territoire de résidence fiscale" type="text" >
+                                   </mat-form-field>
+                               </div>
+                               <div class="col-md-6">
+                                   <mat-form-field class="example-full-width">
+                                     <input matInput placeholder="Matricule Fiscal/Identifiant" type="text">
+                                   </mat-form-field>
+                               </div>
+                             </div>             
+ 
+ 
+
+
+
+                             
+                           <div class="row">
+                            <div class="col-md-6">
+                              <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Raison sociale" type="text" >
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Adresse du siège social" type="text">
+                                </mat-form-field>
+                            </div>
+                          </div> 
+
+
+
+                        
+                          <div class="row">
+                            <div class="col-md-12">
+                         
+                              <mat-form-field class="example-full-width">
+                                 <textarea matInput placeholder="Description des principales activités du groupe d’entreprises"></textarea>
+                               </mat-form-field>
+                            </div>
+
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col-md-12">
+                     
+                          <mat-form-field class="example-full-width">
+                             <textarea matInput placeholder="Description générale de la politique de prix de transfert adoptée par le groupe d’entreprises, en relation avec l’entreprise déclarante"></textarea>
+                           </mat-form-field>
+                        </div>
+
+                  </div>
+
+
+
+  
+                            
+        
+                         
+ 
+
+                            
+                              
+ 
+ 
+ 
+ 
+ 
+                           
+                            
+ 
+                            
+
+ 
+ 
+                           
+                                
+                           
+                              <div class="buttons">
+                                <div class="button">
+                                  <button mat-raised-button type="submit"  cdkStepperNext class="btn btn-info pull-left"cdkStepperPrevious>Previous</button>
+                                </div>
+                                <div class="button">
+                                  <button mat-raised-button type="submit"  cdkStepperNext class="btn btn-info pull-right" cdkStepperNext>Suivant</button>
+                                </div>
+                              </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+            
+       </div>
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+        
+
