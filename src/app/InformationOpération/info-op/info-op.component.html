@@ -1,245 +1,720 @@
 <div class="row">
-  <div class="col-md-8 ml-auto mr-auto">
+  <div class="col-md-10 ml-auto mr-auto">
+    <div *ngIf="currentForm === 1">
     <div class="card">
       <div class="card-header card-header-danger">
-        <h4 class="card-title">IV. Informations sur les opérations réalisées par l’entreprise déclarante avec les
-          entreprises liées résidentes ou établies à l’étranger : Informations Valeurs Exploitation</h4>
-        <p class="card-category"> Montant des transactions avec les entreprises liées résidentes ou établies à
-          l’étranger et méthode de détermination des prix de transfert appliquée</p>
+        <h4 class="card-title">1. Montant des transactions avec les entreprises liées résidentes ou établies à l’étranger et méthode de détermination des prix de transfert appliquée</h4>
+        <p class="card-category">Informations Valeurs Exploitation</p>
       </div>
 
       <div class="card-body">
-        <form [formGroup]="stepFourForm" (ngSubmit)="stepFourSubmit()" autocomplete="off" novalidate #formRef="ngForm">
+        <form [formGroup]="stepFourForm" (ngSubmit)="stepFourSubmit()" autocomplete="off" novalidate
+        #formRef="ngForm">
+        
+
+          <div class="row">
+            <mat-label class="label-margin">Identifiant Entreprise</mat-label>
+            <mat-radio-group aria-label="Choisir une option" (change)="onOptionChangeVExploitation($event)">
+              <mat-radio-button checked class="label-margin" [checked]="selectedOptionVExploitation === 'MatriculeFiscal'"
+                value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionVExploitation=== 'Identifiant'"
+                value="Identifiant">Identifiant</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionVExploitation === 'EtatTerritoire'"
+                value="EtatTerritoire">Etat Territoire</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionVExploitation === 'MatriculeFiscal'">
+
+              <input matInput placeholder="MatriculeFiscal" placeholder="Entrez le MatriculeFiscal"
+                [(ngModel)]="matriculeFiscalValue" formControlName="MatriculeFiscal">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionVExploitation=== 'Identifiant'">
+              <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row" *ngIf="selectedOptionVExploitation === 'EtatTerritoire'">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
+                <mat-option *ngFor="let country of countries" [value]="country.code">
+                  {{ country.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Valeur Exploitation</mat-label>
+                <mat-select formControlName="natureOperationValeurExploitation"  (selectionChange)="onNatureChangeVE($event)">
+                  <mat-option *ngFor="let option of natureOptionsVE" [value]="option.value">{{ option.viewValue
+                    }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6" *ngIf="selectedNatureVE === 'AutreNatureValeurExploitation'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Nature Valeur Exploitation"
+                  formControlName="AutreNatureOperation">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Relation Entreprise</mat-label>
+                <mat-select formControlName="natureRelationEntreprise"  (selectionChange)="onNatureChangeNRVE($event)">
+                  <mat-option *ngFor="let option of natureOptionsNRVE" [value]="option.value">{{ option.viewValue
+                    }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6" *ngIf="selectedNatureNRVE ==='AutreNatureRelation'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Nature Relation" formControlName="AutreNatureRelation">
+              </mat-form-field>
+            </div>
+          </div>
 
 
 
 
+          <div class="row">
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="achatsDepenses" matInput placeholder="Achats / Dépenses">
+                <mat-error
+                *ngIf="f['achatsDepenses'].errors && (f['achatsDepenses'].dirty || f['achatsDepenses'].touched)">
+                <div *ngIf="f['achatsDepenses'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f['achatsDepenses'].errors?.pattern">Montant doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+
+
+
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input matInput  formControlName="ventesRevenus" placeholder="Ventes/ Revenus">
+                <mat-error
+                *ngIf="f['ventesRevenus'].errors && (f['ventesRevenus'].dirty || f['ventesRevenus'].touched)">
+                <div *ngIf="f['ventesRevenus'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f['ventesRevenus'].errors?.pattern">Montant doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+
+
+            
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="raisonSociale" matInput placeholder="Raison Sociale ">
+                <mat-error
+                *ngIf="f['raisonSociale'].errors && (f['raisonSociale'].dirty || f['raisonSociale'].touched)">
+                <div *ngIf="f['raisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f['raisonSociale'].errors['maxlength']">La valeur doit avoir au maximum 20 caractères.</div>
+                <div *ngIf="f['raisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Qualité</mat-label>
+                <mat-select formControlName="qualiteEntreprise" (selectionChange)="onQualiteChange($event)" >
+                  <mat-option *ngFor="let option of qualiteOptions" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedQualite === 'AutreQualite'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Qualité" formControlName="AutreQualite">
+              </mat-form-field>
+            </div>
+          </div>
+          
+            
+
+          <hr>
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Méthode de Détermination du Prix de Transfert</mat-label>
+                <mat-select formControlName="methodePrixTransfert" (selectionChange)="onMethodeChange($event)" >
+                  <mat-option *ngFor="let option of methodeOptions" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedMethode === 'AutreMethodeDeterminationPrixTransfert'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Méthode" formControlName="AutreMethodeDeterminationPrixTransfert">
+              </mat-form-field>
+            </div>
+          </div>
+          
+
+
+          <hr>
+
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Changement Méthode Prix Transfert</mat-label>
+                <mat-select formControlName="changementMethodePrixTransfert"
+                            (selectionChange)="onChangementMethodeChange($event)">
+                  <mat-option *ngFor="let option of methodePrixTransfertOptions" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedChangementMethodePrixTransfert === 'AutreChangementMethodeDeterminationPrixTransfert'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Méthode" formControlName="AutreChangementMethodeDeterminationPrixTransfert">
+              </mat-form-field>
+            </div>
+          </div>
+          
+          
+
+          <div class="buttons">
+           
+            <div class="button">
+              <button mat-raised-button (click)="goToNextForm()"  type="submit"  class="btn btn-info pull-right"
+                >Suivant</button>
+                <button mat-raised-button  type="submit" class="btn btn-info pull-right">Ajouter Plus</button>
+            </div>
+          </div>
+ 
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="col-md-10 ml-auto mr-auto">
+    <div *ngIf="currentForm === 2">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">1. Montant des transactions avec les entreprises liées résidentes ou établies à l’étranger et méthode de détermination des prix de transfert appliquée</h4>
+        <p class="card-category">Informations Remunerations Biens Corporels Incorporels</p>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="step5Form" (ngSubmit)="step5Submit()" autocomplete="off" novalidate
+        #formRef="ngForm">
 
 
           <div class="row">
             <mat-label class="label-margin">Identifiant Entreprise</mat-label>
-            <mat-radio-group aria-label="Choisir une option" (change)="onOptionChange($event)">
-                <mat-radio-button checked class="label-margin" [checked]="selectedOption === 'MatriculeFiscal'" value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
-                <mat-radio-button class="label-margin" [checked]="selectedOption === 'Identifiant'" value="Identifiant">Identifiant</mat-radio-button>
-                <mat-radio-button class="label-margin" [checked]="selectedOption === 'EtatTerritoire'" value="EtatTerritoire">Etat Territoire</mat-radio-button>
+            <mat-radio-group aria-label="Choisir une option" (change)="onOptionChangeRBiens($event)">
+              <mat-radio-button checked class="label-margin" [checked]="selectedOptionRBiens === 'MatriculeFiscal'"
+                value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionRBiens=== 'Identifiant'"
+                value="Identifiant">Identifiant</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionRBiens === 'EtatTerritoire'"
+                value="EtatTerritoire">Etat Territoire</mat-radio-button>
             </mat-radio-group>
-        </div>
-
-
-        <!-- Input field for "MatriculeFiscal" -->
-        <div class="row">
-          <mat-form-field class="example-full-width" *ngIf="selectedOption1 === 'MatriculeFiscal'">
-               
-              <input  matInput placeholder="MatriculeFiscal"   placeholder="Entrez le MatriculeFiscal" [(ngModel)]="matriculeFiscalValue"
-                      formControlName="MatriculeFiscal"   >
-                      
-                     
-          </mat-form-field>
-      </div>
-
-    <!-- Input field for "Identifiant" -->
-    <div class="row">
-      <mat-form-field class="example-full-width" *ngIf="selectedOption1 === 'Identifiant'">
-          <input matInput placeholder="Entrez l'Identifiant" [(ngModel)]="identifiantValue" 
-          formControlName="Id">
-
-          
-      </mat-form-field>
-  </div>
-  
-
-  <div class="row" *ngIf="selectedOption1 === 'EtatTerritoire'">
-    <mat-form-field class="example-full-width">
-        <mat-select placeholder="Nationalite">
-            <mat-option *ngFor="let country of countries" [value]="country.code">
-                {{ country.name }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-</div>
- 
-
-
-
-
-
-
-
-
+          </div>
 
           <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionRBiens === 'MatriculeFiscal'">
 
-            <div class="col-md-4">
+              <input matInput placeholder="MatriculeFiscal" placeholder="Entrez le MatriculeFiscal"
+                [(ngModel)]="matriculeFiscalValue" formControlName="MatriculeFiscal">
 
+
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionRBiens=== 'Identifiant'">
+              <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row" *ngIf="selectedOptionRBiens === 'EtatTerritoire'">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
+                <mat-option *ngFor="let country of countries2" [value]="country.code">
+                  {{ country.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
               <mat-form-field class="example-full-width">
-                <mat-label>Nature Operation</mat-label>
-                <mat-select formControlName="NatureOperation" #selectCtrl (selectionChange)="onSelectionChange($event)">
-                  <mat-option value="1">Matière première</mat-option>
-                  <mat-option value="2">Produits finis ou semi-finis</mat-option>
-                  <mat-option value="3">Marchandises</mat-option>
-                  <mat-option value="Autre">Autre</mat-option>
+                <mat-label>Nature Operation Remuneration Biens</mat-label>
+                <mat-select formControlName="natureOperationRemunerationsBiens" (selectionChange)="onNatureOperationChangeRB($event)">
+                  <mat-option *ngFor="let option of natureRemunerationOptions" [value]="option.value">{{ option.viewValue }}</mat-option>
                 </mat-select>
               </mat-form-field>
-
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-            <div class="col-md-4">
+          
+            <div class="col-md-6" *ngIf="selectedNatureRemuneration === 'AutreNatureOperation'">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Total Achat" type="text">
+                <input matInput placeholder="Autre Nature Operation Remuneration Biens" formControlName="AutreNatureOperation">
               </mat-form-field>
             </div>
-
-            <div class="col-md-4">
-              <mat-form-field class="example-full-width">
-                <input matInput placeholder="Total Ventes Revenus">
-              </mat-form-field>
-            </div>
-
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div *ngIf="isAutreSelected">
-                <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Autre Nature Operation ici" formControlName="autreNatureOperation">
-                </mat-form-field>
-              </div>
-
-
-            </div>
-          </div>
-
-
-
-
-
+          
 
 
 
 
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Achats / Dépenses">
+                <mat-label>Nature Relation Entreprise</mat-label>
+                <mat-select formControlName="natureRelationEntreprise" (selectionChange)="onNatureChangeRB($event)">
+                  <mat-option *ngFor="let option of natureOptionsRB" [value]="option.value">{{ option.viewValue
+                    }}</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
+            
 
-
-
-
-            <div class="col-md-4">
+            <div class="col-md-6" *ngIf="selectedNatureRB=== 'AutreNatureRelation'">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Ventes/ Revenus">
-              </mat-form-field>
-            </div>
-
-
-            <div class="col-md-4">
-              <mat-form-field class="example-full-width">
-                <input matInput placeholder="État ou territoire de résidence fiscale ">
+                <input matInput placeholder="Autre Nature Valeur Exploitation"
+                  formControlName="AutreNatureRelation">
               </mat-form-field>
             </div>
           </div>
-
-
-
-
 
           <div class="row">
-
-            <div class="col-md-4">
-             
-              
-            
-           
-            
-           
-            
-            
-
-
-
-
-   
-
-
-
-
-
-
-
-
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="achatsDepenses" matInput placeholder="Achats / Dépenses">
+                <mat-error
+                *ngIf="f1['achatsDepenses'].errors && (f1['achatsDepenses'].dirty || f1['achatsDepenses'].touched)">
+                <div *ngIf="f1['achatsDepenses'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f1['achatsDepenses'].errors?.pattern">Montant doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
             </div>
 
-            <div class="col-md-4">
+
+
+
+            <div class="col-md">
               <mat-form-field class="example-full-width">
-                <input matInput placeholder="Raison Sociale ">
+                <input matInput  formControlName="ventesRevenus" placeholder="Ventes/ Revenus">
+                <mat-error
+                *ngIf="f1['ventesRevenus'].errors && (f1['ventesRevenus'].dirty || f1['ventesRevenus'].touched)">
+                <div *ngIf="f1['ventesRevenus'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f1['ventesRevenus'].errors?.pattern">Montant doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+
+
+            
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="raisonSociale" matInput placeholder="Raison Sociale ">
+                <mat-error
+                *ngIf="f1['raisonSociale'].errors && (f1['raisonSociale'].dirty || f1['raisonSociale'].touched)">
+                <div *ngIf="f1['raisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f1['raisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+            </mat-error>
               </mat-form-field>
             </div>
           </div>
-
-
 
           <hr>
 
 
 
-
           <div class="row">
-            <section class="example-section">
-              <h3 class="noir">Qualité</h3>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Qualité</mat-label>
+                <mat-select formControlName="qualiteEntreprise" (selectionChange)="onQualiteChangeRB($event)">
+                  <mat-option *ngFor="let option of qualiteOptionsRB" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedQualiteRB === 'AutreQualite'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Qualité" formControlName="AutreQualite">
+              </mat-form-field>
+            </div>
+          </div>
+          
+            
 
-              <!-- First row of checkboxes -->
-              <div class="checkbox-row">
+          <hr>
 
-                <div class="col-md">
-                  <mat-checkbox value="1" class="example-margin" (change)="onCheckboxChange($event)">Entité mère
-                    ultime</mat-checkbox>
-                  <mat-checkbox value="2" class="example-margin" (change)="onCheckboxChange($event)">Entité mère non
-                    ultime</mat-checkbox>
-                  <mat-checkbox value="3" class="example-margin" (change)="onCheckboxChange($event)">Entreprise
-                    holding</mat-checkbox>
-                </div>
 
-                <div class="col-md">
-                  <mat-checkbox value="4" class="example-margin" (change)="onCheckboxChange($event)">Entreprise
-                    filiale</mat-checkbox>
-                  <mat-checkbox value="5" class="example-margin" (change)="onCheckboxChange($event)">Établissement
-                    stable</mat-checkbox>
-                  <mat-checkbox value="autreQualite" class="example-margin" (change)="onCheckboxChange($event)">Autre
-                    Qualite</mat-checkbox>
-                </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Méthode de Détermination du Prix de Transfert</mat-label>
+                <mat-select formControlName="methodePrixTransfert" (selectionChange)="onMethodeChangeRB($event)">
+                  <mat-option *ngFor="let option of methodeOptionsRB" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedMethodeRB === 'AutreMethodeDeterminationPrixTransfert'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Méthode" formControlName="AutreMethodeDeterminationPrixTransfert">
+              </mat-form-field>
+            </div>
+          </div>
+          
 
-              </div>
 
-            </section>
+          <hr>
+
+          
+          
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Changement Méthode Prix Transfert</mat-label>
+                <mat-select formControlName="changementMethodePrixTransfert"
+                            (selectionChange)="onChangementMethodeChangeRB($event)">
+                  <mat-option *ngFor="let option of methodePrixTransfertOptionsRB" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedChangementMethodePrixTransfertRB === 'AutreChangementMethodeDeterminationPrixTransfert'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Méthode" formControlName="AutreChangementMethodeDeterminationPrixTransfert">
+              </mat-form-field>
+            </div>
+          </div>
+          
+
+          <div class="buttons">
+           
+            <div class="button">
+              <button mat-raised-button (click)="goToNextForm2()"  type="submit"  class="btn btn-info pull-right"
+                 >Suivant</button>
+                 <button mat-raised-button (click)="step5Submit()" type="button" class="btn btn-info pull-right">Ajouter Plus</button>
+            </div>
           </div>
 
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="col-md-10 ml-auto mr-auto">
+    <div *ngIf="currentForm === 3">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">1. Montant des transactions avec les entreprises liées résidentes ou établies à l’étranger et méthode de détermination des prix de transfert appliquée</h4>
+        <p class="card-category"> Informations Services</p>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="step6Form" (ngSubmit)="step6Submit()" autocomplete="off" novalidate
+        #formRef="ngForm">
+
 
           <div class="row">
-            <div class="col-md-12">
-              <div *ngIf="showInput">
+            <mat-label class="label-margin">Identifiant Entreprise</mat-label>
+            <mat-radio-group aria-label="Choisir une option" (change)="onOptionChangeService($event)">
+              <mat-radio-button checked class="label-margin" [checked]="selectedOptionS === 'MatriculeFiscal'"
+                value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionS=== 'Identifiant'"
+                value="Identifiant">Identifiant</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionS === 'EtatTerritoire'"
+                value="EtatTerritoire">Etat Territoire</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionS === 'MatriculeFiscal'">
+
+              <input matInput placeholder="MatriculeFiscal" placeholder="Entrez le MatriculeFiscal"
+                [(ngModel)]="matriculeFiscalValue" formControlName="MatriculeFiscal">
 
 
-                <mat-form-field matInput placeholder="Autre Qualite" class="example-margin" class="example-full-width">
-                  <input matInput placeholder="Autre qualité ici" type="text" formControlName="descriptionAutreQualite">
+            </mat-form-field>
+          </div>
 
-                </mat-form-field>
-              </div>
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionS=== 'Identifiant'">
+              <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row" *ngIf="selectedOptionS === 'EtatTerritoire'">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
+                <mat-option *ngFor="let country of countries3" [value]="country.code">
+                  {{ country.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Operation Service</mat-label>
+                <mat-select formControlName="natureOperationService" (selectionChange)="onNatureOperationChangeService($event)">
+                  <mat-option *ngFor="let option of natureServiceOptions" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedServive === 'AutreNatureOperation'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Nature Service" formControlName="AutreNatureOperation">
+              </mat-form-field>
+            </div>
+          </div>
+          
+
+
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Relation Entreprise</mat-label>
+                <mat-select formControlName="natureRelationEntreprise" (selectionChange)="onNatureChangeService($event)">
+                  <mat-option *ngFor="let option of natureOptionsService" [value]="option.value">{{ option.viewValue
+                    }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6" *ngIf="selectedNatureService=== 'AutreNatureRelation'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Nature Valeur Exploitation"
+                  formControlName="AutreNatureRelation">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="achatsDepenses" matInput placeholder="Achats / Dépenses">
+                <mat-error
+                *ngIf="f2['achatsDepenses'].errors && (f2['achatsDepenses'].dirty || f2['achatsDepenses'].touched)">
+                <div *ngIf="f2['achatsDepenses'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f2['achatsDepenses'].errors?.pattern">Montant doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+
+
+
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input matInput  formControlName="ventesRevenus" placeholder="Ventes/ Revenus">
+                <mat-error
+                *ngIf="f2['ventesRevenus'].errors && (f2['ventesRevenus'].dirty || f2['ventesRevenus'].touched)">
+                <div *ngIf="f2['ventesRevenus'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f2['ventesRevenus'].errors?.pattern">Montant doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+
+
+            
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="raisonSociale" matInput placeholder="Raison Sociale ">
+                <mat-error
+                *ngIf="f2['raisonSociale'].errors && (f2['raisonSociale'].dirty || f2['raisonSociale'].touched)">
+                <div *ngIf="f2['raisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f2['raisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+            </mat-error>
+              </mat-form-field>
             </div>
           </div>
 
           <hr>
+
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Qualité</mat-label>
+                <mat-select formControlName="qualiteEntreprise" (selectionChange)="onQualiteChangeService($event)">
+                  <mat-option *ngFor="let option of qualiteOptionsService" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedQualiteService === 'AutreQualite'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Qualité" formControlName="AutreQualite">
+              </mat-form-field>
+            </div>
+          </div>
+          
+            
+
+          <hr>
+
+
+          
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Méthode de Détermination du Prix de Transfert</mat-label>
+                <mat-select formControlName="methodePrixTransfert" (selectionChange)="onMethodeChangeService($event)">
+                  <mat-option *ngFor="let option of methodeOptionsService" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedMethodeService === 'AutreMethodeDeterminationPrixTransfert'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Méthode" formControlName="AutreMethodeDeterminationPrixTransfert">
+              </mat-form-field>
+            </div>
+          </div>
+          
+
+
+          <hr>
+
+          
+          
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Changement Méthode Prix Transfert</mat-label>
+                <mat-select formControlName="changementMethodePrixTransfert"
+                            (selectionChange)="onChangementMethodeChangeService($event)">
+                  <mat-option *ngFor="let option of methodePrixTransfertOptionsService" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedChangementMethodePrixTransfertService === 'AutreChangementMethodeDeterminationPrixTransfert'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Méthode" formControlName="AutreChangementMethodeDeterminationPrixTransfert">
+              </mat-form-field>
+            </div>
+          </div>
+          
+
+          <div class="buttons">
+           
+            <div class="button">
+              <button mat-raised-button (click)="goToNextForm3()"  type="submit"  class="btn btn-info pull-right"
+                 >Suivant</button>
+                 <button mat-raised-button (click)="step6Submit()" type="button" class="btn btn-info pull-right">Ajouter Plus</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -247,143 +722,1415 @@
 
 
  
-           
 
 
 
+
+
+
+  <div class="col-md-10 ml-auto mr-auto">
+    <div *ngIf="currentForm === 4">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">1. Montant des transactions avec les entreprises liées résidentes ou établies à l’étranger et méthode de détermination des prix de transfert appliquée</h4>
+        <p class="card-category"> Informations Operations Financieres</p>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="step7Form" (ngSubmit)="step7Submit()" autocomplete="off" novalidate
+        #formRef="ngForm">
+
+
+          <div class="row">
+            <mat-label class="label-margin">Identifiant Entreprise</mat-label>
+            <mat-radio-group aria-label="Choisir une option" (change)="onOptionChangeFinanciere($event)">
+              <mat-radio-button checked class="label-margin" [checked]="selectedOptionF === 'MatriculeFiscal'"
+                value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionF=== 'Identifiant'"
+                value="Identifiant">Identifiant</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionF === 'EtatTerritoire'"
+                value="EtatTerritoire">Etat Territoire</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionF === 'MatriculeFiscal'">
+
+              <input matInput placeholder="MatriculeFiscal" placeholder="Entrez le MatriculeFiscal"
+                [(ngModel)]="matriculeFiscalValue" formControlName="MatriculeFiscal">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionF=== 'Identifiant'">
+              <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row" *ngIf="selectedOptionF === 'EtatTerritoire'">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
+                <mat-option *ngFor="let country of countries4" [value]="country.code">
+                  {{ country.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Operation Financiere</mat-label>
+                <mat-select formControlName="natureOperationFinanciere" (selectionChange)="onNatureOperationChangeFinanciere($event)">
+                  <mat-option *ngFor="let option of natureFinanciereOptions" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedFinanciere === 'AutreNatureOperation'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Nature Service" formControlName="AutreNatureOperation">
+              </mat-form-field>
+            </div>
+          </div>
+          
+
+
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Relation Entreprise</mat-label>
+                <mat-select formControlName="natureRelationEntreprise" (selectionChange)="onNatureChangeFinanciere($event)">
+                  <mat-option *ngFor="let option of natureOptionsFinanciere" [value]="option.value">{{ option.viewValue
+                    }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6" *ngIf="selectedNatureFinanciere=== 'AutreNatureRelation'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Nature Valeur Exploitation"
+                  formControlName="AutreNatureRelation">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="achatsDepenses" matInput placeholder="Achats / Dépenses">
+                <mat-error
+                *ngIf="f3['achatsDepenses'].errors && (f3['achatsDepenses'].dirty || f3['achatsDepenses'].touched)">
+                <div *ngIf="f3['achatsDepenses'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f3['achatsDepenses'].errors?.pattern">Achats / Dépenses doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+
+
+
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input matInput  formControlName="ventesRevenus" placeholder="Ventes/ Revenus">
+                <mat-error
+                *ngIf="f3['ventesRevenus'].errors && (f3['ventesRevenus'].dirty || f3['ventesRevenus'].touched)">
+                <div *ngIf="f3['ventesRevenus'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f3['ventesRevenus'].errors?.pattern"> Ventes/ Revenus doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+
+
+            
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="raisonSociale" matInput placeholder="Raison Sociale ">
+                <mat-error
+                *ngIf="f3['raisonSociale'].errors && (f3['raisonSociale'].dirty || f3['raisonSociale'].touched)">
+                <div *ngIf="f3['raisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f3['raisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
 
           <hr>
 
 
 
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Qualité</mat-label>
+                <mat-select formControlName="qualiteEntreprise" (selectionChange)="onQualiteChangeFinanciere($event)">
+                  <mat-option *ngFor="let option of qualiteOptionsFinanciere" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedQualiteFinanciere === 'AutreQualite'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Qualité" formControlName="AutreQualite">
+              </mat-form-field>
+            </div>
+          </div>
+          
+            
 
+          <hr>
+
+
+          
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Méthode de Détermination du Prix de Transfert</mat-label>
+                <mat-select formControlName="methodePrixTransfert" (selectionChange)="onMethodeChangeFinanciere($event)">
+                  <mat-option *ngFor="let option of methodeOptionsFinanciere" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedMethodeFinanciere === 'AutreMethodeDeterminationPrixTransfert'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Méthode" formControlName="AutreMethodeDeterminationPrixTransfert">
+              </mat-form-field>
+            </div>
+          </div>
+          
+
+
+          <hr>
+
+          
+          
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Changement Méthode Prix Transfert</mat-label>
+                <mat-select formControlName="changementMethodePrixTransfert"
+                            (selectionChange)="onChangementMethodeChangeFinanciere($event)">
+                  <mat-option *ngFor="let option of methodePrixTransfertOptionsFinanciere" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedChangementMethodePrixTransfertFinanciere === 'AutreChangementMethodeDeterminationPrixTransfert'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Méthode" formControlName="AutreChangementMethodeDeterminationPrixTransfert">
+              </mat-form-field>
+            </div>
+          </div>
+          
+
+          <div class="buttons">
+           
+            <div class="button">
+              <button mat-raised-button (click)="goToNextForm4()"  type="submit"  class="btn btn-info pull-right"
+                 >Suivant</button>
+                 <button mat-raised-button (click)="step7Submit()" type="button" class="btn btn-info pull-right">Ajouter Plus</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+  <div class="col-md-10 ml-auto mr-auto">
+    <div *ngIf="currentForm === 5">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">1. Montant des transactions avec les entreprises liées résidentes ou établies à l’étranger et méthode de détermination des prix de transfert appliquée</h4>
+        <p class="card-category"> Informations Cessions Acquisitions Actifs</p>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="step8Form" (ngSubmit)="step8Submit()" autocomplete="off" novalidate
+        #formRef="ngForm">
+
+
+          <div class="row">
+            <mat-label class="label-margin">Identifiant Entreprise</mat-label>
+            <mat-radio-group aria-label="Choisir une option" (change)="onOptionChangeCessionAcquisitionActif($event)">
+              <mat-radio-button checked class="label-margin" [checked]="selectedOptionC === 'MatriculeFiscal'"
+                value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionC=== 'Identifiant'"
+                value="Identifiant">Identifiant</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionC === 'EtatTerritoire'"
+                value="EtatTerritoire">Etat Territoire</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionC === 'MatriculeFiscal'">
+
+              <input matInput placeholder="MatriculeFiscal" placeholder="Entrez le MatriculeFiscal"
+                [(ngModel)]="matriculeFiscalValue" formControlName="MatriculeFiscal">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionC=== 'Identifiant'">
+              <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row" *ngIf="selectedOptionC === 'EtatTerritoire'">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
+                <mat-option *ngFor="let country of countries5" [value]="country.code">
+                  {{ country.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Cession Acquisition Actif</mat-label>
+                <mat-select formControlName="natureOperationCessionAcquisitionActif" (selectionChange)="onNatureOperationChangeCessionAcquisitionActif($event)">
+                  <mat-option *ngFor="let option of natureCessionAcquisitionActifOptions" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedCessionAcquisitionActif === 'AutreNatureOperation'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Nature Cession Acquisition Actif" formControlName="AutreNatureOperation">
+              </mat-form-field>
+            </div>
+          </div>
+          
 
 
 
 
           <div class="row">
-            <section class="example-section">
-              <h3 class="noir">Méthode Determination Prix Transfert</h3>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Relation Entreprise</mat-label>
+                <mat-select formControlName="natureRelationEntreprise" (selectionChange)="onNatureChangeCessionAcquisitionActif($event)">
+                  <mat-option *ngFor="let option of natureOptionsCessionAcquisitionActif" [value]="option.value">{{ option.viewValue
+                    }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
 
-              <!-- First row of checkboxes -->
-              <div class="checkbox-row">
+            <div class="col-md-6" *ngIf="selectedNatureCessionAcquisitionActif=== 'AutreNatureRelation'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Nature Valeur Exploitation"
+                  formControlName="AutreNatureRelation">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="achatsDepenses" matInput placeholder="Achats / Dépenses">
+                <mat-error
+                *ngIf="f4['achatsDepenses'].errors && (f4['achatsDepenses'].dirty || f4['achatsDepenses'].touched)">
+                <div *ngIf="f4['achatsDepenses'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f4['achatsDepenses'].errors?.pattern">Achats / Dépenses doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
 
 
 
 
-                <div class="col-md-5">
-                  <mat-checkbox value="CUP" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du prix
-                    comparable sur le marché libre</mat-checkbox>
-                  <mat-checkbox value="MPR" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du prix
-                    de revente</mat-checkbox>
-                  <mat-checkbox value="MPRM" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du prix
-                    de revient majoré</mat-checkbox>
-                </div>
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input matInput  formControlName="ventesRevenus" placeholder="Ventes/ Revenus">
+                <mat-error
+                *ngIf="f4['achatsDepenses'].errors && (f4['achatsDepenses'].dirty || f4['achatsDepenses'].touched)">
+                <div *ngIf="f4['achatsDepenses'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f4['achatsDepenses'].errors?.pattern">Ventes/ Revenus doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
 
-                <div class="col-md-7">
-                  <mat-checkbox value="MTMN" class="example-margin" (change)="onCheckboxChange2($event)">Méthode
-                    transactionnelle de la marge nette</mat-checkbox>
-                  <mat-checkbox value="MPB" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du
-                    partage des bénéfices</mat-checkbox>
-                  <mat-checkbox value="AutreMethode" class="example-margin" (change)="onCheckboxChange2($event)"> Autre
-                    Methode Determination Prix Transfert</mat-checkbox>
-                </div>
 
-              </div>
+            
 
-            </section>
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="raisonSociale" matInput placeholder="Raison Sociale ">
+                <mat-error
+                *ngIf="f4['raisonSociale'].errors && (f4['raisonSociale'].dirty || f4['raisonSociale'].touched)">
+                <div *ngIf="f4['raisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f4['raisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <hr>
+
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Qualité</mat-label>
+                <mat-select formControlName="qualiteEntreprise" (selectionChange)="onQualiteChangeCessionAcquisitionActif($event)">
+                  <mat-option *ngFor="let option of qualiteOptionsCessionAcquisitionActif" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedQualiteCessionAcquisitionActif === 'AutreQualite'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Qualité" formControlName="AutreQualite">
+              </mat-form-field>
+            </div>
+          </div>
+          
+            
+
+          <hr>
+
+
+          
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Méthode de Détermination du Prix de Transfert</mat-label>
+                <mat-select formControlName="methodePrixTransfert" (selectionChange)="onMethodeChangeCessionAcquisitionActif($event)">
+                  <mat-option *ngFor="let option of methodeOptionsCessionAcquisitionActif" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedMethodeCessionAcquisitionActif === 'AutreMethodeDeterminationPrixTransfert'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Méthode" formControlName="AutreMethodeDeterminationPrixTransfert">
+              </mat-form-field>
+            </div>
+          </div>
+          
+
+
+          <hr>
+
+          
+          
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Changement Méthode Prix Transfert</mat-label>
+                <mat-select formControlName="changementMethodePrixTransfert"
+                            (selectionChange)="onChangementMethodeChangeCessionAcquisitionActif($event)">
+                  <mat-option *ngFor="let option of methodePrixTransfertOptionsCessionAcquisitionActif" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedChangementMethodePrixTransfertCessionAcquisitionActif === 'AutreChangementMethodeDeterminationPrixTransfert'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Méthode" formControlName="AutreChangementMethodeDeterminationPrixTransfert">
+              </mat-form-field>
+            </div>
+          </div>
+          
+
+          <div class="buttons">
+           
+            <div class="button">
+              <button mat-raised-button (click)="goToNextForm5()"  type="submit"  class="btn btn-info pull-right"
+                 >Suivant</button>
+                 <button mat-raised-button (click)="step8Submit()" type="button" class="btn btn-info pull-right">Ajouter Plus</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="col-md-10 ml-auto mr-auto">
+    <div *ngIf="currentForm === 6">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">1. Montant des transactions avec les entreprises liées résidentes ou établies à l’étranger et méthode de détermination des prix de transfert appliquée</h4>
+        <p class="card-category"> Informations Autres Operations</p>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="step9Form" (ngSubmit)="step9Submit()" autocomplete="off" novalidate
+        #formRef="ngForm">
+
+
+          <div class="row">
+            <mat-label class="label-margin">Identifiant Entreprise</mat-label>
+            <mat-radio-group aria-label="Choisir une option" (change)="onOptionChangeCessionAutreOperation($event)">
+              <mat-radio-button checked class="label-margin" [checked]="selectedOptionA === 'MatriculeFiscal'"
+                value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionA=== 'Identifiant'"
+                value="Identifiant">Identifiant</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionA === 'EtatTerritoire'"
+                value="EtatTerritoire">Etat Territoire</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionA === 'MatriculeFiscal'">
+
+              <input matInput placeholder="MatriculeFiscal" placeholder="Entrez le MatriculeFiscal"
+                [(ngModel)]="matriculeFiscalValue" formControlName="MatriculeFiscal">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionA=== 'Identifiant'">
+              <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row" *ngIf="selectedOptionA === 'EtatTerritoire'">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
+                <mat-option *ngFor="let country of countries6" [value]="country.code">
+                  {{ country.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Autre Operation</mat-label>
+                <mat-select formControlName="natureOperationAutresOperation"  >
+                  <mat-option *ngFor="let option of natureAutreOperation" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+        
+          </div>
+          
+
+
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Relation Entreprise</mat-label>
+                <mat-select formControlName="natureRelationEntreprise" (selectionChange)="natureOptionsAutreOperation($event)">
+                  <mat-option *ngFor="let option of natureOptionsAutreOperation" [value]="option.value">{{ option.viewValue
+                    }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6" *ngIf="selectedNatureAutreOperation=== 'AutreNatureRelation'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Nature Valeur Exploitation"
+                  formControlName="AutreNatureRelation">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="achatsDepenses" matInput placeholder="Achats / Dépenses">
+                <mat-error
+                *ngIf="f5['achatsDepenses'].errors && (f5['achatsDepenses'].dirty || f5['achatsDepenses'].touched)">
+                <div *ngIf="f5['achatsDepenses'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f5['achatsDepenses'].errors?.pattern">Achats / Dépenses doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+
+
+
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input matInput  formControlName="ventesRevenus" placeholder="Ventes/ Revenus">
+                <mat-error
+                *ngIf="f5['ventesRevenus'].errors && (f5['ventesRevenus'].dirty || f5['ventesRevenus'].touched)">
+                <div *ngIf="f5['ventesRevenus'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f5['ventesRevenus'].errors?.pattern">Ventes/ Revenus doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+
+
+            
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="raisonSociale" matInput placeholder="Raison Sociale ">
+                <mat-error
+                *ngIf="f5['raisonSociale'].errors && (f5['raisonSociale'].dirty || f5['raisonSociale'].touched)">
+                <div *ngIf="f5['raisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f5['raisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <hr>
+
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Qualité</mat-label>
+                <mat-select formControlName="qualiteEntreprise" (selectionChange)="onQualiteChangeAutreOperation($event)">
+                  <mat-option *ngFor="let option of qualiteOptionsAutreOperation" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedQualiteAutreOperation === 'AutreQualite'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Qualité" formControlName="AutreQualite">
+              </mat-form-field>
+            </div>
+          </div>
+          
+            
+
+          <hr>
+
+
+          
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Méthode de Détermination du Prix de Transfert</mat-label>
+                <mat-select formControlName="methodePrixTransfert" (selectionChange)="onMethodeChangeCAutreOperation($event)">
+                  <mat-option *ngFor="let option of methodeOptionsAutreOperation" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedMethodeAutreOperation === 'AutreMethodeDeterminationPrixTransfert'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Méthode" formControlName="AutreMethodeDeterminationPrixTransfert">
+              </mat-form-field>
+            </div>
+          </div>
+          
+
+
+          <hr>
+
+          
+          
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Changement Méthode Prix Transfert</mat-label>
+                <mat-select formControlName="changementMethodePrixTransfert"
+                            (selectionChange)="onChangementMethodeChangeAutreOperation($event)">
+                  <mat-option *ngFor="let option of methodePrixTransfertOptionsAutreOperation" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedChangementMethodePrixTransfertAutreOperation === 'AutreChangementMethodeDeterminationPrixTransfert'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Méthode" formControlName="AutreChangementMethodeDeterminationPrixTransfert">
+              </mat-form-field>
+            </div>
+          </div>
+          
+
+          <div class="buttons">
+           
+            <div class="button">
+              <button mat-raised-button (click)="goToNextForm6()"  type="submit"  class="btn btn-info pull-right"
+                 >Suivant</button>
+                 <button mat-raised-button (click)="step9Submit()" type="button" class="btn btn-info pull-right">Ajouter Plus</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="col-md-10 ml-auto mr-auto">
+    <div *ngIf="currentForm ===7">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">1. Montant des transactions avec les entreprises liées résidentes ou établies à l’étranger et méthode de détermination des prix de transfert appliquée</h4>
+        <p class="card-category">Description Transactions Regime Fiscal Privilegie</p>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="step0Form" (ngSubmit)="step0Submit()" autocomplete="off" novalidate
+        #formRef="ngForm">
+ 
+
+          <div class="row">
+   
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <textarea  formControlName="description" matInput placeholder="Décrivez les transactions réalisées avec des entreprises situées dans des États ou territoires à régime fiscal privilégié au sens du point 12 de l’article 14 du code IRPP/IS, dont la liste est fixée par l’arrêté du Ministre des Finances du 25 mars 2019. "></textarea>
+              </mat-form-field>
+            </div>
+
+ 
+          </div>
+ 
+          <div class="buttons">
+           
+            <div class="button">
+              <button mat-raised-button (click)="goToNextForm0()"  type="submit"  class="btn btn-info pull-right"
+                 >Suivant</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+ 
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+  <div class="col-md-10 ml-auto mr-auto">
+    <div *ngIf="currentForm === 8">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">2. Informations spécifiques sur les prêts et emprunts réalisés avec des entreprises liées</h4>
+        <p class="card-category"> A. Prêts accordés à des entreprises liées</p>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="step10Form" (ngSubmit)="step10Submit()" autocomplete="off" novalidate
+        #formRef="ngForm">
+
+
+          <div class="row">
+            <mat-label class="label-margin">Identifiant Entreprise</mat-label>
+            <mat-radio-group aria-label="Choisir une option" (change)="onOptionChangePretAccorde($event)">
+              <mat-radio-button checked class="label-margin" [checked]="selectedOptionP === 'MatriculeFiscal'"
+                value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionP=== 'Identifiant'"
+                value="Identifiant">Identifiant</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionP === 'EtatTerritoire'"
+                value="EtatTerritoire">Etat Territoire</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionP === 'MatriculeFiscal'">
+
+              <input matInput placeholder="MatriculeFiscal" placeholder="Entrez le MatriculeFiscal"
+                [(ngModel)]="matriculeFiscalValue" formControlName="MatriculeFiscal">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionP=== 'Identifiant'">
+              <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row" *ngIf="selectedOptionP === 'EtatTerritoire'">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
+                <mat-option *ngFor="let country of countries7" [value]="country.code">
+                  {{ country.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+ 
+          
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Relation Entreprise</mat-label>
+                <mat-select formControlName="natureRelationEntreprise" (selectionChange)="onNatureChangePretAccorde($event)">
+                  <mat-option *ngFor="let option of natureOptionsPretAccorde" [value]="option.value">{{ option.viewValue
+                    }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6" *ngIf="selectedNaturePretAccorde=== 'AutreNatureRelation'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Nature Valeur Exploitation"
+                  formControlName="AutreNatureRelation">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+           
+ 
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input formControlName="SoldeOuverture" matInput placeholder="Solde Ouverture">
+                <mat-error
+                *ngIf="f7['SoldeOuverture'].errors && (f7['SoldeOuverture'].dirty || f7['SoldeOuverture'].touched)">
+                <div *ngIf="f7['SoldeOuverture'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f7['SoldeOuverture'].errors?.pattern">Solde Ouverture doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+ 
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input formControlName="MouvementsAugmentations" matInput placeholder="Mouvements Augmentations">
+                <mat-error
+                *ngIf="f7['MouvementsAugmentations'].errors && (f7['MouvementsAugmentations'].dirty || f7['MouvementsAugmentations'].touched)">
+                <div *ngIf="f7['MouvementsAugmentations'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f7['MouvementsAugmentations'].errors?.pattern">Mouvements Augmentations doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+
+
+         
+            
           </div>
 
 
           <div class="row">
-            <div class="col-md-12">
-              <div *ngIf="showInput2">
+           <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input formControlName="SoldeCloture" matInput placeholder="Solde Cloture">
+                <mat-error
+                *ngIf="f7['SoldeCloture'].errors && (f7['SoldeCloture'].dirty || f7['SoldeCloture'].touched)">
+                <div *ngIf="f7['SoldeCloture'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f7['SoldeCloture'].errors?.pattern">Solde Cloture doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
 
 
-                <mat-form-field matInput placeholder="Autre méthode détermination Prix Transfert" class="example-margin"
-                  class="example-full-width">
-                  <input matInput placeholder="Autre méthode détermination Prix Transfert ici" type="text"
-                    formControlName="autre3">
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input formControlName="MouvementsDiminutions" matInput placeholder="Mouvements Diminutions">
+                <mat-error
+                *ngIf="f7['MouvementsDiminutions'].errors && (f7['MouvementsDiminutions'].dirty || f7['MouvementsDiminutions'].touched)">
+                <div *ngIf="f7['MouvementsDiminutions'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f7['MouvementsDiminutions'].errors?.pattern">Mouvements Diminutions doit être un nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
 
-                </mat-form-field>
-              </div>
+
+ 
+            
+          </div>
+
+
+          <div class="row">
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <mat-label>Devise</mat-label>
+                <mat-select formControlName="devise">
+                  <mat-option *ngFor="let currency of currencyOptions" [value]="currency.value">
+                    {{ currency.viewValue }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+             
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input  formControlName="raisonSociale" matInput placeholder="Raison Sociale ">
+                <mat-error
+                *ngIf="f7['raisonSociale'].errors && (f7['raisonSociale'].dirty || f7['raisonSociale'].touched)">
+                <div *ngIf="f7['raisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f7['raisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+            </mat-error>
+              </mat-form-field>
+            </div>
+          
+            
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input formControlName="TauxInterets" matInput placeholder="Taux Interets">
+                <mat-error
+                *ngIf="f7['TauxInterets'].errors && (f7['TauxInterets'].dirty || f7['TauxInterets'].touched)">
+                <div *ngIf="f7['TauxInterets'].errors['required']">Ce champ est obligatoire.</div>
+                <div *ngIf="f7['TauxInterets'].errors?.pattern"> Le pourcentage doit être un nombre décimal valide avec jusqu'à 4 chiffres et jusqu'à 2 décimales.</div>
+            </mat-error>
+              </mat-form-field>
+              
+            </div>
+          </div>
+          <br>
+        <div class="row">
+          <div class="col-md">
+            <mat-label class="label-margin">  PretsInterets</mat-label>
+            <mat-radio-group formControlName="PretsInterets" aria-label="Choisir une option" >
+              <mat-radio-button value="O">Oui</mat-radio-button>
+              <mat-radio-button  value="N">Non</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Qualité</mat-label>
+                <mat-select formControlName="qualiteEntreprise" (selectionChange)="onQualiteChangePretAccorde($event)">
+                  <mat-option *ngFor="let option of qualiteOptionsPretAccorde" [value]="option.value">{{ option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          
+            <div class="col-md-6" *ngIf="selectedQualitePretAccorde === 'AutreQualite'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Qualité" formControlName="AutreQualite">
+              </mat-form-field>
+            </div>
+            
+          </div>
+  
+          <div class="buttons">
+           
+            <div class="button">
+              <button mat-raised-button (click)="goToNextForm7()"  type="submit"  class="btn btn-info pull-right"
+                 >Suivant</button>
+                 <button mat-raised-button (click)="step10Submit()" type="button" class="btn btn-info pull-right">Ajouter Plus</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-10 ml-auto mr-auto">
+  <div *ngIf="currentForm === 9">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">2. Informations spécifiques sur les prêts et emprunts réalisés avec des entreprises liées
+        </h4>
+        <p class="card-category"> B. Emprunts contractés auprès d’entreprises liées</p>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="step11Form" (ngSubmit)="step11Submit()" autocomplete="off" novalidate #formRef="ngForm">
+
+
+          <div class="row">
+            <mat-label class="label-margin">Identifiant Entreprise</mat-label>
+            <mat-radio-group aria-label="Choisir une option" (change)="onOptionChangeEmpruntContracte($event)">
+              <mat-radio-button checked class="label-margin" [checked]="selectedOptionE === 'MatriculeFiscal'"
+                value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionE=== 'Identifiant'"
+                value="Identifiant">Identifiant</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionE === 'EtatTerritoire'"
+                value="EtatTerritoire">Etat Territoire</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionE === 'MatriculeFiscal'">
+
+              <input matInput placeholder="MatriculeFiscal" placeholder="Entrez le MatriculeFiscal"
+                [(ngModel)]="matriculeFiscalValue" formControlName="MatriculeFiscal">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="example-full-width" *ngIf="selectedOptionE=== 'Identifiant'">
+              <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+
+
+            </mat-form-field>
+          </div>
+
+          <div class="row" *ngIf="selectedOptionE === 'EtatTerritoire'">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
+                <mat-option *ngFor="let country of countries8" [value]="country.code">
+                  {{ country.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Nature Relation Entreprise</mat-label>
+                <mat-select formControlName="natureRelationEntrepriseEntreprise"
+                  (selectionChange)="onNatureChangeEmpruntContracte($event)">
+                  <mat-option *ngFor="let option of natureOptionsEmpruntContracte" [value]="option.value">{{
+                    option.viewValue
+                    }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6" *ngIf="selectedNatureEmpruntContracte=== '5'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Nature Valeur Exploitation"
+                  formControlName="natureRelationEntreprise">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input formControlName="SoldeOuverture" matInput placeholder="Solde Ouverture">
+                <mat-error
+                  *ngIf="f8['SoldeOuverture'].errors && (f8['SoldeOuverture'].dirty || f8['SoldeOuverture'].touched)">
+                  <div *ngIf="f8['SoldeOuverture'].errors['required']">Ce champ est obligatoire.</div>
+                  <div *ngIf="f8['SoldeOuverture'].errors?.pattern">Solde Ouverture doit être un nombre décimal valide
+                    avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input formControlName="MouvementsAugmentations" matInput placeholder="Mouvements Augmentations">
+                <mat-error
+                  *ngIf="f8['MouvementsAugmentations'].errors && (f8['MouvementsAugmentations'].dirty || f8['MouvementsAugmentations'].touched)">
+                  <div *ngIf="f8['MouvementsAugmentations'].errors['required']">Ce champ est obligatoire.</div>
+                  <div *ngIf="f8['MouvementsAugmentations'].errors?.pattern">Mouvements Augmentations doit être un
+                    nombre décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+
+          <div class="row">
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input formControlName="SoldeCloture" matInput placeholder="Solde Cloture">
+                <mat-error
+                  *ngIf="f8['SoldeCloture'].errors && (f8['SoldeCloture'].dirty || f8['SoldeCloture'].touched)">
+                  <div *ngIf="f8['SoldeCloture'].errors['required']">Ce champ est obligatoire.</div>
+                  <div *ngIf="f8['SoldeCloture'].errors?.pattern">Solde Cloture doit être un nombre décimal valide avec
+                    jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input formControlName="MouvementsDiminutions" matInput placeholder="Mouvements Diminutions">
+                <mat-error
+                  *ngIf="f8['MouvementsDiminutions'].errors && (f8['MouvementsDiminutions'].dirty || f8['MouvementsDiminutions'].touched)">
+                  <div *ngIf="f8['MouvementsDiminutions'].errors['required']">Ce champ est obligatoire.</div>
+                  <div *ngIf="f8['MouvementsDiminutions'].errors?.pattern">Mouvements Diminutions doit être un nombre
+                    décimal valide avec jusqu'à 16 chiffres et jusqu'à 3 décimales.</div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+
+          <div class="row">
+            <div class="col-md">
+              <mat-label class="label-margin"> Emprunt Interets</mat-label>
+              <mat-radio-group formControlName="empruntInterets" aria-label="Choisir une option">
+                <mat-radio-button value="O">Oui</mat-radio-button>
+                <mat-radio-button value="N">Non</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <input formControlName="raisonSociale" matInput placeholder="Raison Sociale ">
+                <mat-error
+                  *ngIf="f8['raisonSociale'].errors && (f8['raisonSociale'].dirty || f8['raisonSociale'].touched)">
+                  <div *ngIf="f8['raisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                  <div *ngIf="f8['raisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.
+                  </div>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+
+            <div class="col-md">
+              <mat-form-field class="example-full-width">
+                <mat-label>Devise</mat-label>
+                <mat-select formControlName="devise">
+                  <mat-option *ngFor="let currency of currencyOptions2" [value]="currency.value">
+                    {{ currency.viewValue }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md">
+
+              <mat-form-field class="example-full-width">
+                <input formControlName="TauxInterets" matInput placeholder="Taux Interets">
+                <mat-error
+                  *ngIf="f8['TauxInterets'].errors && (f8['TauxInterets'].dirty || f8['TauxInterets'].touched)">
+                  <div *ngIf="f8['TauxInterets'].errors['required']">Ce champ est obligatoire.</div>
+                  <div *ngIf="f8['TauxInterets'].errors?.pattern"> Le pourcentage doit être un nombre décimal valide
+                    avec jusqu'à 4 chiffres et jusqu'à 2 décimales.</div>
+                </mat-error>
+              </mat-form-field>
+
             </div>
           </div>
 
 
 
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Qualité</mat-label>
+                <mat-select formControlName="qualiteEntreprise"
+                  (selectionChange)="onQualiteChangeEmpruntContracte($event)">
+                  <mat-option *ngFor="let option of qualiteOptionsEmpruntContracte" [value]="option.value">{{
+                    option.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
 
-  <hr>
+            <div class="col-md-6" *ngIf="selectedQualiteEmpruntContracte === 'AutreQualite'">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Autre Qualité" formControlName="AutreQualite">
+              </mat-form-field>
+            </div>
 
-
-
-
-
-
-
-
-  <div class="row">
-    <section class="example-section">
-      <h3 class="noir">Changement Méthode Prix Transfert</h3>
-
-      <!-- First row of checkboxes -->
-      <div class="checkbox-row">
-
-
-
-
-        <div class="col-md-5">
-          <mat-checkbox value="CUP" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du prix
-            comparable sur le marché libre</mat-checkbox>
-          <mat-checkbox value="MPR" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du prix
-            de revente</mat-checkbox>
-          <mat-checkbox value="MPRM" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du prix
-            de revient majoré</mat-checkbox>
-        </div>
-
-        <div class="col-md-7">
-          <mat-checkbox value="MTMN" class="example-margin" (change)="onCheckboxChange2($event)">Méthode
-            transactionnelle de la marge nette</mat-checkbox>
-          <mat-checkbox value="MPB" class="example-margin" (change)="onCheckboxChange2($event)">Méthode du
-            partage des bénéfices</mat-checkbox>
-          <mat-checkbox value="AutreMethode" class="example-margin" (change)="onCheckboxChange2($event)"> Autre
-            Methode Determination Prix Transfert</mat-checkbox>
-        </div>
-
-      </div>
-
-    </section>
-  </div>
+          </div>
 
 
-  <div class="row">
-    <div class="col-md-12">
-      <div *ngIf="showInput2">
+          <div class="buttons">
 
+            <div class="button">
+              <button mat-raised-button (click)="goToNextForm8()" type="submit"
+                class="btn btn-info pull-right">Suivant</button>
+              <button mat-raised-button (click)="step11Submit()" type="button" class="btn btn-info pull-right">Ajouter
+                Plus</button>
+            </div>
+          </div>
 
-        <mat-form-field matInput placeholder="Autre méthode détermination Prix Transfert" class="example-margin"
-          class="example-full-width">
-          <input matInput placeholder="Autre méthode détermination Prix Transfert ici" type="text"
-            formControlName="autre3">
-
-        </mat-form-field>
+        </form>
       </div>
     </div>
   </div>
+</div>
 
 
 
-       
 
-  
-  <div class="buttons">
-    <div class="button">
-      <button mat-raised-button type="submit"  cdkStepperNext class="btn btn-info pull-left"cdkStepperPrevious>Previous</button>
-    </div>
-    <div class="button">
-      <button mat-raised-button type="submit"  cdkStepperNext class="btn btn-info pull-right" cdkStepperNext>Suivant</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-10 ml-auto mr-auto">
+  <div *ngIf="currentForm === 10">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">3. Opérations réalisées avec des entreprises liées sans contrepartie ou avec une
+          contrepartie non monétaire</h4>
+        <p class="card-category">A. L’entreprise déclarante a-t-elle fourni des biens ou services ou transféré des biens
+          (corporels ou incorporels) à une entreprise liée, sans contrepartie ou avec une contrepartie non monétaire ?
+        </p>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="step12Form" (ngSubmit)="step12Submit()" autocomplete="off" novalidate #formRef="ngForm">
+          <div class="row">
+            <mat-label class="label-margin">Affirmation</mat-label>
+            <mat-radio-group formControlName="affirmation" aria-label="Choisir une option">
+              <mat-radio-button value="O" (change)="onAffirmationChange($event)">Oui</mat-radio-button>
+              <mat-radio-button value="N" (change)="onAffirmationChange($event)">Non</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="buttons" *ngIf="showButton">
+            <div class="button">
+              <button mat-raised-button (click)="goToNextForm9()" type="submit"
+                class="btn btn-info pull-right">Suivant</button>
+            </div>
+          </div>
+
+
+
+          <div *ngIf="showInputFields">
+            <mat-label class="label-margin">Identifiant Entreprise</mat-label>
+            <mat-radio-group aria-label="Choisir une option" (change)="onOptionChangeContrepartieNonMonetaire($event)">
+              <mat-radio-button checked class="label-margin" [checked]="selectedOptionCNM === 'MatriculeFiscal'"
+                value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionCNM === 'Identifiant'"
+                value="Identifiant">Identifiant</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionCNM === 'EtatTerritoire'"
+                value="EtatTerritoire">Etat Territoire</mat-radio-button>
+            </mat-radio-group>
+
+
+            <div class="row">
+              <mat-form-field class="example-full-width" *ngIf="selectedOptionCNM === 'MatriculeFiscal'">
+                <input matInput placeholder="MatriculeFiscal" [(ngModel)]="matriculeFiscalValue"
+                  formControlName="MatriculeFiscal">
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <mat-form-field class="example-full-width" *ngIf="selectedOptionCNM === 'Identifiant'">
+                <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+              </mat-form-field>
+            </div>
+
+            <div class="row" *ngIf="selectedOptionCNM === 'EtatTerritoire'">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
+                  <mat-option *ngFor="let country of countries9" [value]="country.code">{{ country.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Nature Relation Entreprise</mat-label>
+                  <mat-select formControlName="natureRelationEntreprise"
+                    (selectionChange)="onNatureChangeContrepartieNonMonetaire($event)">
+                    <mat-option *ngFor="let option of natureOptionsContrepartieNonMonetaire" [value]="option.value">{{
+                      option.viewValue }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6" *ngIf="selectedNatureContrepartieNonMonetaire === 'AutreNatureRelation'">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Autre Nature" formControlName="AutreNatureRelation">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md">
+                <mat-form-field class="example-full-width">
+                  <input formControlName="NatureBiensOuService" matInput placeholder="Nature Biens Ou Service">
+                  <mat-error
+                    *ngIf="f9['NatureBiensOuService'].errors && (f9['NatureBiensOuService'].dirty || f9['NatureBiensOuService'].touched)">
+                    <div *ngIf="f9['NatureBiensOuService'].errors['required']">Ce champ est obligatoire.</div>
+                    <div *ngIf="f9['NatureBiensOuService'].errors?.pattern">Seuls les caractères alphanumériques sont
+                      autorisés.</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md">
+                <mat-form-field class="example-full-width">
+                  <input formControlName="NatureContrepartie" matInput placeholder="Nature Biens Ou Service">
+                  <mat-error
+                    *ngIf="f9['NatureContrepartie'].errors && (f9['NatureContrepartie'].dirty || f9['NatureContrepartie'].touched)">
+                    <div *ngIf="f9['NatureContrepartie'].errors['required']">Ce champ est obligatoire.</div>
+                    <div *ngIf="f9['NatureContrepartie'].errors?.pattern">Seuls les caractères alphanumériques sont
+                      autorisés.</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md">
+                <mat-form-field class="example-full-width">
+                  <input formControlName="raisonSociale" matInput placeholder="Raison Sociale">
+                  <mat-error
+                    *ngIf="f9['raisonSociale'].errors && (f9['raisonSociale'].dirty || f9['raisonSociale'].touched)">
+                    <div *ngIf="f9['raisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                    <div *ngIf="f9['raisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont
+                      autorisés.</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Qualité</mat-label>
+                  <mat-select formControlName="qualiteEntreprise"
+                    (selectionChange)="onQualiteChangeContrepartieNonMonetaire($event)">
+                    <mat-option *ngFor="let option of qualiteOptionsContrepartieNonMonetaire" [value]="option.value">{{
+                      option.viewValue }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6" *ngIf="selectedQualiteContrepartieNonMonetaire === 'AutreQualite'">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Autre Qualité" formControlName="AutreQualite">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="buttons">
+              <div class="button">
+                <button mat-raised-button (click)="goToNextForm9()" type="submit"
+                  class="btn btn-info pull-right">Suivant</button>
+                <button mat-raised-button (click)="step12Submit()" type="button" class="btn btn-info pull-right">Ajouter
+                  Plus</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
+</div>
 
 
 
@@ -393,6 +2140,203 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-10 ml-auto mr-auto">
+  <div *ngIf="currentForm === 11">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">3. Opérations réalisées avec des entreprises liées sans contrepartie ou avec une
+          contrepartie non monétaire</h4>
+        <p class="card-category">B. L’entreprise déclarante a-t-elle fourni une contrepartie non monétaire ou aucune
+          contrepartie à une entreprise liée pour la fourniture de biens ou services ou le transfert de biens (corporels
+          ou incorporels) ?</p>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="step13Form" (ngSubmit)="step13Submit()" autocomplete="off" novalidate #formRef="ngForm">
+          <div class="row">
+            <mat-label class="label-margin">Affirmation</mat-label>
+            <mat-radio-group formControlName="affirmation" aria-label="Choisir une option">
+              <mat-radio-button value="O"
+                (change)="onAffirmationChangeOperationsAccordsPrealables($event)">Oui</mat-radio-button>
+              <mat-radio-button value="N"
+                (change)="onAffirmationChangeOperationsAccordsPrealables($event)">Non</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+
+          <div class="buttons" *ngIf="showButtonOAP">
+            <div class="button">
+              <button mat-raised-button (click)="goToNextForm10()" type="submit"
+                class="btn btn-info pull-right" cdkStepperNext>Suivant</button>
+            </div>
+          </div>
+
+          <div *ngIf="showInputFieldsOAP">
+            <mat-label class="label-margin">Identifiant Entreprise</mat-label>
+            <mat-radio-group aria-label="Choisir une option"
+              (change)="onOptionChangeOperationsAccordsPrealables($event)">
+              <mat-radio-button checked class="label-margin" [checked]="selectedOptionOAP === 'MatriculeFiscal'"
+                value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionOAP === 'Identifiant'"
+                value="Identifiant">Identifiant</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionOAP === 'EtatTerritoire'"
+                value="EtatTerritoire">Etat Territoire</mat-radio-button>
+            </mat-radio-group>
+
+
+            <div class="row">
+              <mat-form-field class="example-full-width" *ngIf="selectedOptionOAP === 'MatriculeFiscal'">
+                <input matInput placeholder="MatriculeFiscal" [(ngModel)]="matriculeFiscalValue"
+                  formControlName="MatriculeFiscal">
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <mat-form-field class="example-full-width" *ngIf="selectedOptionOAP === 'Identifiant'">
+                <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+              </mat-form-field>
+            </div>
+
+            <div class="row" *ngIf="selectedOptionOAP === 'EtatTerritoire'">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
+                  <mat-option *ngFor="let country of countries10" [value]="country.code">{{ country.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Nature Relation Entreprise</mat-label>
+                  <mat-select formControlName="natureRelationEntreprise"
+                    (selectionChange)="onNatureChangeNatureOperationsAccordsPrealables($event)">
+                    <mat-option *ngFor="let option of natureOptionsOperationsAccordsPrealables"
+                      [value]="option.value">{{ option.viewValue }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6" *ngIf="selectedNatureOperationsAccordsPrealables === 'AutreNatureRelation'">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Autre Nature" formControlName="AutreNatureRelation">
+                </mat-form-field>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+
+              <div class="col-md">
+                <mat-form-field class="example-full-width">
+                  <input formControlName="exerciceDebut" type="number" matInput placeholder="Exercice Debut">
+                  <mat-error *ngIf="f10.exerciceDebut.invalid && (f10.exerciceDebut.dirty || f10.exerciceDebut.touched)">
+                    <div *ngIf="f10.exerciceDebut.errors.required">Exercice Debut est obligatoire.</div>
+                    <div *ngIf="f10.exerciceDebut.errors.pattern">Veuillez saisir Exercice Debut valide.</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+              <div class="col-md">
+                <mat-form-field class="example-full-width">
+                  <input formControlName="exerciceFin" type="number" matInput placeholder="Exercice Fin">
+                  <mat-error *ngIf="f10.exerciceFin.invalid && (f10.exerciceFin.dirty || f10.exerciceFin.touched)">
+                    <div *ngIf="f10.exerciceFin.errors.required">Exercice Fin est obligatoire.</div>
+                    <div *ngIf="f10.exerciceFin.errors.pattern">Veuillez saisir un Exercice Fin valide.</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+            </div>
+
+
+            <div class="row">
+
+              <div class="col-md">
+                <mat-form-field class="example-full-width">
+                  <input formControlName="natureOperation" matInput placeholder="Nature Operation">
+                  <mat-error
+                    *ngIf="f10['natureOperation'].errors && (f10['natureOperation'].dirty || f10['natureOperation'].touched)">
+                    <div *ngIf="f10['natureOperation'].errors['required']">Ce champ est obligatoire.</div>
+                    <div *ngIf="f10['natureOperation'].errors?.pattern">Seuls les caractères alphanumériques sont
+                      autorisés.</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+
+
+              <div class="col-md">
+                <mat-form-field class="example-full-width">
+                  <input formControlName="raisonSociale" matInput placeholder="Raison Sociale">
+                  <mat-error
+                    *ngIf="f10['raisonSociale'].errors && (f10['raisonSociale'].dirty || f10['raisonSociale'].touched)">
+                    <div *ngIf="f10['raisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                    <div *ngIf="f10['raisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont
+                      autorisés.</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Qualité</mat-label>
+                  <mat-select formControlName="qualiteEntreprise"
+                    (selectionChange)="onQualiteChangeOperationsAccordsPrealables($event)">
+                    <mat-option *ngFor="let option of qualiteOptionsOperationsAccordsPrealables"
+                      [value]="option.value">{{ option.viewValue }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6" *ngIf="selectedQualiteOperationsAccordsPrealables === 'AutreQualite'">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Autre Qualité" formControlName="AutreQualite">
+                </mat-form-field>
+              </div>
+            </div>
+
+
+
+            <div class="buttons">
+              <div class="button">
+                <button mat-raised-button (click)="goToNextForm10()" type="submit" cdkStepperNext
+                  class="btn btn-info pull-right">Suivant</button>
+                <button mat-raised-button (click)="step13Submit()" type="button" class="btn btn-info pull-right">Ajouter
+                  Plus</button>
+              </div>
+            </div>
+          </div>
         </form>
       </div>
     </div>

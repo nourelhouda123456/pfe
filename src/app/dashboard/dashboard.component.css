@@ -1,11 +1,22 @@
-.color{
+.color {
     color: rgb(92, 102, 102);
- }
+}
 
- .checkbox-space {
+.checkbox-space {
     margin-right: 200px;
 }
 
-mat-horizontal-stepper{
-    background-color: #eee; /* Set your desired color */
-  }
+mat-horizontal-stepper {
+    background-color: #eee;
+    /* Set your desired color */
+}
+
+.empty-div h1 {
+     color: white;
+     background-color: blue;
+        display: block;
+margin: auto;
+     font-weight: bold; 
+     border: 2px solid blue;
+}
+ 

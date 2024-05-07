@@ -7,13 +7,22 @@
     <mat-horizontal-stepper #cdkStepper [linear]="true">  
         
     
-        <mat-step [stepControl]="stepTwo.stepTwoForm" [optional]="false">
+        <mat-step [stepControl]="stepTwo.stepTwoForm" [optional]="true">
             <ng-template matStepLabel>
               <div class="step-bullet">2</div>
               <div class="step-title">dentification Entreprise Déclarante <span class="required">*</span></div>
             </ng-template>
             <app-step2 #stepTwo></app-step2>
           </mat-step>
+
+          
+        <mat-step [stepControl]="stepTwo.stepTwoForm" [optional]="true">
+          <ng-template matStepLabel>
+            <div class="step-bullet">2</div>
+            <div class="step-title">dentification Entreprise Déclarante <span class="required">*</span></div>
+          </ng-template>
+          <app-info-ed #stepTwo></app-info-ed>
+        </mat-step>
     </mat-horizontal-stepper>
     
   

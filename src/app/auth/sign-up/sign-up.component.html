@@ -5,16 +5,16 @@
 
 <div class="login-reg-panel">
 	<div class="login-info-box">
-		<h2>Have an account?</h2>
-		<p>Lorem ipsum dolor sit amet</p>
-		<label id="label-register" for="log-reg-show">Login</label>
+		<h2>Avez-vous un compte ?</h2>
+        <p> Bienvenue sur notre plateforme de déclaration annuelle sur les Prix de Transfert.</p>
+		<label id="label-register" for="log-reg-show" class="colorCode">Se connecter</label>
 		<input type="radio" name="active-log-panel" id="log-reg-show" checked="checked">
 	</div>
 
 	<div class="register-info-box">
-		<h2>Don't have an account?</h2>
-		<p>Lorem ipsum dolor sit amet</p>
-		<label id="label-login" for="log-login-show">Register</label>
+		<h2>Créer un compte</h2>
+		<p> Bienvenue sur notre plateforme de déclaration annuelle sur les Prix de Transfert.</p>
+		<label id="label-login" for="log-login-show" class="colorCode">S'inscrire</label>
 		<input type="radio" name="active-log-panel" id="log-login-show">
 	</div>
 
@@ -24,7 +24,7 @@
 	<div class="white-panel">
 
 		<form (ngSubmit)="registerUser(newUser)" [formGroup]="form" (ngSubmit)="onSubmit()" class="register-show">
-			<h2 class="smaller ">REGISTER</h2>
+			<h2 class="smaller ">S'inscrire</h2>
 
 
 			<div class="row">
@@ -108,7 +108,7 @@ Remplir tous les champs.
 
 
 
-			<input type="submit" value="Register">
+			<input type="submit" value="S'inscrire" >
 		</form>
 
 
@@ -123,7 +123,7 @@ Remplir tous les champs.
 
 		<form (ngSubmit)="loginUser(newUser2)" [formGroup]="form" (ngSubmit)="onSubmit()" class="login-show">
 		 
-			<h2>LOGIN</h2>
+			<h2>Se connecter</h2>
  
 
 
@@ -200,7 +200,7 @@ Remplir tous les champs.
 	   
 			
 			
-			<input type="submit" value="Login">
+			<input type="submit" value="Se connecter">
 			 
 		</form>
 
@@ -213,3 +213,17 @@ Remplir tous les champs.
 
 	</div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

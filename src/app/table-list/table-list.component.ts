@@ -49,32 +49,7 @@ export class TableListComponent implements OnInit {
     this.serviceService.deleteDeclarationById(id).subscribe(
       (response:any) => {
         console.log("mabrouuuuuk aliik"); 
-        this.loadDeclarationsByEntreprise(this.entrepriseId);
-
-        const user = JSON.parse(this.getCookie('user'));
-         this.userId = user?.id;
-  
-        this.entrepriseService.getEntrepriseByUserId(this.userId).subscribe(
-          (data: any) => {
-            this.entrepriseId = data.id;
-            console.log("entreprise id :" + this.entrepriseId);
-      
-            // Fetch Declaration data
-            this.serviceService.getDeclarationsByEntreprise(this.entrepriseId).subscribe(
-              (data: any) => {
-                this.declarations = data;
-                console.log(this.declarations);
-                console.log(this.entrepriseId);
-              },
-              error => {
-                console.error('Error fetching declarations:', error);
-              }
-            );
-          },
-          error => {
-            console.error('Error fetching entreprise:', error);
-          }
-        );
+        this.loadDeclarationsByEntreprise(this.entrepriseId)
       },
       error => {
         console.error('Error deleting declaration:', error);
@@ -85,14 +60,14 @@ export class TableListComponent implements OnInit {
 
   searchQuery: string = '';
 
-  // ... ngOnInit and other methods
+  
 
   onSearch(): void {
     if (this.searchQuery.trim() === '') {
-      // If search query is empty, reload all declarations
+    
       this.loadDeclarationsByEntreprise(this.entrepriseId);
     } else {
-      // Filter declarations based on the search query
+   
       this.declarations = this.declarations.filter(
         declaration => declaration.exercice.toString().toLowerCase().includes(this.searchQuery.toLowerCase())
       );

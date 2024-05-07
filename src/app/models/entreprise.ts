@@ -5,7 +5,7 @@ export interface Entreprise {
     nationalite: string;
     adresseSiegeSocialEtablissementTunisie: string;
     codePostal: string;
-    codeActe: string;
+    
     codeCategorie: string;
     codeTVA: string;
     activitePrincipale: string;

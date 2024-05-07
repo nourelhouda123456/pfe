@@ -46,7 +46,7 @@ export class SignUpComponent implements OnInit {
         if (error.error.message === 'Login already exists') {
           this.errorMessage = 'Login already exists';
           console.log('errorMessage:', this.errorMessage); 
-          this.onReset(); // Reset the form
+          this.onReset();  
         } else {
           console.error('Unexpected error:', error);
         }
@@ -62,8 +62,8 @@ export class SignUpComponent implements OnInit {
     console.log('Password errors:', this.form.get('password').errors);
 
     setTimeout(() => {
-      this.errorMessage = '';  // Clear the errorMessage after 6 seconds
-      this.onReset(); // Reset the form
+      this.errorMessage = '';  
+      this.onReset(); 
     }, 6000);
   }
 }
@@ -90,15 +90,14 @@ export class SignUpComponent implements OnInit {
     this.newUser = { firstName: '', lastName: '', login: '', password: '' };
   }
   ngOnInit(): void {
-    // Initialize form with formBuilder
+    
     this.form = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: [
         '',
         [
           Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(20)
+          
         ]
       ],
       login: ['', [Validators.required, Validators.email]],
@@ -158,7 +157,7 @@ export class SignUpComponent implements OnInit {
     this.newUser2.login = this.form.value.login;
     this.newUser2.password = this.form.value.password;
   
-    console.log('New user credentials:', this.newUser2);  // Log the newUser2 object
+    console.log('New user credentials:', this.newUser2);  
   
     this.loginUser(this.newUser2);
   }
@@ -186,17 +185,17 @@ export class SignUpComponent implements OnInit {
   loginUser(newUser2: credentials): void {
     console.log('Attempting to login with:', newUser2);
   
-    // Check if login or password is empty
+    
     if (!newUser2.login || !newUser2.password) {
       this.errorMessage = 'Veuillez remplir tous les champs.';
       console.log('errorMessage:', this.errorMessage);
-      this.onReset(); // Reset the form
-      return; // Exit the function if either input is empty
+      this.onReset();  
+      return;  
     }
   
     this.userService.login(newUser2).subscribe({
       next: (resp: loginResponse) => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/compte']);
         var token = resp.token;
         document.cookie = `token=${token}; path=/; expires=`;
         document.cookie =`user=${JSON.stringify(resp)};`; 
@@ -209,16 +208,16 @@ export class SignUpComponent implements OnInit {
           this.errorMessage = 'Unknown user';
           console.log('errorMessage:', this.errorMessage);
           setTimeout(() => {
-            this.errorMessage = ''; // Clear the errorMessage after 2 seconds
+            this.errorMessage = ''; 
           }, 2000);
-          this.onReset(); // Reset the form
+          this.onReset(); 
         } else if (error.error.message === 'Invalid password') {
           this.errorMessage = 'Invalid password';
           console.log('errorMessage:', this.errorMessage);
           setTimeout(() => {
-            this.errorMessage = ''; // Clear the errorMessage after 2 seconds
+            this.errorMessage = '';  
           }, 2000);
-          this.onReset(); // Reset the form
+          this.onReset(); 
         } else {
           console.error('Unexpected error:', error);
         }

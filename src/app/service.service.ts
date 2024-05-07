@@ -8,6 +8,25 @@ import { Entreprise } from './models/entreprise';
 import { loginResponse } from './models/LoginResponse';
 import { ResponseEntreprise } from './models/ResponseEntreprise';
 import { Declaration } from './models/Declaration';
+import { InfoED } from './models/InfoDeclaration';
+import { ParticipationLiee } from './models/ParticipationLiee';
+import { ParticipationDeclarante } from './models/ParticipationDeclarante';
+import { InfoGE } from './models/InfoGE';
+import { ActifIncorporel } from './models/AcrifIncorporel';
+import { ActifCorporel } from './models/ActifCorporel';
+import { RestructurationsGE } from './models/RestructurationsGE';
+import { ValeurExploitation } from './models/ValeurExploitation';
+import { RemunerationsBiens } from './models/RemunerationsBiens';
+import { Service } from './models/Service';
+import { PretAccorde } from './models/PretAccorde';
+import { AutreOperation } from './models/AutreOperation';
+import { CessionAcquisitionActif } from './models/CessionAcquisitionActif';
+import { Financiere } from './models/Financiere';
+import { EmpruntContracte } from './models/EmpruntContracte';
+import { DescriptionTransactionsRegimeFiscalPrivilegie } from './models/DescriptionTransactionsRegimeFiscalPrivilegie';
+import { AutreInfoARenseigner } from './models/AutreInfoARenseigner';
+import { ContrepartieNonMonetaire } from './models/ContrepartieNonMonetaire';
+import { OperationsAccordsPrealables } from './models/OperationsAccordsPrealables';
  // Import the Entreprise model
 
 @Injectable({
@@ -103,6 +122,284 @@ export class ServiceService {
     return this.http.get<Declaration>(url);
   }
 
+
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/user/${userId}`);
+  }
+
+
+
+
  
 
+  createInfoDeclaration(newInfoDeclaration: InfoED, declarationId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/infoEntreprise/entreprise/${declarationId}`, newInfoDeclaration, requestOptions);
+  }
+  
+ 
+
+
+  updateUser(user: User): Observable<any> {
+    return this.http.put(`${this.baseUrl}/update`, user);
+  }
+  
+
+
+  
+  createParticipationLiee(newParticipationLiee: ParticipationLiee ,participationLieeId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/ParticipartionLiee/${participationLieeId}`, newParticipationLiee, requestOptions);
+
+   
+  }
+
+
+
+  createParticipationDeclarante(newParticipationDeclarante: ParticipationDeclarante ,participationDeclaranteId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/ParticipartionDeclarante/${participationDeclaranteId}`, newParticipationDeclarante, requestOptions);
+
+   
+  }
+
+
+
+  createInfoGE(newInfoGE: InfoGE ,InfoGEId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/infoGroupeEntreprise/${InfoGEId}`, newInfoGE, requestOptions);
+
+   
+  }
+
+ 
+
+
+  createActifIncorporel(newAI: ActifIncorporel ,ACId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/ActifIncorporel/${ACId}`, newAI, requestOptions);
+
+   
+  }
+
+
+  createActifCorporel(newAC: ActifCorporel ,ACId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/ActifCorporel/${ACId}`, newAC, requestOptions);
+
+   
+  }
+
+  createRestructurationGE(newRestructurationGE: RestructurationsGE ,RestructurationGEId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/RestructurationGroupeEntreprise/${RestructurationGEId}`, newRestructurationGE, requestOptions);
+
+   
+  }
+
+  createValeurExploitation(newValeurExploitation: ValeurExploitation ,ValeurExploitationId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/valeurExploitation/${ValeurExploitationId}`, newValeurExploitation, requestOptions);
+
+   
+  }
+
+  createRemunerationsBiens(newRemunerationsBiens: RemunerationsBiens ,RemunerationsBiensId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/RemunerationsBiens/${RemunerationsBiensId}`, newRemunerationsBiens, requestOptions);
+
+   
+  }
+
+
+
+
+
+  createService(newService: Service ,ServiceId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/services/${ServiceId}`, newService, requestOptions);
+
+   
+  }
+
+
+
+  createFinanciere(newFinanciere: Financiere ,FinanciereId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/operationFinanciere/${FinanciereId}`, newFinanciere, requestOptions);
+
+   
+  }
+
+
+
+  createCessionAcquisitionActif(newCessionAcquisitionActif: CessionAcquisitionActif ,CessionAcquisitionActifId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/cessionAcquisitionActif/${CessionAcquisitionActifId}`, newCessionAcquisitionActif, requestOptions);
+
+   
+  }
+
+
+
+
+
+
+
+
+
+  createAutreOperation(newAutreOperation: AutreOperation ,AutreOperationId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/autresOperation/${AutreOperationId}`, newAutreOperation, requestOptions);
+
+   
+  }
+
+
+
+  
+  createPretAccorde(newPretAccorde: PretAccorde ,PretAccordeId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/pretAccorde/${PretAccordeId}`, newPretAccorde, requestOptions);
+
+   
+  }
+
+
+
+
+  createEmpruntContracte(newEmpruntContracte: EmpruntContracte ,EmpruntContracteId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/empruntContracte/${EmpruntContracteId}`, newEmpruntContracte, requestOptions);
+
+   
+  }
+  
+
+  createDescriptionTransactionsRegimeFiscalPrivilegie(newDescriptionTransactionsRegimeFiscalPrivilegie: DescriptionTransactionsRegimeFiscalPrivilegie ,DescriptionTransactionsRegimeFiscalPrivilegieId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/descriptionTransactionsRegimeFiscalPrivilegie/${DescriptionTransactionsRegimeFiscalPrivilegieId}`, newDescriptionTransactionsRegimeFiscalPrivilegie, requestOptions);
+
+   
+  }
+
+
+
+
+  createAutreInfoARenseigner(newAutreInfoARenseigner: AutreInfoARenseigner ,AutreInfoARenseignerId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/autreInfo/${AutreInfoARenseignerId}`, newAutreInfoARenseigner, requestOptions);
+
+   
+  }
+
+  createContrepartieNonMonetaire(newContrepartieNonMonetaire: ContrepartieNonMonetaire ,ContrepartieNonMonetaireId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/contrepartie/${ContrepartieNonMonetaireId}`, newContrepartieNonMonetaire, requestOptions);
+
+   
+  }
+
+
+  createOperationsAccordsPrealables(newOperationsAccordsPrealables: OperationsAccordsPrealables ,OperationsAccordsPrealablesId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/operationsAccords/${OperationsAccordsPrealablesId}`, newOperationsAccordsPrealables, requestOptions);
+
+   
+  }
 }

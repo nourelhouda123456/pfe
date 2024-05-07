@@ -14,7 +14,7 @@
                     <div class="col-md-12">
                            <h3>Si vous avez d'autres renseignements à ajouter au niveau de tous les tableaux </h3>
                       <mat-form-field class="example-full-width">
-                         <textarea matInput placeholder="  décrivez les en indiquant la partie concernée."></textarea>
+                         <textarea formControlName="description" matInput placeholder="  décrivez les en indiquant la partie concernée."></textarea>
                        </mat-form-field>
                     </div>
 
@@ -23,12 +23,10 @@
                
   
               <div class="buttons">
-                <div class="button">
-                  <button class="button previous" cdkStepperPrevious class="btn btn-info pull-left">Precident</button>
-                </div>
+                
                 <div class="button">
                   <button mat-raised-button type="submit" cdkStepperNext class="btn btn-info pull-right"
-                    cdkStepperNext>Suivant</button>
+                    cdkStepperNext>Exporter</button>
                 </div>
               </div>
   

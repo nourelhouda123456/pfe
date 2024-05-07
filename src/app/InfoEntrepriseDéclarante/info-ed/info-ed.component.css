@@ -27,6 +27,6 @@
   
   .mat-radio-button {
     flex: 1; /* This will allow the radio buttons to take equal width */
-    margin: 0 100px; /* Adjust this value to control the spacing */
+    margin: 0 20px; /* Adjust this value to control the spacing */
   }
   

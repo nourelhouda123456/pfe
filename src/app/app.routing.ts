@@ -7,6 +7,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { CompteComponent } from './compte/compte.component';
 import { ViewComponent } from './view/view.component';
+import { InfoEDComponent } from './InfoEntrepriseDéclarante/info-ed/info-ed.component';
  
 
 
@@ -14,6 +15,10 @@ import { ViewComponent } from './view/view.component';
  
 
 const routes: Routes =[
+  {
+    path: 'info-ed/:idDeclaration',
+    component: InfoEDComponent
+  },
 
   {path: 'SignUp', component: SignUpComponent},
   {path: 'view', component: ViewComponent},

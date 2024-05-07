@@ -25,6 +25,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { CompteComponent } from './compte/compte.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ViewComponent } from './view/view.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+ 
+import { MatDialogModule } from '@angular/material/dialog';
+ 
  
  
  
@@ -78,6 +82,11 @@ import { ViewComponent } from './view/view.component';
     AsyncPipe, 
     MatCheckboxModule,
     MatRadioModule,
+    MatSnackBarModule,
+    MatDialogModule,
+  
+    
+   
 
 
 

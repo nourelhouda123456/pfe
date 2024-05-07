@@ -44,7 +44,7 @@
 
             <div class="row">
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <mat-form-field class="example-full-width">
                   <input matInput placeholder="Chiffre d'Affaire Annuel en (DT)" type="number" formControlName="chiffreAffaireAnnuel">
                   <mat-error *ngIf="f['chiffreAffaireAnnuel'].invalid && (f['chiffreAffaireAnnuel'].dirty || f['chiffreAffaireAnnuel'].touched)">
@@ -56,10 +56,24 @@
                 </mat-form-field>
               </div>
               
+
+              <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Code Acte" formControlName="CodeActe">
+                    <mat-option value="0">Initiale</mat-option>
+                    <mat-option value="1">Rectificative</mat-option>
+                    <mat-option value="4">Cessation d’activité</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="f['CodeActe'].errors && (f['CodeActe'].dirty || f['CodeActe'].touched)">
+                    <div *ngIf="f['CodeActe'].errors['required']">Ce champ est obligatoire.</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              
               
 
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <mat-form-field class="example-full-width">
                   <input matInput placeholder="Exercice" type="number" formControlName="Exercice">
                   <mat-error *ngIf="f['Exercice'].errors && (f['Exercice'].dirty || f['Exercice'].touched)">
