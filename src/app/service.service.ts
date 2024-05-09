@@ -27,6 +27,8 @@ import { DescriptionTransactionsRegimeFiscalPrivilegie } from './models/Descript
 import { AutreInfoARenseigner } from './models/AutreInfoARenseigner';
 import { ContrepartieNonMonetaire } from './models/ContrepartieNonMonetaire';
 import { OperationsAccordsPrealables } from './models/OperationsAccordsPrealables';
+import { BiensOuServicesSansContrePartie } from './models/BiensOuServicesSansContrePartie';
+import { ModifLienC } from './models/ModifLienC';
  // Import the Entreprise model
 
 @Injectable({
@@ -180,7 +182,21 @@ export class ServiceService {
 
 
 
+  createModifLienC(newModifLienC: ModifLienC ,ModifLienCId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/ModifLienCapital/${ModifLienCId}`, newModifLienC, requestOptions);
+
+   
+  }
+
   createInfoGE(newInfoGE: InfoGE ,InfoGEId: number): Observable<any> {
+    console.log("test3" +InfoGEId)
+
     const requestOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -374,6 +390,20 @@ export class ServiceService {
     };
 
     return this.http.post<any>(`${this.baseUrl}/autreInfo/${AutreInfoARenseignerId}`, newAutreInfoARenseigner, requestOptions);
+
+   
+  }
+
+
+
+  createBiensOuServicesSansContrePartie(newBiensOuServicesSansContrePartie: BiensOuServicesSansContrePartie ,BiensOuServicesSansContrePartieId: number): Observable<any> {
+    const requestOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<any>(`${this.baseUrl}/biens-sans-contrepartie/${BiensOuServicesSansContrePartieId}`, newBiensOuServicesSansContrePartie, requestOptions);
 
    
   }

@@ -41,9 +41,10 @@
                                         <td>{{ declaration.dateDebut }}</td>
                                         <td>{{ declaration.dateFin }}</td>
                                         <td>
-                                            <button *ngIf="declaration.typedeclaration === 'P'"   (click)="deleteDeclaration(declaration.id)">Delete</button>
-                                            <button mat-raised-button (click)="getDeclarationByIdAndNavigate(declaration.id)">View Details</button>
+                                            <button mat-raised-button class="custom-button" *ngIf="declaration.typedeclaration === 'P'" (click)="deleteDeclaration(declaration.id)">Supprimer</button>
 
+                                            <button mat-raised-button class="custom-button" style="margin-left: 10px;" (click)="getDeclarationByIdAndNavigate(declaration.id)">Consulter</button>
+                                            
                                         </td>
                                     </tr>
                                 </tbody>

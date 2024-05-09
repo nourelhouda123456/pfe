@@ -411,7 +411,7 @@
       
       <div class="button">
         
-        <button mat-raised-button type="submit" cdkStepperNext    class="btn btn-info pull-right"  >Suivant</button>
+        <button mat-raised-button type="submit"  (click)="goToNextForm3()"       class="btn btn-info pull-right"  >Suivant</button>
       </div>
     </div>
    </form>
@@ -432,6 +432,54 @@
 
 
 
+
+
+
+
+
+
+
+
+
+  <div class="col-md-8 ml-auto mr-auto">
+    <div *ngIf="currentForm === 4">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title"> Liens en capital de l’entreprise déclarante avec des entreprises liées</h4>
+          <p class="card-category"> C. Modifications des liens en capital de l’entreprise déclarante avec des entreprises liées au cours de l’exercice</p>
+
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="step4Form" (ngSubmit)="step4Submit()" autocomplete="off" novalidate #formRef="ngForm">
+
+
+
+            <mat-radio-group  formControlName="affirmation">
+              <p>Modification LiensCapital Au Cours Exercice</p>
+              <mat-radio-button  value="O" (change)="toggleTextAreaDescription($event)">Oui</mat-radio-button>
+              <mat-radio-button  value="N" (change)="toggleTextAreaDescription($event)">Non</mat-radio-button>
+
+            </mat-radio-group>
+
+
+            <div *ngIf="showTextAreaDescription" appearance="fill">
+              <mat-form-field matInput placeholder="description ici" class="example-margin" class="example-full-width">
+                <textarea matInput placeholder="description ici" type="text" formControlName="descripton"></textarea>
+              </mat-form-field>
+            </div>
+ 
+            <div class="buttons">
+
+              <div class="button">
+                <button mat-raised-button type="submit" class="btn btn-info pull-right" cdkStepperNext>Suivant</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 

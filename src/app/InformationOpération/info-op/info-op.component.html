@@ -1964,6 +1964,173 @@
 
 
 
+<div class="col-md-10 ml-auto mr-auto">
+  <div *ngIf="currentForm === 10">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">3. Opérations réalisées avec des entreprises liées sans contrepartie ou avec une
+          contrepartie non monétaire</h4>
+        <p class="card-category">3.1. Information sSur Biens Ou Services Sans Contre Partie
+          
+        </p>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="step14Form" (ngSubmit)="step14Submit()" autocomplete="off" novalidate #formRef="ngForm">
+          <div class="row">
+            <mat-label class="label-margin">Affirmation</mat-label>
+            <mat-radio-group formControlName="affirmation" aria-label="Choisir une option">
+              <mat-radio-button value="O" (change)="onAffirmationChangeBSC($event)">Oui</mat-radio-button>
+              <mat-radio-button value="N" (change)="onAffirmationChangeBSC($event)">Non</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="buttons" *ngIf="showButtonBSC">
+            <div class="button">
+              <button mat-raised-button (click)="goToNextForm11()" type="submit"
+                class="btn btn-info pull-right">Suivant</button>
+            </div>
+          </div>
+
+
+
+          <div *ngIf="showInputFieldsBSC">
+            <mat-label class="label-margin">Identifiant Entreprise</mat-label>
+            <mat-radio-group aria-label="Choisir une option" (change)="onOptionChangeBiensOuServicesSansContrePartie($event)">
+              <mat-radio-button checked class="label-margin" [checked]="selectedOptionBSC === 'MatriculeFiscal'"
+                value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionBSC === 'Identifiant'"
+                value="Identifiant">Identifiant</mat-radio-button>
+              <mat-radio-button class="label-margin" [checked]="selectedOptionBSC === 'EtatTerritoire'"
+                value="EtatTerritoire">Etat Territoire</mat-radio-button>
+            </mat-radio-group>
+
+
+            <div class="row">
+              <mat-form-field class="example-full-width" *ngIf="selectedOptionBSC === 'MatriculeFiscal'">
+                <input matInput placeholder="MatriculeFiscal" [(ngModel)]="matriculeFiscalValue"
+                  formControlName="MatriculeFiscal">
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <mat-form-field class="example-full-width" *ngIf="selectedOptionBSC === 'Identifiant'">
+                <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+              </mat-form-field>
+            </div>
+
+            <div class="row" *ngIf="selectedOptionBSC === 'EtatTerritoire'">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
+                  <mat-option *ngFor="let country of countries11" [value]="country.code">{{ country.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Nature Relation Entreprise</mat-label>
+                  <mat-select formControlName="natureRelationEntreprise"
+                    (selectionChange)="onNatureChangeBiensOuServicesSansContrePartie($event)">
+                    <mat-option *ngFor="let option of natureOptionsBiensOuServicesSansContrePartie" [value]="option.value">{{
+                      option.viewValue }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6" *ngIf="selectedNatureBiensOuServicesSansContrePartie === 'AutreNatureRelation'">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Autre Nature" formControlName="AutreNatureRelation">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md">
+                <mat-form-field class="example-full-width">
+                  <input formControlName="NatureBiensOuService" matInput placeholder="Nature Biens Ou Service">
+                  <mat-error
+                    *ngIf="f11['NatureBiensOuService'].errors && (f11['NatureBiensOuService'].dirty || f11['NatureBiensOuService'].touched)">
+                    <div *ngIf="f11['NatureBiensOuService'].errors['required']">Ce champ est obligatoire.</div>
+                    <div *ngIf="f11['NatureBiensOuService'].errors?.pattern">Seuls les caractères alphanumériques sont
+                      autorisés.</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md">
+                <mat-form-field class="example-full-width">
+                  <input formControlName="NatureContrepartie" matInput placeholder="Nature Biens Ou Service">
+                  <mat-error
+                    *ngIf="f11['NatureContrepartie'].errors && (f11['NatureContrepartie'].dirty || f11['NatureContrepartie'].touched)">
+                    <div *ngIf="f11['NatureContrepartie'].errors['required']">Ce champ est obligatoire.</div>
+                    <div *ngIf="f11['NatureContrepartie'].errors?.pattern">Seuls les caractères alphanumériques sont
+                      autorisés.</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md">
+                <mat-form-field class="example-full-width">
+                  <input formControlName="raisonSociale" matInput placeholder="Raison Sociale">
+                  <mat-error
+                    *ngIf="f11['raisonSociale'].errors && (f11['raisonSociale'].dirty || f11['raisonSociale'].touched)">
+                    <div *ngIf="f11['raisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+                    <div *ngIf="f11['raisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont
+                      autorisés.</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Qualité</mat-label>
+                  <mat-select formControlName="qualiteEntreprise"
+                    (selectionChange)="onQualiteChangeBiensOuServicesSansContrePartie($event)">
+                    <mat-option *ngFor="let option of qualiteOptionsBiensOuServicesSansContrePartie" [value]="option.value">{{
+                      option.viewValue }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6" *ngIf="selectedQualiteBiensOuServicesSansContrePartie === 'AutreQualite'">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Autre Qualité" formControlName="AutreQualite">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="buttons">
+              <div class="button">
+                <button mat-raised-button (click)="goToNextForm11()" type="submit"
+                  class="btn btn-info pull-right" cdkStepperNext>Suivant</button>
+                <button mat-raised-button (click)="step14Submit()" type="button" class="btn btn-info pull-right">Ajouter
+                  Plus</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1980,13 +2147,12 @@
 
 
 <div class="col-md-10 ml-auto mr-auto">
-  <div *ngIf="currentForm === 10">
+  <div *ngIf="currentForm === 11">
     <div class="card">
       <div class="card-header card-header-danger">
         <h4 class="card-title">3. Opérations réalisées avec des entreprises liées sans contrepartie ou avec une
           contrepartie non monétaire</h4>
-        <p class="card-category">A. L’entreprise déclarante a-t-elle fourni des biens ou services ou transféré des biens
-          (corporels ou incorporels) à une entreprise liée, sans contrepartie ou avec une contrepartie non monétaire ?
+        <p class="card-category">3.2. Informations Sur Contrepartie Non Monetaire Pour Biens Ou Services
         </p>
       </div>
 
@@ -2164,7 +2330,7 @@
 
 
 <div class="col-md-10 ml-auto mr-auto">
-  <div *ngIf="currentForm === 11">
+  <div *ngIf="currentForm === 12">
     <div class="card">
       <div class="card-header card-header-danger">
         <h4 class="card-title">3. Opérations réalisées avec des entreprises liées sans contrepartie ou avec une

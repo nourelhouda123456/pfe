@@ -5,64 +5,48 @@
   </div>
  
 
-  <mat-horizontal-stepper #cdkStepper [linear]="false" >  
-    
-  
-    <mat-step [stepControl]="stepOne.stepOneForm" [optional]="false">
+  <mat-horizontal-stepper #cdkStepper [linear]="true">
+    <mat-step [stepControl]="stepOne.stepOneForm" [optional]="false" [editable]="false">
       <ng-template matStepLabel>
         <div class="step-bullet"></div>
         <div class="step-title">Informations sur l'Entreprise Déclarante <span class="required">*</span></div>
       </ng-template>
       <app-declaration #stepOne></app-declaration>
     </mat-step>
-
- 
-
-    <mat-step [stepControl]="stepTwo.stepTwoForm" [optional]="false">
+  
+    <mat-step [stepControl]="stepTwo.stepTwoForm" [optional]="false" [editable]="false">
       <ng-template matStepLabel>
         <div class="step-bullet"></div>
         <div class="step-title">Informations sur l'Entreprise Déclarante <span class="required">*</span></div>
       </ng-template>
       <app-info-ed #stepTwo></app-info-ed>
     </mat-step>
-
-
-    <mat-step [stepControl]="stepThree.stepThreeForm" [optional]="false">
+  
+    <mat-step [stepControl]="stepThree.stepThreeForm" [optional]="false" [editable]="false">
       <ng-template matStepLabel>
         <div class="step-bullet"></div>
-        <div class="step-title">Informations sur groupe de l'Entreprise  <span class="required">*</span></div>
+        <div class="step-title">Informations sur groupe de l'Entreprise <span class="required">*</span></div>
       </ng-template>
       <app-info-ge #stepThree></app-info-ge>
     </mat-step>
-
-    
-
-    
-    <mat-step [stepControl]="stepFour.stepFourForm" [optional]="false">
+  
+    <mat-step [stepControl]="stepFour.stepFourForm" [optional]="false" [editable]="false">
       <ng-template matStepLabel>
         <div class="step-bullet"></div>
-        <div class="step-title">Informations sur Operetion <span class="required">*</span></div>
+        <div class="step-title">Informations sur Operation <span class="required">*</span></div>
       </ng-template>
       <app-info-op #stepFour></app-info-op>
-       
     </mat-step>
-     
-    <mat-step [stepControl]="stepFive.stepFiveForm" [optional]="false">
+  
+    <mat-step [stepControl]="stepFive.stepFiveForm" [optional]="false" [editable]="false">
       <ng-template matStepLabel>
         <div class="step-bullet"></div>
-        <div class="step-title"> Autres informations à renseigner sur Declaration PrixT ransferts<span class="required">*</span></div>
+        <div class="step-title"> Autres informations à renseigner sur Declaration Prix Transferts<span class="required">*</span></div>
       </ng-template>
       <app-autre-info #stepFive></app-autre-info>
     </mat-step>
-     
-   
-  
-      
-
-        
-       
   </mat-horizontal-stepper>
-</div>
+  
 
 <div  *ngIf="!check" class="empty-div">
   <h1 style="margin-top: 60px; margin-bottom: 20px; margin-left: 100px; position: absolute;">Cette page est introuvable. Veuillez créer un compte entreprise</h1>

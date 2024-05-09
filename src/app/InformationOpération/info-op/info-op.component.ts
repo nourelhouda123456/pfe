@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AutreOperation } from 'app/models/AutreOperation';
+import { BiensOuServicesSansContrePartie } from 'app/models/BiensOuServicesSansContrePartie';
 import { CessionAcquisitionActif } from 'app/models/CessionAcquisitionActif';
 import { ContrepartieNonMonetaire } from 'app/models/ContrepartieNonMonetaire';
 import { DescriptionTransactionsRegimeFiscalPrivilegie } from 'app/models/DescriptionTransactionsRegimeFiscalPrivilegie';
@@ -37,6 +38,17 @@ export class InfoOpComponent implements OnInit {
     this.showInputFieldsOAP = event.value === 'O';
     this.showButtonOAP = event.value !== 'O';  
   }
+
+
+
+  showInputFieldsBSC: boolean = false;
+  showButtonBSC: boolean = true;
+
+  onAffirmationChangeBSC(event: any) {
+    this.showInputFieldsBSC = event.value === 'O';
+    this.showButtonBSC = event.value !== 'O';  
+  }
+
 
   selectedNatureVE: string;
   selectedNatureValeursExploitation: string;
@@ -2619,6 +2631,262 @@ export class InfoOpComponent implements OnInit {
   ];
 
 
+  countries11 = [
+    { code: 'AF', name: 'AFGHANISTAN' },
+    { code: 'AX', name: 'ALAND ISLANDS' },
+    { code: 'AL', name: 'ALBANIA' },
+    { code: 'DZ', name: 'ALGERIA' },
+    { code: 'AS', name: 'AMERICAN SAMOA' },
+    { code: 'AD', name: 'ANDORRA' },
+    { code: 'AO', name: 'ANGOLA' },
+    { code: 'AI', name: 'ANGUILLA' },
+    { code: 'AQ', name: 'ANTARCTICA' },
+    { code: 'AG', name: 'ANTIGUA AND BARBUDA' },
+    { code: 'AR', name: 'ARGENTINA' },
+    { code: 'AM', name: 'ARMENIA' },
+    { code: 'AW', name: 'ARUBA' },
+    { code: 'AU', name: 'AUSTRALIA' },
+    { code: 'AT', name: 'AUSTRIA' },
+    { code: 'AZ', name: 'AZERBAIJAN' },
+    { code: 'BS', name: 'BAHAMAS' },
+    { code: 'BH', name: 'BAHRAIN' },
+    { code: 'BD', name: 'BANGLADESH' },
+    { code: 'BB', name: 'BARBADOS' },
+    { code: 'BY', name: 'BELARUS' },
+    { code: 'BE', name: 'BELGIUM' },
+    { code: 'BZ', name: 'BELIZE' },
+    { code: 'BJ', name: 'BENIN' },
+    { code: 'BM', name: 'BERMUDA' },
+    { code: 'BT', name: 'BHUTAN' },
+    { code: 'BO', name: 'BOLIVIA, PLURINATIONAL STATE OF' },
+    { code: 'BQ', name: 'BONAIRE, SINT EUSTATIUS AND SABA' },
+    { code: 'BA', name: 'BOSNIA AND HERZEGOVINA' },
+    { code: 'BW', name: 'BOTSWANA' },
+    { code: 'BV', name: 'BOUVET ISLAND' },
+    { code: 'BR', name: 'BRAZIL' },
+    { code: 'IO', name: 'BRITISH INDIAN OCEAN TERRITORY' },
+    { code: 'BN', name: 'BRUNEI DARUSSALAM' },
+    { code: 'BG', name: 'BULGARIA' },
+    { code: 'BF', name: 'BURKINA FASO' },
+    { code: 'BI', name: 'BURUNDI' },
+    { code: 'KH', name: 'CAMBODIA' },
+    { code: 'CM', name: 'CAMEROON' },
+    { code: 'CA', name: 'CANADA' },
+    { code: 'CV', name: 'CABO VERDE' },
+    { code: 'KY', name: 'CAYMAN ISLANDS' },
+    { code: 'CF', name: 'CENTRAL AFRICAN REPUBLIC' },
+    { code: 'TD', name: 'CHAD' },
+    { code: 'CL', name: 'CHILE' },
+    { code: 'CN', name: 'CHINA' },
+    { code: 'CX', name: 'CHRISTMAS ISLAND' },
+    { code: 'CC', name: 'COCOS (KEELING) ISLANDS' },
+    { code: 'CO', name: 'COLOMBIA' },
+    { code: 'KM', name: 'COMOROS' },
+    { code: 'CG', name: 'CONGO' },
+    { code: 'CD', name: 'CONGO, THE DEMOCRATIC REPUBLIC OF THE' },
+    { code: 'CK', name: 'COOK ISLANDS' },
+    { code: 'CR', name: 'COSTA RICA' },
+    { code: 'CI', name: 'COTE D\'IVOIRE' },
+    { code: 'HR', name: 'CROATIA' },
+    { code: 'CU', name: 'CUBA' },
+    { code: 'CW', name: 'CURACAO' },
+    { code: 'CY', name: 'CYPRUS' },
+    { code: 'CZ', name: 'CZECHIA' },
+    { code: 'DK', name: 'DENMARK' },
+    { code: 'DJ', name: 'DJIBOUTI' },
+    { code: 'DM', name: 'DOMINICA' },
+    { code: 'DO', name: 'DOMINICAN REPUBLIC' },
+    { code: 'EC', name: 'ECUADOR' },
+    { code: 'EG', name: 'EGYPT' },
+    { code: 'SV', name: 'EL SALVADOR' },
+    { code: 'GQ', name: 'EQUATORIAL GUINEA' },
+    { code: 'ER', name: 'ERITREA' },
+    { code: 'EE', name: 'ESTONIA' },
+    { code: 'ET', name: 'ETHIOPIA' },
+    { code: 'FK', name: 'FALKLAND ISLANDS (MALVINAS)' },
+    { code: 'FO', name: 'FAROE ISLANDS' },
+    { code: 'FJ', name: 'FIJI' },
+    { code: 'FI', name: 'FINLAND' },
+    { code: 'FR', name: 'FRANCE' },
+    { code: 'GF', name: 'FRENCH GUIANA' },
+    { code: 'PF', name: 'FRENCH POLYNESIA' },
+    { code: 'TF', name: 'FRENCH SOUTHERN TERRITORIES' },
+    { code: 'GA', name: 'GABON' },
+    { code: 'GM', name: 'GAMBIA' },
+    { code: 'GE', name: 'GEORGIA' },
+    { code: 'DE', name: 'GERMANY' },
+    { code: 'GH', name: 'GHANA' },
+    { code: 'GI', name: 'GIBRALTAR' },
+    { code: 'GR', name: 'GREECE' },
+    { code: 'GL', name: 'GREENLAND' },
+    { code: 'GD', name: 'GRENADA' },
+    { code: 'GP', name: 'GUADELOUPE' },
+    { code: 'GU', name: 'GUAM' },
+    { code: 'GT', name: 'GUATEMALA' },
+    { code: 'GG', name: 'GUERNSEY' },
+    { code: 'GN', name: 'GUINEA' },
+    { code: 'GW', name: 'GUINEA-BISSAU' },
+    { code: 'GY', name: 'GUYANA' },
+    { code: 'HT', name: 'HAITI' },
+    { code: 'HM', name: 'HEARD ISLAND AND MCDONALD ISLANDS' },
+    { code: 'VA', name: 'HOLY SEE (VATICAN CITY STATE)' },
+    { code: 'HN', name: 'HONDURAS' },
+    { code: 'HK', name: 'HONG KONG' },
+    { code: 'HU', name: 'HUNGARY' },
+    { code: 'IS', name: 'ICELAND' },
+    { code: 'IN', name: 'INDIA' },
+    { code: 'ID', name: 'INDONESIA' },
+    { code: 'IR', name: 'IRAN, ISLAMIC REPUBLIC OF' },
+    { code: 'IQ', name: 'IRAQ' },
+    { code: 'IE', name: 'IRELAND' },
+    { code: 'IM', name: 'ISLE OF MAN' },
+    { code: 'IL', name: 'ISRAEL' },
+    { code: 'IT', name: 'ITALY' },
+    { code: 'JM', name: 'JAMAICA' },
+    { code: 'JP', name: 'JAPAN' },
+    { code: 'JE', name: 'JERSEY' },
+    { code: 'JO', name: 'JORDAN' },
+    { code: 'KZ', name: 'KAZAKHSTAN' },
+    { code: 'KE', name: 'KENYA' },
+    { code: 'KI', name: 'KIRIBATI' },
+    { code: 'KP', name: 'KOREA, DEMOCRATIC PEOPLE\'S REPUBLIC OF' },
+    { code: 'KR', name: 'KOREA, REPUBLIC OF' },
+    { code: 'KW', name: 'KUWAIT' },
+    { code: 'KG', name: 'KYRGYZSTAN' },
+    { code: 'LA', name: 'LAO PEOPLE\'S DEMOCRATIC REPUBLIC' },
+    { code: 'LV', name: 'LATVIA' },
+    { code: 'LB', name: 'LEBANON' },
+    { code: 'LS', name: 'LESOTHO' },
+    { code: 'LR', name: 'LIBERIA' },
+    { code: 'LY', name: 'LIBYA' },
+    { code: 'LI', name: 'LIECHTENSTEIN' },
+    { code: 'LT', name: 'LITHUANIA' },
+    { code: 'LU', name: 'LUXEMBOURG' },
+    { code: 'MO', name: 'MACAO' },
+    { code: 'MK', name: 'NORTH MACEDONIA' },
+    { code: 'MG', name: 'MADAGASCAR' },
+    { code: 'MW', name: 'MALAWI' },
+    { code: 'MY', name: 'MALAYSIA' },
+    { code: 'MV', name: 'MALDIVES' },
+    { code: 'ML', name: 'MALI' },
+    { code: 'MT', name: 'MALTA' },
+    { code: 'MH', name: 'MARSHALL ISLANDS' },
+    { code: 'MQ', name: 'MARTINIQUE' },
+    { code: 'MR', name: 'MAURITANIA' },
+    { code: 'MU', name: 'MAURITIUS' },
+    { code: 'YT', name: 'MAYOTTE' },
+    { code: 'MX', name: 'MEXICO' },
+    { code: 'FM', name: 'MICRONESIA, FEDERATED STATES OF' },
+    { code: 'MD', name: 'MOLDOVA, REPUBLIC OF' },
+    { code: 'MC', name: 'MONACO' },
+    { code: 'MN', name: 'MONGOLIA' },
+    { code: 'ME', name: 'MONTENEGRO' },
+    { code: 'MS', name: 'MONTSERRAT' },
+    { code: 'MA', name: 'MOROCCO' },
+    { code: 'MZ', name: 'MOZAMBIQUE' },
+    { code: 'MM', name: 'MYANMAR' },
+    { code: 'NA', name: 'NAMIBIA' },
+    { code: 'NR', name: 'NAURU' },
+    { code: 'NP', name: 'NEPAL' },
+    { code: 'NL', name: 'NETHERLANDS' },
+    { code: 'NC', name: 'NEW CALEDONIA' },
+    { code: 'NZ', name: 'NEW ZEALAND' },
+    { code: 'NI', name: 'NICARAGUA' },
+    { code: 'NE', name: 'NIGER' },
+    { code: 'NG', name: 'NIGERIA' },
+    { code: 'NU', name: 'NIUE' },
+    { code: 'NF', name: 'NORFOLK ISLAND' },
+    { code: 'MP', name: 'NORTHERN MARIANA ISLANDS' },
+    { code: 'NO', name: 'NORWAY' },
+    { code: 'OM', name: 'OMAN' },
+    { code: 'PK', name: 'PAKISTAN' },
+    { code: 'PW', name: 'PALAU' },
+    { code: 'PS', name: 'PALESTINE, STATE OF' },
+    { code: 'PA', name: 'PANAMA' },
+    { code: 'PG', name: 'PAPUA NEW GUINEA' },
+    { code: 'PY', name: 'PARAGUAY' },
+    { code: 'PE', name: 'PERU' },
+    { code: 'PH', name: 'PHILIPPINES' },
+    { code: 'PN', name: 'PITCAIRN' },
+    { code: 'PL', name: 'POLAND' },
+    { code: 'PT', name: 'PORTUGAL' },
+    { code: 'PR', name: 'PUERTO RICO' },
+    { code: 'QA', name: 'QATAR' },
+    { code: 'RE', name: 'REUNION' },
+    { code: 'RO', name: 'ROMANIA' },
+    { code: 'RU', name: 'RUSSIAN FEDERATION' },
+    { code: 'RW', name: 'RWANDA' },
+    { code: 'BL', name: 'SAINT BARTHELEMY' },
+    { code: 'SH', name: 'SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA' },
+    { code: 'KN', name: 'SAINT KITTS AND NEVIS' },
+    { code: 'LC', name: 'SAINT LUCIA' },
+    { code: 'MF', name: 'SAINT MARTIN (FRENCH PART)' },
+    { code: 'PM', name: 'SAINT PIERRE AND MIQUELON' },
+    { code: 'VC', name: 'SAINT VINCENT AND THE GRENADINES' },
+    { code: 'WS', name: 'SAMOA' },
+    { code: 'SM', name: 'SAN MARINO' },
+    { code: 'ST', name: 'SAO TOME AND PRINCIPE' },
+    { code: 'SA', name: 'SAUDI ARABIA' },
+    { code: 'SN', name: 'SENEGAL' },
+    { code: 'RS', name: 'SERBIA' },
+    { code: 'SC', name: 'SEYCHELLES' },
+    { code: 'SL', name: 'SIERRA LEONE' },
+    { code: 'SG', name: 'SINGAPORE' },
+    { code: 'SX', name: 'SINT MAARTEN (DUTCH PART)' },
+    { code: 'SK', name: 'SLOVAKIA' },
+    { code: 'SI', name: 'SLOVENIA' },
+    { code: 'SB', name: 'SOLOMON ISLANDS' },
+    { code: 'SO', name: 'SOMALIA' },
+    { code: 'ZA', name: 'SOUTH AFRICA' },
+    { code: 'GS', name: 'SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS' },
+    { code: 'SS', name: 'SOUTH SUDAN' },
+    { code: 'ES', name: 'SPAIN' },
+    { code: 'LK', name: 'SRI LANKA' },
+    { code: 'SD', name: 'SUDAN' },
+    { code: 'SR', name: 'SURINAME' },
+    { code: 'SJ', name: 'SVALBARD AND JAN MAYEN' },
+    { code: 'SZ', name: 'ESWATINI' },
+    { code: 'SE', name: 'SWEDEN' },
+    { code: 'CH', name: 'SWITZERLAND' },
+    { code: 'SY', name: 'SYRIAN ARAB REPUBLIC' },
+    { code: 'TW', name: 'TAIWAN, PROVINCE OF CHINA' },
+    { code: 'TJ', name: 'TAJIKISTAN' },
+    { code: 'TZ', name: 'TANZANIA, UNITED REPUBLIC OF' },
+    { code: 'TH', name: 'THAILAND' },
+    { code: 'TL', name: 'TIMOR-LESTE' },
+    { code: 'TG', name: 'TOGO' },
+    { code: 'TK', name: 'TOKELAU' },
+    { code: 'TO', name: 'TONGA' },
+    { code: 'TT', name: 'TRINIDAD AND TOBAGO' },
+    { code: 'TN', name: 'TUNISIA' },
+    { code: 'TR', name: 'TURKEY' },
+    { code: 'TM', name: 'TURKMENISTAN' },
+    { code: 'TC', name: 'TURKS AND CAICOS ISLANDS' },
+    { code: 'TV', name: 'TUVALU' },
+    { code: 'UG', name: 'UGANDA' },
+    { code: 'UA', name: 'UKRAINE' },
+    { code: 'AE', name: 'UNITED ARAB EMIRATES' },
+    { code: 'GB', name: 'UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND' },
+    { code: 'US', name: 'UNITED STATES' },
+    { code: 'UM', name: 'UNITED STATES MINOR OUTLYING ISLANDS' },
+    { code: 'UY', name: 'URUGUAY' },
+    { code: 'UZ', name: 'UZBEKISTAN' },
+    { code: 'VU', name: 'VANUATU' },
+    { code: 'VE', name: 'VENEZUELA, BOLIVARIAN REPUBLIC OF' },
+    { code: 'VN', name: 'VIET NAM' },
+    { code: 'VG', name: 'VIRGIN ISLANDS, BRITISH' },
+    { code: 'VI', name: 'VIRGIN ISLANDS, U.S.' },
+    { code: 'WF', name: 'WALLIS AND FUTUNA' },
+    { code: 'EH', name: 'WESTERN SAHARA' },
+    { code: 'YE', name: 'YEMEN' },
+    { code: 'ZM', name: 'ZAMBIA' },
+    { code: 'ZW', name: 'ZIMBABWE' },
+    { code: 'XK', name: 'KOSOVO' },
+    { code: 'X5', name: 'STATELESS' },
+    { code: 'XX', name: 'OTHER COUNTRY' }
+  ];
+
+
   currencyOptions = [
     { value: 'AED', viewValue: 'UAE Dirham: UNITED ARAB EMIRATES' },
     { value: 'AFN', viewValue: 'Afghani: AFGHANISTAN' },
@@ -3135,6 +3403,21 @@ export class InfoOpComponent implements OnInit {
 
 
 
+  selectedNatureBiensOuServicesSansContrePartie: string;
+  natureOptionsBiensOuServicesSansContrePartie= [
+    { value: '1', viewValue: 'Propriétaires' },
+    { value: '2', viewValue: 'Copropriétaires' },
+    { value: '3', viewValue: 'Locataires' },
+    { value: '4', viewValue: 'Concessionnaires' },
+    { value: 'AutreNatureRelation', viewValue: 'Autre Nature Relation' }
+  ];
+
+  onNatureChangeBiensOuServicesSansContrePartie(event: any) {
+    this.selectedNatureBiensOuServicesSansContrePartie= event.value;
+  }
+
+
+
 
   selectedNatureOperationsAccordsPrealables: string;
   natureOptionsOperationsAccordsPrealables = [
@@ -3161,6 +3444,7 @@ export class InfoOpComponent implements OnInit {
     private EmpruntContracteService: ServiceService,
     private DescriptionTransactionsRegimeFiscalPrivilegieService: ServiceService,
     private ContrepartieNonMonetaireService: ServiceService,
+    private BiensOuServicesSansContrePartieService: ServiceService,
     private OperationsAccordsPrealablesService: ServiceService,
     private shared: SharedServiveService,
     
@@ -3175,7 +3459,7 @@ export class InfoOpComponent implements OnInit {
       Identifiant: [
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')
         ]
@@ -3183,7 +3467,7 @@ export class InfoOpComponent implements OnInit {
       MatriculeFiscal: [
         '',
         [
-          Validators.required,
+         
           Validators.minLength(7),
           Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
         ]
@@ -3200,7 +3484,7 @@ export class InfoOpComponent implements OnInit {
       raisonSociale:  [
         '',
         [
-          Validators.required,
+           
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$') 
         ]
@@ -3219,7 +3503,7 @@ export class InfoOpComponent implements OnInit {
       Identifiant: [
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')
         ]
@@ -3227,7 +3511,7 @@ export class InfoOpComponent implements OnInit {
       MatriculeFiscal: [
         '',
         [
-          Validators.required,
+         
           Validators.minLength(7),
           Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
         ]
@@ -3243,7 +3527,7 @@ export class InfoOpComponent implements OnInit {
       raisonSociale:  [
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$') // Only alphanumeric characters
         ]
@@ -3267,7 +3551,7 @@ export class InfoOpComponent implements OnInit {
       Identifiant: [
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')
         ]
@@ -3275,7 +3559,7 @@ export class InfoOpComponent implements OnInit {
       MatriculeFiscal: [
         '',
         [
-          Validators.required,
+         
           Validators.minLength(7),
           Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
         ]
@@ -3291,7 +3575,7 @@ export class InfoOpComponent implements OnInit {
       raisonSociale:  [
         '',
         [
-          Validators.required,
+          
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$') // Only alphanumeric characters
         ]
@@ -3313,7 +3597,7 @@ export class InfoOpComponent implements OnInit {
       Identifiant: [
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')
         ]
@@ -3321,7 +3605,7 @@ export class InfoOpComponent implements OnInit {
       MatriculeFiscal: [
         '',
         [
-          Validators.required,
+         
           Validators.minLength(7),
           Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
         ]
@@ -3337,7 +3621,7 @@ export class InfoOpComponent implements OnInit {
       raisonSociale:  [
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$') // Only alphanumeric characters
         ]
@@ -3358,7 +3642,7 @@ export class InfoOpComponent implements OnInit {
       description: [
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')
         ]
@@ -3371,7 +3655,7 @@ export class InfoOpComponent implements OnInit {
       Identifiant: [
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')
         ]
@@ -3379,7 +3663,7 @@ export class InfoOpComponent implements OnInit {
       MatriculeFiscal: [
         '',
         [
-          Validators.required,
+        
           Validators.minLength(7),
           Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
         ]
@@ -3395,7 +3679,7 @@ export class InfoOpComponent implements OnInit {
       raisonSociale:  [
         '',
         [
-          Validators.required,
+          
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$') // Only alphanumeric characters
         ]
@@ -3420,7 +3704,7 @@ export class InfoOpComponent implements OnInit {
       Identifiant: [
         '',
         [
-          Validators.required,
+        
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')
         ]
@@ -3428,7 +3712,7 @@ export class InfoOpComponent implements OnInit {
       MatriculeFiscal: [
         '',
         [
-          Validators.required,
+          
           Validators.minLength(7),
           Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
         ]
@@ -3444,7 +3728,7 @@ export class InfoOpComponent implements OnInit {
       raisonSociale:  [
         '',
         [
-          Validators.required,
+          
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$') // Only alphanumeric characters
         ]
@@ -3467,7 +3751,7 @@ export class InfoOpComponent implements OnInit {
       Identifiant: [
         '',
         [
-          Validators.required,
+        
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')
         ]
@@ -3475,7 +3759,7 @@ export class InfoOpComponent implements OnInit {
       MatriculeFiscal: [
         '',
         [
-          Validators.required,
+          
           Validators.minLength(7),
           Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
         ]
@@ -3488,7 +3772,7 @@ export class InfoOpComponent implements OnInit {
       raisonSociale:  [
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$') // Only alphanumeric characters
         ]],
@@ -3510,7 +3794,7 @@ export class InfoOpComponent implements OnInit {
       Identifiant: [
         '',
         [
-          Validators.required,
+           
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')
         ]
@@ -3518,7 +3802,7 @@ export class InfoOpComponent implements OnInit {
       MatriculeFiscal: [
         '',
         [
-          Validators.required,
+        
           Validators.minLength(7),
           Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
         ]
@@ -3531,7 +3815,7 @@ export class InfoOpComponent implements OnInit {
       raisonSociale:  [
         '',
         [
-          Validators.required,
+           
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')  
         ]],
@@ -3553,7 +3837,7 @@ export class InfoOpComponent implements OnInit {
       Identifiant: [
         '',
         [
-          Validators.required,
+          
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')
         ]
@@ -3561,7 +3845,7 @@ export class InfoOpComponent implements OnInit {
       MatriculeFiscal: [
         '',
         [
-          Validators.required,
+         
           Validators.minLength(7),
           Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
         ]
@@ -3574,7 +3858,7 @@ export class InfoOpComponent implements OnInit {
       raisonSociale:  [
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')  
         ]],
@@ -3596,7 +3880,7 @@ export class InfoOpComponent implements OnInit {
       Identifiant: [
         '',
         [
-          Validators.required,
+          
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')
         ]
@@ -3604,7 +3888,7 @@ export class InfoOpComponent implements OnInit {
       MatriculeFiscal: [
         '',
         [
-          Validators.required,
+          
           Validators.minLength(7),
           Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
         ]
@@ -3617,7 +3901,7 @@ export class InfoOpComponent implements OnInit {
       raisonSociale:  [
         '',
         [
-          Validators.required,
+           
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')  
         ]],
@@ -3625,14 +3909,14 @@ export class InfoOpComponent implements OnInit {
       NatureContrepartie:[
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')  
         ]],
         NatureBiensOuService:[
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')  
         ]],
@@ -3649,7 +3933,7 @@ export class InfoOpComponent implements OnInit {
       Identifiant: [
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')
         ]
@@ -3657,7 +3941,7 @@ export class InfoOpComponent implements OnInit {
       MatriculeFiscal: [
         '',
         [
-          Validators.required,
+         
           Validators.minLength(7),
           Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
         ]
@@ -3671,7 +3955,7 @@ export class InfoOpComponent implements OnInit {
       raisonSociale:  [
         '',
         [
-          Validators.required,
+         
           Validators.maxLength(20),
           Validators.pattern('^[a-zA-Z ]*$')  
         ]],
@@ -3683,7 +3967,7 @@ export class InfoOpComponent implements OnInit {
      
       AutreQualite: [''],
       exerciceDebut: ['', [
-        Validators.required,
+       
         Validators.pattern(/^\d{4}$/),  
         Validators.min(1900),  
         Validators.max(9999) 
@@ -3691,7 +3975,7 @@ export class InfoOpComponent implements OnInit {
       ]],
    
       exerciceFin: ['', [
-        Validators.required,
+       
         Validators.pattern(/^\d{4}$/),  
         Validators.min(1900), 
         Validators.max(9999)  
@@ -3699,7 +3983,58 @@ export class InfoOpComponent implements OnInit {
       
     });
 
-
+    this.step14Form = this.formBuilder.group({
+      Identifiant: [
+        '',
+        [
+          
+          Validators.maxLength(20),
+          Validators.pattern('^[a-zA-Z ]*$')
+        ]
+      ],
+      MatriculeFiscal: [
+        '',
+        [
+          
+          Validators.minLength(7),
+          Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
+        ]
+      ],
+ 
+      EtatTerritoire: [''],
+      qualiteEntreprise: [''],
+      natureRelationEntreprise: [''],
+     
+      raisonSociale:  [
+        '',
+        [
+          
+          Validators.maxLength(20),
+          Validators.pattern('^[a-zA-Z ]*$')  
+        ]],
+      
+      NatureContrepartie:[
+        '',
+        [
+           
+          Validators.maxLength(20),
+          Validators.pattern('^[a-zA-Z ]*$')  
+        ]],
+        NatureBiensOuService:[
+        '',
+        [
+          
+          Validators.maxLength(20),
+          Validators.pattern('^[a-zA-Z ]*$')  
+        ]],
+    
+      affirmation: [this.defaultValueCNM],
+      AutreNatureRelation: [''],
+      AutreQualite: [''],
+      
+      
+      
+    });
   
 
 
@@ -3746,15 +4081,19 @@ export class InfoOpComponent implements OnInit {
     return this.step13Form.controls;
   }
 
+  get f11(): { [key: string]: AbstractControl } {
+    return this.step14Form.controls;
+  }
+
   stepFourForm: FormGroup = new FormGroup({
   
     MatriculeFiscal: new FormControl('', [
-      Validators.required,
+     
       Validators.minLength(7),
       Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
     ]),
     Identifiant: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -3764,7 +4103,7 @@ export class InfoOpComponent implements OnInit {
     methodePrixTransfert: new FormControl(''),
     changementMethodePrixTransfert: new FormControl(''),
     raisonSociale: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -3787,12 +4126,12 @@ export class InfoOpComponent implements OnInit {
   step5Form: FormGroup = new FormGroup({
 
     MatriculeFiscal: new FormControl('', [
-      Validators.required,
+     
       Validators.minLength(7),
       Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
     ]),
     Identifiant: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -3802,7 +4141,7 @@ export class InfoOpComponent implements OnInit {
     methodePrixTransfert: new FormControl(''),
     changementMethodePrixTransfert: new FormControl(''),
     raisonSociale: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -3824,12 +4163,12 @@ export class InfoOpComponent implements OnInit {
   step6Form: FormGroup = new FormGroup({
 
     MatriculeFiscal: new FormControl('', [
-      Validators.required,
+     
       Validators.minLength(7),
       Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
     ]),
     Identifiant: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -3839,7 +4178,7 @@ export class InfoOpComponent implements OnInit {
     methodePrixTransfert: new FormControl(''),
     changementMethodePrixTransfert: new FormControl(''),
     raisonSociale: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -3885,12 +4224,12 @@ export class InfoOpComponent implements OnInit {
 
     
     MatriculeFiscal: new FormControl('', [
-      Validators.required,
+     
       Validators.minLength(7),
       Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
     ]),
     Identifiant: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -3900,7 +4239,7 @@ export class InfoOpComponent implements OnInit {
     methodePrixTransfert: new FormControl(''),
     changementMethodePrixTransfert: new FormControl(''),
     raisonSociale: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -3928,12 +4267,12 @@ export class InfoOpComponent implements OnInit {
   step9Form: FormGroup = new FormGroup({
 
     MatriculeFiscal: new FormControl('', [
-      Validators.required,
+     
       Validators.minLength(7),
       Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
     ]),
     Identifiant: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -3943,7 +4282,7 @@ export class InfoOpComponent implements OnInit {
     methodePrixTransfert: new FormControl(''),
     changementMethodePrixTransfert: new FormControl(''),
     raisonSociale: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -3969,12 +4308,12 @@ export class InfoOpComponent implements OnInit {
 
      
     MatriculeFiscal: new FormControl('', [
-      Validators.required,
+     
       Validators.minLength(7),
       Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
     ]),
     Identifiant: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -3984,7 +4323,7 @@ export class InfoOpComponent implements OnInit {
     Montant: new FormControl(''),
    
     raisonSociale: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -4011,12 +4350,12 @@ export class InfoOpComponent implements OnInit {
 
      
     MatriculeFiscal: new FormControl('', [
-      Validators.required,
+     
       Validators.minLength(7),
       Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
     ]),
     Identifiant: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -4026,7 +4365,7 @@ export class InfoOpComponent implements OnInit {
     
    
     raisonSociale: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -4049,12 +4388,12 @@ export class InfoOpComponent implements OnInit {
 
      
     MatriculeFiscal: new FormControl('', [
-      Validators.required,
+     
       Validators.minLength(7),
       Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
     ]),
     Identifiant: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -4064,7 +4403,7 @@ export class InfoOpComponent implements OnInit {
   
    
     raisonSociale: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -4084,12 +4423,12 @@ export class InfoOpComponent implements OnInit {
 
      
     MatriculeFiscal: new FormControl('', [
-      Validators.required,
+     
       Validators.minLength(7),
       Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
     ]),
     Identifiant: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -4099,7 +4438,7 @@ export class InfoOpComponent implements OnInit {
   
    
     raisonSociale: new FormControl('', [
-      Validators.required,
+     
       Validators.maxLength(20),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
@@ -4116,7 +4455,40 @@ export class InfoOpComponent implements OnInit {
 
   });
 
- 
+  step14Form: FormGroup = new FormGroup({
+
+     
+    MatriculeFiscal: new FormControl('', [
+     
+      Validators.minLength(7),
+      Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
+    ]),
+    Identifiant: new FormControl('', [
+     
+      Validators.maxLength(20),
+      Validators.pattern('^[a-zA-Z ]*$')
+    ]),
+    EtatTerritoire: new FormControl(''),
+    qualiteEntreprise: new FormControl(''),
+    natureRelationEntreprise: new FormControl(''),
+  
+   
+    raisonSociale: new FormControl('', [
+     
+      Validators.maxLength(20),
+      Validators.pattern('^[a-zA-Z ]*$')
+    ]),
+    
+    identifiantEntreprise: new FormControl(''),
+    affirmation: new FormControl(''),
+    NatureBiensOuService: new FormControl(''),
+    NatureContrepartie: new FormControl(''),
+    AutreNatureRelation: new FormControl(''),
+    AutreQualite: new FormControl(''),
+    
+
+
+  });
 
 
   currentForm = 1;
@@ -4179,11 +4551,17 @@ export class InfoOpComponent implements OnInit {
 
 
   goToNextForm10() {
-   
+    this.currentForm++;
     this.step13Submit()
 
   }
   
+  
+  goToNextForm11() {
+    this.currentForm++;
+    this.step14Submit()
+
+  }
   
   goToNextForm0() {
     this.currentForm++;
@@ -4454,6 +4832,27 @@ natureAutreOperation = [
   onQualiteChangeContrepartieNonMonetaire(event: any) {
     this.selectedQualiteContrepartieNonMonetaire = event.value;
   }
+
+
+
+
+
+
+  selectedQualiteBiensOuServicesSansContrePartie: string;
+  
+  qualiteOptionsBiensOuServicesSansContrePartie= [
+    { value: '1', viewValue: 'Entité mère ultime' },
+    { value: '2', viewValue: 'Entité mère non ultime' },
+    { value: '3', viewValue: 'Entreprise holding' },
+    { value: '4', viewValue: 'Entreprise filiale' },
+    { value: '5', viewValue: 'Établissement stable' },
+    { value: 'AutreQualite', viewValue: 'Autre Qualité' }
+  ];
+  onQualiteChangeBiensOuServicesSansContrePartie(event: any) {
+    this.selectedQualiteBiensOuServicesSansContrePartie = event.value;
+  }
+
+
 
   selectedQualiteOperationsAccordsPrealables: string;
   
@@ -4818,6 +5217,14 @@ natureAutreOperation = [
                 this.selectedOptionCNM= event.value;
               }
 
+
+              selectedOptionBSC: string = 'MatriculeFiscal';  
+  
+              onOptionChangeBiensOuServicesSansContrePartie(event: any) {
+                  this.selectedOptionBSC= event.value;
+                }
+  
+
               selectedOptionOAP: string = 'MatriculeFiscal';  
   
               onOptionChangeOperationsAccordsPrealables(event: any) {
@@ -4877,11 +5284,12 @@ onCheckboxChange3(event: any) {
 declarationId: number; 
 submitted = false;
 identifiantEntrepriseVE : any
-jsonObject: any = {}; // Initialize jsonObject as an empty object
+jsonObject: any = {};  
 
 stepFourSubmit(): void {
   const idDeclaration = this.shared.getData(); 
   this.submitted = true;
+  console.log('id'+ idDeclaration)
 
   if (this.selectedNatureVE === "AutreNatureValeurExploitation"){
     this.jsonObject.AutreNatureValeurExploitation = this.stepFourForm.get('AutreNatureOperation').value;
@@ -4904,19 +5312,23 @@ stepFourSubmit(): void {
   }
 
   console.log('Form Data:', this.stepFourForm.value);
-  console.log('Additional JSON Object:', this.jsonObject);
-
-  let identifiantEntrepriseVEValue: any;
-  if (this.selectedOptionVExploitation === "MatriculeFiscal") {
-    identifiantEntrepriseVEValue = { MatriculeFiscal: this.stepFourForm.get('MatriculeFiscal')?.value };
-  } else if (this.selectedOptionVExploitation === "Identifiant") {
-    identifiantEntrepriseVEValue = { Identifiant: this.stepFourForm.get('Identifiant')?.value };
-  } else if (this.selectedOptionVExploitation === "EtatTerritoire") {
-    identifiantEntrepriseVEValue = { EtatTerritoire: this.stepFourForm.get('EtatTerritoire')?.value };
-  }
+ 
+  if(this.selectedOptionVExploitation === "MatriculeFiscal"){
+    this.identifiantEntrepriseVE = {
+     MatriculeFiscal : this.stepFourForm.get('MatriculeFiscal')?.value
+   }
+ }else if(this.selectedOptionVExploitation === "Identifiant"){
+   this.identifiantEntrepriseVE = {
+     Identifiant : this.stepFourForm.get('Identifiant')?.value
+   }
+ }else if(this.selectedOptionVExploitation === "EtatTerritoire"){
+   this.identifiantEntrepriseVE = {
+     EtatTerritoire : this.stepFourForm.get('EtatTerritoire')?.value
+   }
+ }
 
   const newValeurExploitation: ValeurExploitation = {
-    identifiantEntreprise: JSON.stringify(identifiantEntrepriseVEValue),
+    identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseVE),
     raisonSociale: this.stepFourForm.get('raisonSociale')?.value,
     qualiteEntreprise: (this.stepFourForm.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.stepFourForm.get('qualiteEntreprise')?.value,
     achatsDepenses: this.stepFourForm.get('achatsDepenses')?.value,
@@ -5004,19 +5416,24 @@ if (this.selectedChangementMethodePrixTransfertRB === "AutreChangementMethodeDet
     AutreChangementMethodeDeterminationPrixTransfert: this.step5Form.get('AutreChangementMethodeDeterminationPrixTransfert').value
 }}
 
-  let identifiantEntrepriseRBValue: any;
-  if (this.selectedOptionRBiens === "MatriculeFiscal") {
-    identifiantEntrepriseRBValue = { MatriculeFiscal: this.step5Form.get('MatriculeFiscal')?.value };
-  } else if (this.selectedOptionRBiens === "Identifiant") {
-    identifiantEntrepriseRBValue = { Identifiant: this.step5Form.get('Identifiant')?.value };
-  } else if (this.selectedOptionRBiens === "EtatTerritoire") {
-    identifiantEntrepriseRBValue = { EtatTerritoire: this.step5Form.get('EtatTerritoire')?.value };
-  }
-
-  console.log(identifiantEntrepriseRBValue);
+ 
+  if(this.selectedOptionRBiens === "MatriculeFiscal"){
+    this.identifiantEntrepriseRB = {
+     MatriculeFiscal : this.step5Form.get('MatriculeFiscal')?.value
+   }
+ }else if(this.selectedOptionRBiens === "Identifiant"){
+   this.identifiantEntrepriseRB = {
+     Identifiant : this.step5Form.get('Identifiant')?.value
+   }
+ }else if(this.selectedOptionRBiens === "EtatTerritoire"){
+   this.identifiantEntrepriseRB = {
+     EtatTerritoire : this.step5Form.get('EtatTerritoire')?.value
+   }
+ }
+  console.log(this.identifiantEntrepriseRB);
 
   const newRemunerationsBiens: RemunerationsBiens = {
-    identifiantEntreprise: JSON.stringify(identifiantEntrepriseRBValue),
+    identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseRB),
     raisonSociale: this.step5Form.get('raisonSociale')?.value,
     qualiteEntreprise: (this.step5Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step5Form.get('qualiteEntreprise')?.value,
     achatsDepenses: this.step5Form.get('achatsDepenses')?.value,
@@ -5112,20 +5529,23 @@ if (this.selectedChangementMethodePrixTransfertService === "AutreChangementMetho
     AutreChangementMethodeDeterminationPrixTransfert: this.step6Form.get('AutreChangementMethodeDeterminationPrixTransfert').value
 }}
 
-
-  let identifiantEntrepriseServiceValue: any;
-  if (this.selectedOptionS === "MatriculeFiscal") {
-    identifiantEntrepriseServiceValue = { MatriculeFiscal: this.step6Form.get('MatriculeFiscal')?.value };
-  } else if (this.selectedOptionS === "Identifiant") {
-    identifiantEntrepriseServiceValue = { Identifiant: this.step6Form.get('Identifiant')?.value };
-  } else if (this.selectedOptionS === "EtatTerritoire") {
-    identifiantEntrepriseServiceValue = { EtatTerritoire: this.step6Form.get('EtatTerritoire')?.value };
-  }
-
-  console.log(identifiantEntrepriseServiceValue);
+ 
+  if(this.selectedOptionS === "MatriculeFiscal"){
+    this.identifiantEntrepriseService = {
+     MatriculeFiscal : this.step6Form.get('MatriculeFiscal')?.value
+   }
+ }else if(this.selectedOptionS === "Identifiant"){
+   this.identifiantEntrepriseService = {
+     Identifiant : this.step6Form.get('Identifiant')?.value
+   }
+ }else if(this.selectedOptionS === "EtatTerritoire"){
+   this.identifiantEntrepriseService = {
+     EtatTerritoire : this.step6Form.get('EtatTerritoire')?.value
+   }
+ }
 
   const newService: Service = {
-    identifiantEntreprise: JSON.stringify(identifiantEntrepriseServiceValue),
+    identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseService),
     raisonSociale: this.step6Form.get('raisonSociale')?.value,
     qualiteEntreprise: (this.step6Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step6Form.get('qualiteEntreprise')?.value,
     achatsDepenses: this.step6Form.get('achatsDepenses')?.value,
@@ -5225,20 +5645,25 @@ if (this.selectedChangementMethodePrixTransfertFinanciere === "AutreChangementMe
     AutreChangementMethodeDeterminationPrixTransfert: this.step7Form.get('AutreChangementMethodeDeterminationPrixTransfert').value
 }}
 
+ 
 
-  let identifiantEntrepriseFinanciereValue: any;
-  if (this.selectedOptionF === "MatriculeFiscal") {
-    identifiantEntrepriseFinanciereValue = { MatriculeFiscal: this.step7Form.get('MatriculeFiscal')?.value };
-  } else if (this.selectedOptionF === "Identifiant") {
-    identifiantEntrepriseFinanciereValue = { Identifiant: this.step7Form.get('Identifiant')?.value };
-  } else if (this.selectedOptionF === "EtatTerritoire") {
-    identifiantEntrepriseFinanciereValue = { EtatTerritoire: this.step7Form.get('EtatTerritoire')?.value };
-  }
-
-  console.log(identifiantEntrepriseFinanciereValue);
+  if(this.selectedOptionF === "MatriculeFiscal"){
+    this.identifiantEntrepriseFinanciere = {
+     MatriculeFiscal : this.step7Form.get('MatriculeFiscal')?.value
+   }
+ }else if(this.selectedOptionF === "Identifiant"){
+   this.identifiantEntrepriseFinanciere = {
+     Identifiant : this.step7Form.get('Identifiant')?.value
+   }
+ }else if(this.selectedOptionF === "EtatTerritoire"){
+   this.identifiantEntrepriseFinanciere = {
+     EtatTerritoire : this.step7Form.get('EtatTerritoire')?.value
+   }
+ }
+  console.log(this.identifiantEntrepriseFinanciere);
 
   const newFinanciere: Financiere = {
-    identifiantEntreprise: JSON.stringify(identifiantEntrepriseFinanciereValue),
+    identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseFinanciere),
     raisonSociale: this.step7Form.get('raisonSociale')?.value,
     qualiteEntreprise: (this.step7Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step7Form.get('qualiteEntreprise')?.value,
     achatsDepenses: this.step7Form.get('achatsDepenses')?.value,
@@ -5300,7 +5725,7 @@ return;
  
 const newDescriptionTransactionsRegimeFiscalPrivilegie: DescriptionTransactionsRegimeFiscalPrivilegie  = {
  
-description: this.step0Form.get('description')?.value,
+  descriptionTransactionsRegimeFiscalPrivilegie: this.step0Form.get('description')?.value,
 declaration: this.declarationId  
 
 };
@@ -5395,19 +5820,25 @@ if (this.selectedChangementMethodePrixTransfertCessionAcquisitionActif === "Autr
   this.jsonObject = {
     AutreChangementMethodeDeterminationPrixTransfert: this.step7Form.get('AutreChangementMethodeDeterminationPrixTransfert').value
 }}
-  let identifiantEntrepriseCessionAcquisitionActifValue: any;
-  if (this.selectedOptionC === "MatriculeFiscal") {
-    identifiantEntrepriseCessionAcquisitionActifValue = { MatriculeFiscal: this.step7Form.get('MatriculeFiscal')?.value };
-  } else if (this.selectedOptionC === "Identifiant") {
-    identifiantEntrepriseCessionAcquisitionActifValue = { Identifiant: this.step7Form.get('Identifiant')?.value };
-  } else if (this.selectedOptionC === "EtatTerritoire") {
-    identifiantEntrepriseCessionAcquisitionActifValue = { EtatTerritoire: this.step7Form.get('EtatTerritoire')?.value };
-  }
+ 
 
-  console.log(identifiantEntrepriseCessionAcquisitionActifValue);
+  if(this.selectedOptionC === "MatriculeFiscal"){
+    this.identifiantEntrepriseCessionAcquisitionActif = {
+     MatriculeFiscal : this.step8Form.get('MatriculeFiscal')?.value
+   }
+ }else if(this.selectedOptionC === "Identifiant"){
+   this.identifiantEntrepriseCessionAcquisitionActif = {
+     Identifiant : this.step8Form.get('Identifiant')?.value
+   }
+ }else if(this.selectedOptionC === "EtatTerritoire"){
+   this.identifiantEntrepriseCessionAcquisitionActif = {
+     EtatTerritoire : this.step8Form.get('EtatTerritoire')?.value
+   }
+ }
+  console.log(this.identifiantEntrepriseCessionAcquisitionActif);
 
   const newCessionAcquisitionActif: CessionAcquisitionActif = {
-    identifiantEntreprise: JSON.stringify(identifiantEntrepriseCessionAcquisitionActifValue),
+    identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseCessionAcquisitionActif),
     raisonSociale: this.step8Form.get('raisonSociale')?.value,
     qualiteEntreprise: (this.step8Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step8Form.get('qualiteEntreprise')?.value,
     achatsDepenses: this.step8Form.get('achatsDepenses')?.value,
@@ -5422,12 +5853,12 @@ if (this.selectedChangementMethodePrixTransfertCessionAcquisitionActif === "Autr
   this.CessionAcquisitionActifService.createCessionAcquisitionActif(newCessionAcquisitionActif, idDeclaration).subscribe(
     data => {
       console.log('CessionAcquisitionActif created:', data);
-      // Reset the form after successfully submitting
+       
       this.resetForm8();
     },
     error => {
       console.error('Error creating CessionAcquisitionActif :', error);
-      // Optionally handle errors here
+       
     }
   );
 }
@@ -5502,19 +5933,27 @@ if (this.selectedChangementMethodePrixTransfertAutreOperation === "AutreChangeme
     AutreChangementMethodeDeterminationPrixTransfert: this.step9Form.get('AutreChangementMethodeDeterminationPrixTransfert').value
 }}
 
-  let identifiantEntrepriseAutreOperationValue: any;
-  if (this.selectedOptionA === "MatriculeFiscal") {
-    identifiantEntrepriseAutreOperationValue = { MatriculeFiscal: this.step9Form.get('MatriculeFiscal')?.value };
-  } else if (this.selectedOptionA === "Identifiant") {
-    identifiantEntrepriseAutreOperationValue = { Identifiant: this.step9Form.get('Identifiant')?.value };
-  } else if (this.selectedOptionA === "EtatTerritoire") {
-    identifiantEntrepriseAutreOperationValue = { EtatTerritoire: this.step9Form.get('EtatTerritoire')?.value };
-  }
+ 
+  
+  if(this.selectedOptionA === "MatriculeFiscal"){
+    this.identifiantEntrepriseAutreOperation = {
+     MatriculeFiscal : this.step9Form.get('MatriculeFiscal')?.value
+   }
+ }else if(this.selectedOptionA === "Identifiant"){
+   this.identifiantEntrepriseAutreOperation = {
+     Identifiant : this.step9Form.get('Identifiant')?.value
+   }
+ }else if(this.selectedOptionA === "EtatTerritoire"){
+   this.identifiantEntrepriseAutreOperation = {
+     EtatTerritoire : this.step9Form.get('EtatTerritoire')?.value
+   }
+ }
+  console.log(this.identifiantEntrepriseAutreOperation);
 
-  console.log(identifiantEntrepriseAutreOperationValue);
+ 
 
   const newAutreOperation: AutreOperation  = {
-    identifiantEntreprise: JSON.stringify(identifiantEntrepriseAutreOperationValue),
+    identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseAutreOperation),
     raisonSociale: this.step9Form.get('raisonSociale')?.value,
     qualiteEntreprise: (this.step9Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step9Form.get('qualiteEntreprise')?.value,
     achatsDepenses: this.step9Form.get('achatsDepenses')?.value,
@@ -5530,18 +5969,18 @@ if (this.selectedChangementMethodePrixTransfertAutreOperation === "AutreChangeme
   this.AutreOperationService.createAutreOperation(newAutreOperation, idDeclaration).subscribe(
     data => {
       console.log('CessionAcquisitionActif created:', data);
-      // Reset the form after successfully submitting
+       
       this.resetForm9();
     },
     error => {
       console.error('Error creating CessionAcquisitionActif :', error);
-      // Optionally handle errors here
+       
     }
   );
 }
 
 resetForm9(): void {
-  // Reset form fields and set submitted to false
+   
   this.submitted9 = false;
   this.step9Form.reset();
 }
@@ -5591,20 +6030,25 @@ step10Submit(): void {
       AutreQualite: this.step10Form.get('AutreQualite').value
   }}
   
-
-  let identifiantEntreprisePretAccordeValue: any;
-  if (this.selectedOptionP === "MatriculeFiscal") {
-    identifiantEntreprisePretAccordeValue = { MatriculeFiscal: this.step10Form.get('MatriculeFiscal')?.value };
-  } else if (this.selectedOptionP === "Identifiant") {
-    identifiantEntreprisePretAccordeValue = { Identifiant: this.step10Form.get('Identifiant')?.value };
-  } else if (this.selectedOptionP === "EtatTerritoire") {
-    identifiantEntreprisePretAccordeValue = { EtatTerritoire: this.step10Form.get('EtatTerritoire')?.value };
-  }
-
-  console.log(identifiantEntreprisePretAccordeValue);
+ 
+  
+  if(this.selectedOptionP === "MatriculeFiscal"){
+    this.identifiantEntreprisePretAccorde = {
+     MatriculeFiscal : this.step10Form.get('MatriculeFiscal')?.value
+   }
+ }else if(this.selectedOptionP === "Identifiant"){
+   this.identifiantEntreprisePretAccorde = {
+     Identifiant : this.step10Form.get('Identifiant')?.value
+   }
+ }else if(this.selectedOptionP === "EtatTerritoire"){
+   this.identifiantEntreprisePretAccorde = {
+     EtatTerritoire : this.step10Form.get('EtatTerritoire')?.value
+   }
+ }
+  console.log(this.identifiantEntreprisePretAccorde);
 
   const newPretAccorde: PretAccorde = {
-    identifiantEntreprise: JSON.stringify(identifiantEntreprisePretAccordeValue),
+    identifiantEntreprise: JSON.stringify(this.identifiantEntreprisePretAccorde),
     raisonSociale: this.step10Form.get('raisonSociale')?.value,
     qualiteEntreprise: (this.step10Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step10Form.get('qualiteEntreprise')?.value,  
     devise: this.step10Form.get('devise')?.value,
@@ -5632,7 +6076,7 @@ step10Submit(): void {
 }
 
 resetForm10(): void {
-  // Reset form fields and set submitted to false
+ 
   this.submitted10 = false;
   this.step10Form.reset();
 }
@@ -5752,21 +6196,25 @@ step12Submit(): void {
       AutreQualite: this.step12Form.get('AutreQualite').value
   }}
   
-
-
-  let identifiantEntrepriseContrepartieNonMonetaire: any;
-  if (this.selectedOptionCNM === "MatriculeFiscal") {
-    identifiantEntrepriseContrepartieNonMonetaire = { MatriculeFiscal: this.step12Form.get('MatriculeFiscal')?.value };
-  } else if (this.selectedOptionCNM === "Identifiant") {
-    identifiantEntrepriseContrepartieNonMonetaire = { Identifiant: this.step12Form.get('Identifiant')?.value };
-  } else if (this.selectedOptionCNM === "EtatTerritoire") {
-    identifiantEntrepriseContrepartieNonMonetaire = { EtatTerritoire: this.step12Form.get('EtatTerritoire')?.value };
-  }
-
-  console.log(identifiantEntrepriseContrepartieNonMonetaire);
+ 
+   
+  if(this.selectedOptionCNM === "MatriculeFiscal"){
+    this.identifiantEntrepriseContrepartieNonMonetaire = {
+     MatriculeFiscal : this.step12Form.get('MatriculeFiscal')?.value
+   }
+ }else if(this.selectedOptionCNM === "Identifiant"){
+   this.identifiantEntrepriseContrepartieNonMonetaire = {
+     Identifiant : this.step12Form.get('Identifiant')?.value
+   }
+ }else if(this.selectedOptionCNM === "EtatTerritoire"){
+   this.identifiantEntrepriseContrepartieNonMonetaire = {
+     EtatTerritoire : this.step12Form.get('EtatTerritoire')?.value
+   }
+ }
+  console.log(this.identifiantEntrepriseContrepartieNonMonetaire);
 
   const newContrepartieNonMonetaire: ContrepartieNonMonetaire = {
-    identifiantEntreprise: JSON.stringify(identifiantEntrepriseContrepartieNonMonetaire),
+    identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseContrepartieNonMonetaire),
     raisonSociale: this.step12Form.get('raisonSociale')?.value,
     qualiteEntreprise: (this.step12Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step12Form.get('qualiteEntreprise')?.value,    
     natureRelationEntreprise:(this.step12Form.get('natureRelationEntreprise')?.value === 'AutreNatureRelation') ? JSON.stringify(this.jsonObject) : this.step12Form.get('natureRelationEntreprise')?.value,    
@@ -5806,6 +6254,93 @@ resetForm12(): void {
 
 
 
+identifiantEntrepriseBiensOuServicesSansContrePartie: any
+submitted14= false;
+step14Submit(): void {
+  const idDeclaration = this.shared.getData(); 
+  this.submitted14 = true;
+
+  if (this.selectedNatureBiensOuServicesSansContrePartie === "AutreNatureRelation"){
+      
+
+      
+    this.jsonObject = {
+      AutreNatureRelation: this.step14Form.get('AutreNatureRelation').value
+  }
+  
+  }
+
+  if (this.selectedQualiteBiensOuServicesSansContrePartie=== "AutreQualite"){
+    
+
+    
+    this.jsonObject = {
+      AutreQualite: this.step14Form.get('AutreQualite').value
+  }}
+  
+ 
+
+   
+  if(this.selectedOptionBSC === "MatriculeFiscal"){
+    this.identifiantEntrepriseBiensOuServicesSansContrePartie = {
+     MatriculeFiscal : this.step14Form.get('MatriculeFiscal')?.value
+   }
+ }else if(this.selectedOptionBSC === "Identifiant"){
+   this.identifiantEntrepriseBiensOuServicesSansContrePartie = {
+     Identifiant : this.step14Form.get('Identifiant')?.value
+   }
+ }else if(this.selectedOptionBSC === "EtatTerritoire"){
+   this.identifiantEntrepriseBiensOuServicesSansContrePartie = {
+     EtatTerritoire : this.step14Form.get('EtatTerritoire')?.value
+   }
+ }
+  console.log(this.identifiantEntrepriseBiensOuServicesSansContrePartie);
+
+  const newBiensOuServicesSansContrePartie: BiensOuServicesSansContrePartie = {
+    identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseBiensOuServicesSansContrePartie),
+    raisonSociale: this.step14Form.get('raisonSociale')?.value,
+    qualiteEntreprise: (this.step14Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step12Form.get('qualiteEntreprise')?.value,    
+    natureRelationEntreprise:(this.step14Form.get('natureRelationEntreprise')?.value === 'AutreNatureRelation') ? JSON.stringify(this.jsonObject) : this.step14Form.get('natureRelationEntreprise')?.value,    
+    affirmation: this.step14Form.get('affirmation')?.value,
+    natureBiensOuService: this.step14Form.get('NatureBiensOuService')?.value,
+    natureContrepartie: this.step14Form.get('NatureContrepartie')?.value,
+    
+  };
+
+  this.BiensOuServicesSansContrePartieService.createBiensOuServicesSansContrePartie(newBiensOuServicesSansContrePartie, idDeclaration).subscribe(
+    data => {
+      console.log('BiensOuServicesSansContrePartie created:', data);
+     
+      this.resetForm12();
+    },
+    error => {
+      console.error('Error creating BiensOuServicesSansContrePartie :', error);
+     
+    }
+  );
+}
+
+resetForm14(): void {
+  // Reset form fields and set submitted to false
+  this.submitted14 = false;
+  this.step14Form.reset();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5815,6 +6350,8 @@ resetForm12(): void {
 identifiantEntrepriseOperationsAccordsPrealables : any
 submitted13= false;
 step13Submit(): void {
+  const idDeclaration = this.shared.getData(); 
+
   this.submitted13 = true;
 
   if (this.selectedNatureOperationsAccordsPrealables === "AutreNatureRelation"){
@@ -5835,21 +6372,25 @@ step13Submit(): void {
       AutreQualite: this.step13Form.get('AutreQualite').value
   }}
   
+ 
 
-
-  let identifiantEntrepriseOperationsAccordsPrealables: any;
-  if (this.selectedOptionOAP === "MatriculeFiscal") {
-    identifiantEntrepriseOperationsAccordsPrealables = { MatriculeFiscal: this.step13Form.get('MatriculeFiscal')?.value };
-  } else if (this.selectedOptionOAP === "Identifiant") {
-    identifiantEntrepriseOperationsAccordsPrealables = { Identifiant: this.step13Form.get('Identifiant')?.value };
-  } else if (this.selectedOptionOAP === "EtatTerritoire") {
-    identifiantEntrepriseOperationsAccordsPrealables = { EtatTerritoire: this.step13Form.get('EtatTerritoire')?.value };
-  }
-
-  console.log(identifiantEntrepriseOperationsAccordsPrealables);
+  if(this.selectedOptionOAP === "MatriculeFiscal"){
+    this.identifiantEntrepriseOperationsAccordsPrealables = {
+     MatriculeFiscal : this.step13Form.get('MatriculeFiscal')?.value
+   }
+ }else if(this.selectedOptionOAP === "Identifiant"){
+   this.identifiantEntrepriseOperationsAccordsPrealables = {
+     Identifiant : this.step13Form.get('Identifiant')?.value
+   }
+ }else if(this.selectedOptionOAP === "EtatTerritoire"){
+   this.identifiantEntrepriseOperationsAccordsPrealables = {
+     EtatTerritoire : this.step13Form.get('EtatTerritoire')?.value
+   }
+ }
+  console.log(this.identifiantEntrepriseOperationsAccordsPrealables);
 
   const newOperationsAccordsPrealables: OperationsAccordsPrealables = {
-    identifiantEntreprise: JSON.stringify(identifiantEntrepriseOperationsAccordsPrealables),
+    identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseOperationsAccordsPrealables),
     raisonSociale: this.step13Form.get('raisonSociale')?.value,
     qualiteEntreprise: (this.step13Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step12Form.get('qualiteEntreprise')?.value,    
     natureRelationEntreprise:(this.step13Form.get('natureRelationEntreprise')?.value === 'AutreNatureRelation') ? JSON.stringify(this.jsonObject) : this.step12Form.get('natureRelationEntreprise')?.value,    
@@ -5860,7 +6401,7 @@ step13Submit(): void {
     
   };
 
-  this.OperationsAccordsPrealablesService.createOperationsAccordsPrealables(newOperationsAccordsPrealables, 1).subscribe(
+  this.OperationsAccordsPrealablesService.createOperationsAccordsPrealables(newOperationsAccordsPrealables, idDeclaration).subscribe(
     data => {
       console.log('OperationsAccordsPrealables created:', data);
      

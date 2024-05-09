@@ -4,6 +4,7 @@ import { ThemePalette } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IdentifiantEntreprise } from 'app/models/IdentifiantEntreprise';
 import { InfoED } from 'app/models/InfoDeclaration';
+import { ModifLienC } from 'app/models/ModifLienC';
 import { ParticipationDeclarante } from 'app/models/ParticipationDeclarante';
 import { ParticipationLiee } from 'app/models/ParticipationLiee';
 import { QualiteEntreprise } from 'app/models/QualiteEntreprise';
@@ -399,7 +400,13 @@ export class InfoEDComponent implements OnInit {
   });
 
 
+  step4Form: FormGroup = new FormGroup({
 
+    affirmation: new FormControl(''),
+    description: new FormControl(''),
+    
+
+  });
 
 
   @Input() idDeclaration: number;
@@ -408,6 +415,7 @@ export class InfoEDComponent implements OnInit {
   submitted = false;
   submitted2 = false;
   submitted3 = false;
+  submitted4 = false;
   task: Task = {
     name: 'Indeterminate',
     completed: false,
@@ -423,8 +431,10 @@ export class InfoEDComponent implements OnInit {
     private InfoEDService: ServiceService,
     private shared: SharedServiveService,
     private ParticipationLieeService: ServiceService,
+    private ModifLienCService:ServiceService
   ) { }
   defaultValue = 'N';
+  defaultValueDescription = 'N';
   ngOnInit(): void {
 
     this.stepTwoForm = this.formBuilder.group({
@@ -448,13 +458,7 @@ export class InfoEDComponent implements OnInit {
 
     this.step2Form = this.formBuilder.group({
       AutreQualite: [''],
-      raisonSociale: [
-        '',
-        [
-          Validators.required,
-
-        ]
-      ],
+      raisonSociale: [''],
 
       identifiantEntreprise: [''],
 
@@ -474,13 +478,8 @@ export class InfoEDComponent implements OnInit {
 
     this.step3Form = this.formBuilder.group({
       AutreQualite: [''],
-      raisonSocialePD: [
-        '',
-        [
-          Validators.required,
-
-        ]
-      ],
+      raisonSocialePD:[''],
+        
 
 
 
@@ -495,6 +494,13 @@ export class InfoEDComponent implements OnInit {
 
 
 
+    });
+
+
+    this.step4Form = this.formBuilder.group({
+      affirmation: [this.defaultValueDescription],
+      description:[''],
+   
     });
 
 
@@ -575,20 +581,20 @@ export class InfoEDComponent implements OnInit {
       
       return;
     }
+    console.log('id'+idDeclaration)
     this.qualiteEntreprise.key6.value = this.qualiteEntreprise.key6.key === '6' ? this.stepTwoForm.get('qualiteEntreprise')?.value : null
     const newInfoED: InfoED = {
       qualiteEntreprise: JSON.stringify(this.qualiteEntreprise),
       descriptionActivitePrincipale: this.stepTwoForm.get('descriptionActivitePrincipale')?.value,
       changementsActivite: this.stepTwoForm.get('changementsActivite')?.value,
       description2: this.stepTwoForm.get('description2')?.value,
-      declaration: this.declarationId   
     };
 
     //this.idDeclaration = this.shared.getData().id
     this.InfoEDService.createInfoDeclaration(newInfoED, idDeclaration  ).subscribe(
       data => {
         console.log('InfoED created:', data);
-        this.shared.setData(data.id);
+        this.shared.setinfoEDdata(data.id);
         console.log("qualite" + newInfoED.qualiteEntreprise)
         console.log("changementsActivite" + newInfoED.changementsActivite)
 
@@ -608,7 +614,7 @@ export class InfoEDComponent implements OnInit {
 
   jsonObject:any
   step2Submit(): void {
-    const idInfoED = this.shared.getData(); 
+    const idInfoED = this.shared.getinfoEDdata(); 
     this.submitted2 = true;
     
     if (this.step2Form.invalid) {
@@ -966,18 +972,45 @@ export class InfoEDComponent implements OnInit {
 
 
   goToNextForm2() {
-    this.currentForm++;
-    this.step2Submit()
+    if(this.step2Form.invalid){
+      Object.keys(this.step2Form.controls).forEach(key => {
+        this.step2Form.get(key).markAsTouched();
+      });
+      console.log("invalid");
+      return
+    }else{
+      this.currentForm++;
+      this.step2Submit()
+    }
+
+
+  }
+
+
+  goToNextForm3() {
+    if(this.step3Form.invalid){
+      Object.keys(this.step3Form.controls).forEach(key => {
+        this.step3Form.get(key).markAsTouched();
+      });
+      console.log("invalid");
+      return
+    }else{
+      this.currentForm++;
+      this.step3Submit()
+    }
+
 
   }
 
 
 
 
-
-
-
-
+  textAreaValueDescription: string = 'N';
+  showTextAreaDescription: boolean = false;
+  
+  toggleTextAreaDescription(event: any) {
+    this.showTextAreaDescription = event.value === 'O';
+  }
 
 
 
@@ -1313,7 +1346,7 @@ export class InfoEDComponent implements OnInit {
 
   step3Submit(): void {
     this.submitted3 = true;
-    const idInfoED = this.shared.getData(); 
+    const idInfoED = this.shared.getinfoEDdata(); 
     if (this.step3Form.invalid) {
       return;
     }
@@ -1364,6 +1397,49 @@ export class InfoEDComponent implements OnInit {
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  step4Submit(): void {
+    this.submitted3 = true;
+    const idInfoED = this.shared.getinfoEDdata(); 
+    if (this.step3Form.invalid) {
+      return;
+    }
+
+   
+     const newModifLienC: ModifLienC = {
+       affirmation: this.step4Form.get('affirmation')?.value,
+      description: this.step4Form.get('description')?.value,
+      
+
+    };
+     
+ 
+    this.ModifLienCService.createModifLienC(newModifLienC, idInfoED).subscribe(
+      data2 => {
+        console.log('ModifLienC created:', data2);
+        console.log(data2);
+        console.log(newModifLienC);
+      },
+      error => {
+        console.error('Error creating ModifLienC:', error);
+      }
+    );
+  }
 
 }
 

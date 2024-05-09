@@ -10,7 +10,8 @@ export class SharedServiveService {
   }
 
   data:any
-
+  infoEDdata:any
+  infoGEdata:any
 
   setData(data) {
     this.data = data;
@@ -22,5 +23,25 @@ export class SharedServiveService {
   }
 
 
+  setinfoEDdata(infoEDdata) {
+    this.infoEDdata = infoEDdata;
+  }
 
+
+  getinfoEDdata(){
+    return this.infoEDdata
+  }
+
+
+
+
+  
+  setinfoGEdata(infoGEdata) {
+    this.infoGEdata = infoGEdata;
+  }
+
+
+  getinfoGEdata(){
+    return this.infoGEdata
+  }
 }

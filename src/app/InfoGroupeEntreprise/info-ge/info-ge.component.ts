@@ -348,7 +348,7 @@ export class InfoGEComponent implements OnInit {
     });
 
     this.step6Form = this.formBuilder.group({
-      affirmation: [''],
+      affirmation: [this.textAreaValue],
       descripton: [''],
       
 
@@ -796,6 +796,7 @@ onOptionChangeAI(event: any) {
   identifiantEntreprise : any
   stepThreeSubmit(): void {
     const idDeclaration = this.shared.getData(); 
+    console.log(idDeclaration)
     this.submitted = true;
     console.log(this.stepThreeForm);
     
@@ -826,20 +827,23 @@ onOptionChangeAI(event: any) {
     }
   
     console.log("Identifiant Entreprise:", this.identifiantEntreprise);
-    
+    console.log("test1" +idDeclaration)
+
     const newInfoGE: InfoGE = {
       identifiantEntreprise: JSON.stringify(this.identifiantEntreprise),
       raisonSociale: this.stepThreeForm.get('RaisonSociale')?.value,
       adresseSiegeSocial: this.stepThreeForm.get('AdresseSiegeSocial')?.value,
       descriptionPrincipalesActivites: this.stepThreeForm.get('descriptionPrincipalesActivites')?.value,
       descriptionGeneralePolitiquePrixTransfert: this.stepThreeForm.get('DescriptionPolitique')?.value,
-      declaration: idDeclaration
     };
-  
+    console.log(newInfoGE);
+    console.log("test2" +idDeclaration)
+
     // Call the service to create new InfoGE
     this.InfoGEService.createInfoGE(newInfoGE, idDeclaration).subscribe(
       data => {
         console.log('Info groupe entreprise created:', data);
+        this.shared.setinfoGEdata(data.id);
         console.log('Declaration ID:', idDeclaration);
         console.log('newInfoGE data:', data);
       },
@@ -850,38 +854,38 @@ onOptionChangeAI(event: any) {
   }
   
   identifiantEntrepriseAI : any
-
+  jsonObject:any
   submitted4 = false;
   step4Submit() {
-    const idInfoGE = this.shared.getData(); 
+    const idInfoGE = this.shared.getinfoGEdata(); 
     this.submitted4 = true;
   
-    if (this.step4Form.invalid) {
-      Object.keys(this.step4Form.controls).forEach(key => {
-        this.step4Form.get(key).markAsTouched();
-      });
-      return;
-    }
-  
-    let identifiantEntrepriseAIValue: any;
-    switch (this.selectedOptionAI) {
-      case "MatriculeFiscal":
-        identifiantEntrepriseAIValue = { MatriculeFiscal: this.step4Form.get('MatriculeFiscal')?.value };
-        break;
-      case "Identifiant":
-        identifiantEntrepriseAIValue = { Identifiant: this.step4Form.get('Identifiant')?.value };
-        break;
-      case "EtatTerritoire":
-        identifiantEntrepriseAIValue = { EtatTerritoire: this.step4Form.get('EtatTerritoire')?.value };
-        break;
-    }
-  
-    const qualiteEntrepriseAI = this.qualiteEntrepriseAI.key6.key === '6' ? this.step4Form.get('qualiteEntreprise')?.value : null;
-    
+    if (this.selectedQualite === "AutreQualite"){
+      
+
+      
+      this.jsonObject = {
+        AutreQualite: this.step4Form.get('AutreQualite').value
+    }}
+    if(this.selectedOptionAI === "MatriculeFiscal"){
+      this.identifiantEntrepriseAI = {
+       MatriculeFiscal : this.step4Form.get('MatriculeFiscal')?.value
+     }
+   }else if(this.selectedOptionAI === "Identifiant"){
+     this.identifiantEntrepriseAI = {
+       Identifiant : this.step4Form.get('Identifiant')?.value
+     }
+   }else if(this.selectedOptionAI === "EtatTerritoire"){
+     this.identifiantEntrepriseAI = {
+       EtatTerritoire : this.step4Form.get('EtatTerritoire')?.value
+     }
+   }
+
+   console.log(this.identifiantEntrepriseAI); 
 const newActifIncorporel: ActifIncorporel = {
-  identifiantEntreprise: JSON.stringify(identifiantEntrepriseAIValue),
+  identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseAI),
   nature_ActifIncorporel: this.step4Form.get('NatureActifIncorporel')?.value,
-  qualiteEntreprise: JSON.stringify(this.qualiteEntrepriseAI),
+  qualiteEntreprise: (this.step4Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step4Form.get('qualiteEntreprise')?.value,
   raisonSociale: this.step4Form.get('RaisonSociale')?.value,
   onereuxGratuit: this.step4Form.get('onereuxGratuit')?.value,
   natureRelationEntreprise: this.step4Form.get('NatureRelation')?.value,
@@ -910,7 +914,7 @@ this.ActifIncorporelService.createActifIncorporel(newActifIncorporel, idInfoGE).
   identifiantEntrepriseAC : any
   submitted5 = false;
   step5Submit() {
-    const idInfoGE = this.shared.getData(); 
+    const idInfoGE = this.shared.getinfoGEdata(); 
     this.submitted5 = true;
   
     if (this.step5Form.invalid) {
@@ -1286,15 +1290,26 @@ this.ActifIncorporelService.createActifIncorporel(newActifIncorporel, idInfoGE).
   }
 
 
+ 
+
 
   goToNextFormAC() {
-    this.currentForm++;
-    this.step4Submit()
+    if(this.step4Form.invalid){
+      Object.keys(this.step4Form.controls).forEach(key => {
+        this.step4Form.get(key).markAsTouched();
+      });
+      console.log("invalid");
+      return
+    }else{
+      this.currentForm++;
+      this.step4Submit()
+    }
 
   }
 
 
-  selectedOptionAC: string = 'MatriculeFiscal'; // Default to 'MatriculeFiscal'
+
+  selectedOptionAC: string = 'MatriculeFiscal'; 
   
   onOptionChangeAC(event: any) {
       this.selectedOptionAC= event.value;
@@ -1343,35 +1358,35 @@ this.ActifIncorporelService.createActifIncorporel(newActifIncorporel, idInfoGE).
 
   submitted6 = false;
   step6Submit() {
-    const idInfoGE = this.shared.getData(); 
+    const idInfoGE = this.shared.getinfoGEdata(); 
     this.submitted6 = true;
-  
+   
     if (this.step6Form.invalid) {
       Object.keys(this.step6Form.controls).forEach(key => {
         this.step6Form.get(key).markAsTouched();
       });
-      return;  // Exit the function if the form is not valid
+      return;   
     }
   
     const newRestructurationsGE: RestructurationsGE = {
       affirmation: this.step6Form.get('affirmation')?.value,
-      descripton: this.step6Form.get('descripton')?.value,  // Using 'descripton' as per your type definition
+      descripton: this.step6Form.get('descripton')?.value,   
     };
   
-    // Log the new object to console for debugging
+   
     console.log(newRestructurationsGE);
   
-    // Call the service to create the new RestructurationsGE
+    
     this.RestructurationGEService.createRestructurationGE(newRestructurationsGE, idInfoGE).subscribe(
       data => {
         console.log('RestructurationsGE linked created:', data);
-        console.log('Response data:', data);  // This may be redundant if 'data' does not have additional structure
+        console.log('Response data:', data);  
         console.log('Submitted RestructurationsGE:', newRestructurationsGE);
-        this.resetForm6();  // Reset the form on successful data submission
+        this.resetForm6();  
       },
       error => {
         console.error('Error creating RestructurationsGE:', error);
-        // Display an error message to the user if needed
+         
       }
     );
   }
