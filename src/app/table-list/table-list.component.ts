@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Declaration } from 'app/models/Declaration';
 import { Entreprise } from 'app/models/entreprise';
 import { ServiceService } from 'app/service.service';
+import { SharedServiveService } from 'app/shared-servive.service';
 
 @Component({
   selector: 'app-table-list',
@@ -16,7 +17,9 @@ export class TableListComponent implements OnInit {
   entrepriseId: number;
 
   constructor(private serviceService: ServiceService,
-     private router: Router, private entrepriseService: ServiceService) { }
+     private router: Router, private entrepriseService: ServiceService,
+     private shared: SharedServiveService
+    ) { }
   ngOnInit(): void {
     // Get userId from cookie
     const user = JSON.parse(this.getCookie('user'));
@@ -88,7 +91,10 @@ export class TableListComponent implements OnInit {
       
         this.loadDeclarationsByEntreprise(this.entrepriseId);
   
-        this.router.navigate(['/dashboard', { id: id }]);
+        this.router.navigate(['/view', { id: id }]);
+        console.log("idddddddd"+id);
+        const idDeclaration = this.shared.setData(id); 
+
       },
       error => {
         console.error('Error fetching declaration:', error);

@@ -8,27 +8,10 @@
                         <p class="card-category">Here is a subtitle for this table</p>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead class="text-primary">
-                                    <th>Key</th>
-                                    <th>Value</th>
-                                    
-                                </thead>
-                                <tbody>
-                                    <tr >
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td>
-                                            <button >Delete</button>
-                                            <button>View</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <textarea [(ngModel)]="xmlContent" rows="100" class="form-control"></textarea>
+                        <button mat-raised-button class="custom-button" style="margin-left: 10px;" >Enregistrer</button>
+                        <button mat-raised-button class="custom-button" style="margin-left: 10px;" >Exporter</button>
+
                     </div>
                 </div>
             </div>
