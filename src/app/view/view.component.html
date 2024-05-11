@@ -9,8 +9,8 @@
                     </div>
                     <div class="card-body">
                         <textarea [(ngModel)]="xmlContent" rows="100" class="form-control"></textarea>
-                        <button mat-raised-button class="custom-button" style="margin-left: 10px;" >Enregistrer</button>
-                        <button mat-raised-button class="custom-button" style="margin-left: 10px;" >Exporter</button>
+                        <button mat-raised-button class="custom-button" style="margin-left: 10px;" (click)="SaveXml()" >Enregistrer</button>
+                        <button mat-raised-button class="custom-button" style="margin-left: 10px;" (click)="DownloadXml()" >Exporter</button>
 
                     </div>
                 </div>

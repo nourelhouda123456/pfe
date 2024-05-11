@@ -25,8 +25,9 @@ export class AutreInfoComponent   {
   
   constructor(private formBuilder: FormBuilder,
     private AutreInfoARenseignerService: ServiceService,
-    private router: Router,
-    private  shared: SharedServiveService) {}
+     private  shared: SharedServiveService,
+        private declarationService: ServiceService,
+) {}
 
 
     userId: number;
@@ -80,10 +81,14 @@ export class AutreInfoComponent   {
       const idDeclaration = this.shared.getData(); 
       this.submitted = true;
     
-    if (this.stepFiveForm.invalid) {
-    
-    return;
-    }
+      if (this.stepFiveForm.invalid) {
+        Object.keys(this.stepFiveForm.controls).forEach(key => {
+          this.stepFiveForm.get(key).markAsTouched();
+        });
+        console.log("invalid");
+        
+        return;
+      }
     
      
     const newAutreInfoARenseigner: AutreInfoARenseigner  = {
@@ -107,4 +112,14 @@ export class AutreInfoComponent   {
     );
     }
 
+
+
+
+
+
+    xmlContent: string = '';
+
+
+
+     
 }

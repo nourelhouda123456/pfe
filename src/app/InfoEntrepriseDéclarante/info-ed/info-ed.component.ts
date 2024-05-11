@@ -325,7 +325,7 @@ export class InfoEDComponent implements OnInit {
   }
 
 
-
+  
   selectedOption: string = '';
   isAutreSelected: boolean = false;
 
@@ -389,12 +389,13 @@ export class InfoEDComponent implements OnInit {
 
   step3Form: FormGroup = new FormGroup({
 
-    raisonSocialePD: new FormControl(''),
-    pourcentageDetentionCapitalPD: new FormControl(''),
-    pourcentageDetentionDroitsVotePD: new FormControl(''),
-    MatriculeFiscalPD: new FormControl(''),
-    IdentifiantPD: new FormControl(''),
-    EtatTerritoirePD: new FormControl(''),
+    raisonSociale: new FormControl(''),
+    pourcentageDetentionCapital: new FormControl(''),
+    pourcentageDetentionDroitsVote: new FormControl(''),
+    MatriculeFiscal: new FormControl(''),
+    Identifiant: new FormControl(''),
+    EtatTerritoire: new FormControl(''),
+
     AutreQualite: new FormControl(''),
 
   });
@@ -431,6 +432,7 @@ export class InfoEDComponent implements OnInit {
     private InfoEDService: ServiceService,
     private shared: SharedServiveService,
     private ParticipationLieeService: ServiceService,
+    private ParticipationDeclaranteService: ServiceService,
     private ModifLienCService:ServiceService
   ) { }
   defaultValue = 'N';
@@ -478,19 +480,17 @@ export class InfoEDComponent implements OnInit {
 
     this.step3Form = this.formBuilder.group({
       AutreQualite: [''],
-      raisonSocialePD:[''],
-        
-
+      raisonSociale: [''],
 
 
       qualiteEntreprise: [''],
 
-      pourcentageDetentionCapitalPD: [''],
-      pourcentageDetentionDroitsVotePD: [''],
-      MatriculeFiscalPD: [''],
+      pourcentageDetentionCapital: [''],
+      pourcentageDetentionDroitsVote: [''],
+      MatriculeFiscal: [''],
+      Identifiant: [''],
+      EtatTerritoire: [''],
 
-      IdentifiantPD: [''],
-      EtatTerritoirePD: [''],
 
 
 
@@ -634,13 +634,11 @@ export class InfoEDComponent implements OnInit {
       }
     }else if(this.selectedOption1 === "Identifiant"){
       this.identifiantEntreprise = {
-        Identifiant : this.step2Form.get('Identifiant')?.value
-      }
-    }else if(this.selectedOption1 === "EtatTerritoire"){
-      this.identifiantEntreprise = {
+        Identifiant : this.step2Form.get('Identifiant')?.value,
         EtatTerritoire : this.step2Form.get('EtatTerritoire')?.value
+
       }
-    }
+    } 
     console.log(this.identifiantEntreprise);
     
     const newEntrepriseLiee: ParticipationLiee = {
@@ -653,10 +651,11 @@ export class InfoEDComponent implements OnInit {
     };
     console.log(newEntrepriseLiee);
 
-    //this.idDeclaration = this.shared.getData().id
+    
     this.ParticipationLieeService.createParticipationLiee(newEntrepriseLiee, idInfoED).subscribe(
       data2 => {
         console.log('entreprise liee created:', data2);
+        this.resetForm();
         console.log(data2);
         console.log(newEntrepriseLiee);
       },
@@ -666,6 +665,11 @@ export class InfoEDComponent implements OnInit {
     );
   }
 
+  resetForm(): void {
+ 
+    this.submitted2 = false;
+    this.step2Form.reset();
+  }
 
 
 
@@ -1341,16 +1345,17 @@ export class InfoEDComponent implements OnInit {
 
 
 
-
   
 
+
+  identifiantEntreprisePD:any
   step3Submit(): void {
-    this.submitted3 = true;
     const idInfoED = this.shared.getinfoEDdata(); 
+    this.submitted3 = true;
+    
     if (this.step3Form.invalid) {
       return;
     }
-
     if (this.selectedQualite === "AutreQualite"){
       
 
@@ -1359,45 +1364,57 @@ export class InfoEDComponent implements OnInit {
         AutreQualite: this.step3Form.get('AutreQualite').value
     }}
 
-     if(this.selectedOptionPD === "MatriculeFiscal"){
-       this.identifiantEntreprise = {
+     if(this.selectedOptionPD === "MatriculeFiscalPD"){
+       this.identifiantEntreprisePD = {
         MatriculeFiscal : this.step3Form.get('MatriculeFiscal')?.value
       }
-    }else if(this.selectedOptionPD === "Identifiant"){
-      this.identifiantEntreprise = {
-        Identifiant : this.step3Form.get('Identifiant')?.value
-      }
-    }else if(this.selectedOptionPD === "EtatTerritoire"){
-      this.identifiantEntreprise = {
+    }else if(this.selectedOptionPD === "IdentifiantPD"){
+      this.identifiantEntreprisePD = {
+        Identifiant : this.step3Form.get('Identifiant')?.value,
         EtatTerritoire : this.step3Form.get('EtatTerritoire')?.value
+
       }
-    }
-    console.log(this.identifiantEntreprise);
-     const newEntrepriseDeclarante: ParticipationDeclarante = {
+    } 
+    console.log(this.identifiantEntreprisePD);
+    
+    const newEntrepriseDeclarante: ParticipationDeclarante = {
       qualiteEntreprise: (this.step3Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step3Form.get('qualiteEntreprise')?.value,
-      identifiantEntreprise: this.step3Form.get('identifiantEntreprise')?.value,
-      raisonSociale: this.step3Form.get('raisonSocialePD')?.value,
-      pourcentage_detention_capital: this.step3Form.get('pourcentageDetentionCapitalPD')?.value,
-      pourcentage_detention_droits_vote: this.step3Form.get('pourcentageDetentionDroitsVotePD')?.value,
+      identifiantEntreprise: JSON.stringify(this.identifiantEntreprisePD),
+      raisonSociale: this.step3Form.get('raisonSociale')?.value,
+      pourcentage_detention_capital: this.step3Form.get('pourcentageDetentionCapital')?.value,
+      pourcentage_detention_droits_vote: this.step3Form.get('pourcentageDetentionDroitsVote')?.value,
 
     };
     console.log(newEntrepriseDeclarante);
 
-    //this.idDeclaration = this.shared.getData().id
-    this.ParticipationLieeService.createParticipationDeclarante(newEntrepriseDeclarante, idInfoED).subscribe(
+    
+    this.ParticipationDeclaranteService.createParticipationDeclarante(newEntrepriseDeclarante, idInfoED).subscribe(
       data2 => {
         console.log('entreprise liee created:', data2);
+        this.resetForm3();
         console.log(data2);
         console.log(newEntrepriseDeclarante);
       },
       error => {
-        console.error('Error creating entreprise declarante:', error);
+        console.error('Error creating entreprise liee:', error);
       }
     );
   }
 
 
 
+
+
+
+ 
+
+
+
+  resetForm3(): void {
+ 
+    this.submitted3 = false;
+    this.step3Form.reset();
+  }
 
 
 

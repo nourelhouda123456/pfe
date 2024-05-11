@@ -16,49 +16,40 @@
             <div class="row">
               <mat-label class="label-margin">Identifiant Entreprise</mat-label>
               <mat-radio-group aria-label="Choisir une option" (change)="onOptionChange($event)">
-                <mat-radio-button checked class="label-margin" [checked]="selectedOption === 'MatriculeFiscal'"
-                  value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
-                <mat-radio-button class="label-margin" [checked]="selectedOption=== 'Identifiant'"
-                  value="Identifiant">Identifiant</mat-radio-button>
-                <mat-radio-button class="label-margin" [checked]="selectedOption === 'EtatTerritoire'"
-                  value="EtatTerritoire">Etat Territoire</mat-radio-button>
+                  <mat-radio-button class="label-margin" [checked]="selectedOption === 'MatriculeFiscal'" value="MatriculeFiscal">Matricule Fiscal</mat-radio-button>
+                  <mat-radio-button class="label-margin" [checked]="selectedOption=== 'Identifiant'" value="Identifiant">Identifiant</mat-radio-button>
               </mat-radio-group>
-            </div>
-
-
-
-            <!-- Input field for "MatriculeFiscal" -->
-            <div class="row">
-              <mat-form-field class="example-full-width" *ngIf="selectedOption === 'MatriculeFiscal'">
-
-                <input matInput placeholder="MatriculeFiscal" placeholder="Entrez le MatriculeFiscal"
-                  [(ngModel)]="matriculeFiscalValue" formControlName="MatriculeFiscal">
-
-
-              </mat-form-field>
-            </div>
-
-            <!-- Input field for "Identifiant" -->
-            <div class="row">
-              <mat-form-field class="example-full-width" *ngIf="selectedOption=== 'Identifiant'">
-                <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
-
-
-              </mat-form-field>
-            </div>
-
-
-            <div class="row" *ngIf="selectedOption === 'EtatTerritoire'">
+          </div>
+          
+          <!-- Input field for "MatriculeFiscal" -->
+          <div class="row" *ngIf="selectedOption === 'MatriculeFiscal'">
               <mat-form-field class="example-full-width">
-                <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
-                  <mat-option *ngFor="let country of countries" [value]="country.code">
-                    {{ country.name }}
-                  </mat-option>
-                </mat-select>
+                  <input matInput placeholder="Entrez le MatriculeFiscal" [(ngModel)]="matriculeFiscalValue" formControlName="MatriculeFiscal">
               </mat-form-field>
-            </div>
-
-
+          </div>
+          
+          <!-- Input fields for "Identifiant" and "EtatTerritoire" -->
+          <div *ngIf="selectedOption === 'Identifiant'">
+              <div class="row">
+                  <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+                  </mat-form-field>
+              </div>
+              <div class="row">
+                  <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Etat/Territoire" formControlName="EtatTerritoire">
+                          <mat-option *ngFor="let country of countries" [value]="country.code">
+                              {{ country.name }}
+                          </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+          </div>
+          
+      
+      
+      
+      
 
 
 
@@ -67,12 +58,24 @@
               <div class="col-md-6">
                 <mat-form-field class="example-full-width">
                   <input matInput placeholder="Raison sociale" type="text" formControlName="RaisonSociale">
+                  <mat-error
+            *ngIf="f['RaisonSociale'].errors && (f['RaisonSociale'].dirty || f['RaisonSociale'].touched)">
+            <div *ngIf="f['RaisonSociale'].errors['required']">Ce champ est obligatoire.</div>
+            <div *ngIf="f['RaisonSociale'].errors['maxlength']">La valeur doit avoir au maximum 20 caractères.</div>
+            <div *ngIf="f['RaisonSociale'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+        </mat-error>
                 </mat-form-field>
               </div>
               <div class="col-md-6">
                 <mat-form-field class="example-full-width">
                   <input matInput placeholder="Adresse du siège social" type="text"
                     formControlName="AdresseSiegeSocial">
+                    <mat-error
+                    *ngIf="f['AdresseSiegeSocial'].errors && (f['AdresseSiegeSocial'].dirty || f['AdresseSiegeSocial'].touched)">
+                    <div *ngIf="f['AdresseSiegeSocial'].errors['required']">Ce champ est obligatoire.</div>
+                    <div *ngIf="f['AdresseSiegeSocial'].errors['maxlength']">La valeur doit avoir au maximum 20 caractères.</div>
+                    <div *ngIf="f['AdresseSiegeSocial'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+                </mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -86,6 +89,12 @@
                 <mat-form-field class="example-full-width">
                   <textarea matInput placeholder="Description des principales activités du groupe d’entreprises"
                     formControlName="descriptionPrincipalesActivites"></textarea>
+                    <mat-error
+                    *ngIf="f['descriptionPrincipalesActivites'].errors && (f['descriptionPrincipalesActivites'].dirty || f['descriptionPrincipalesActivites'].touched)">
+                    <div *ngIf="f['descriptionPrincipalesActivites'].errors['required']">Ce champ est obligatoire.</div>
+                    <div *ngIf="f['descriptionPrincipalesActivites'].errors['maxlength']">La valeur doit avoir au maximum 20 caractères.</div>
+                    <div *ngIf="f['descriptionPrincipalesActivites'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+                </mat-error>
                 </mat-form-field>
               </div>
 
@@ -99,6 +108,12 @@
                   <textarea matInput
                     placeholder="Description générale de la politique de prix de transfert adoptée par le groupe d’entreprises, en relation avec l’entreprise déclarante"
                     formControlName="DescriptionPolitique"></textarea>
+                    <mat-error
+                    *ngIf="f['DescriptionPolitique'].errors && (f['DescriptionPolitique'].dirty || f['DescriptionPolitique'].touched)">
+                    <div *ngIf="f['DescriptionPolitique'].errors['required']">Ce champ est obligatoire.</div>
+                    <div *ngIf="f['DescriptionPolitique'].errors['maxlength']">La valeur doit avoir au maximum 20 caractères.</div>
+                    <div *ngIf="f['DescriptionPolitique'].errors?.pattern">Seuls les caractères alphanumériques sont autorisés.</div>
+                </mat-error>
                 </mat-form-field>
               </div>
 
@@ -164,50 +179,38 @@
             <div class="row">
               <mat-label class="label-margin">Identifiant Entreprise</mat-label>
               <mat-radio-group aria-label="Choisir une option" (change)="onOptionChangeAI($event)">
-                <mat-radio-button checked class="label-margin" [checked]="selectedOptionAI === 'MatriculeFiscal'"
-                  value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
-                <mat-radio-button class="label-margin" [checked]="selectedOptionAI=== 'Identifiant'"
-                  value="Identifiant">Identifiant</mat-radio-button>
-                <mat-radio-button class="label-margin" [checked]="selectedOptionAI === 'EtatTerritoire'"
-                  value="EtatTerritoire">Etat Territoire</mat-radio-button>
+                  <mat-radio-button class="label-margin" [checked]="selectedOptionAI === 'MatriculeFiscal'" value="MatriculeFiscal">Matricule Fiscal</mat-radio-button>
+                  <mat-radio-button class="label-margin" [checked]="selectedOptionAI=== 'Identifiant'" value="Identifiant">Identifiant</mat-radio-button>
               </mat-radio-group>
-            </div>
-
-
-
-            <!-- Input field for "MatriculeFiscal" -->
-            <div class="row">
-              <mat-form-field class="example-full-width" *ngIf="selectedOptionAI === 'MatriculeFiscal'">
-
-                <input matInput placeholder="MatriculeFiscal" placeholder="Entrez le MatriculeFiscal"
-                  [(ngModel)]="matriculeFiscalValue2" formControlName="MatriculeFiscal">
-
-
-              </mat-form-field>
-            </div>
-
-            <!-- Input field for "Identifiant" -->
-            <div class="row">
-              <mat-form-field class="example-full-width" *ngIf="selectedOptionAI=== 'Identifiant'">
-                <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
-
-
-              </mat-form-field>
-            </div>
-
-
-            <div class="row" *ngIf="selectedOptionAI === 'EtatTerritoire'">
+          </div>
+          
+          <!-- Input field for "MatriculeFiscal" -->
+          <div class="row" *ngIf="selectedOptionAI === 'MatriculeFiscal'">
               <mat-form-field class="example-full-width">
-                <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
-                  <mat-option *ngFor="let country of countries2" [value]="country.code">
-                    {{ country.name }}
-                  </mat-option>
-                </mat-select>
+                  <input matInput placeholder="Entrez le MatriculeFiscal" [(ngModel)]="matriculeFiscalValue" formControlName="MatriculeFiscal">
               </mat-form-field>
-            </div>
-
-
-
+          </div>
+          
+          <!-- Input fields for "Identifiant" and "EtatTerritoire" -->
+          <div *ngIf="selectedOptionAI === 'Identifiant'">
+              <div class="row">
+                  <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+                  </mat-form-field>
+              </div>
+              <div class="row">
+                  <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Etat/Territoire" formControlName="EtatTerritoire">
+                          <mat-option *ngFor="let country of countries2" [value]="country.code">
+                              {{ country.name }}
+                          </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+          </div>
+          
+      
+      
 
 
 
@@ -351,6 +354,27 @@
 
 
 
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <div class="col-md-8 ml-auto mr-auto">
     <div *ngIf="currentForm === 3">
       <div class="card">
@@ -365,51 +389,39 @@
           <form [formGroup]="step5Form" (ngSubmit)="step5Submit()" autocomplete="off" novalidate #formRef="ngForm">
 
 
+           
             <div class="row">
               <mat-label class="label-margin">Identifiant Entreprise</mat-label>
               <mat-radio-group aria-label="Choisir une option" (change)="onOptionChangeAC($event)">
-                <mat-radio-button checked class="label-margin" [checked]="selectedOptionAC === 'MatriculeFiscal'"
-                  value="MatriculeFiscal">MatriculeFiscal</mat-radio-button>
-                <mat-radio-button class="label-margin" [checked]="selectedOptionAC=== 'Identifiant'"
-                  value="Identifiant">Identifiant</mat-radio-button>
-                <mat-radio-button class="label-margin" [checked]="selectedOptionAC === 'EtatTerritoire'"
-                  value="EtatTerritoire">Etat Territoire</mat-radio-button>
+                  <mat-radio-button class="label-margin" [checked]="selectedOptionAC === 'MatriculeFiscal'" value="MatriculeFiscal">Matricule Fiscal</mat-radio-button>
+                  <mat-radio-button class="label-margin" [checked]="selectedOptionAC=== 'Identifiant'" value="Identifiant">Identifiant</mat-radio-button>
               </mat-radio-group>
-            </div>
-
-
-
-            <!-- Input field for "MatriculeFiscal" -->
-            <div class="row">
-              <mat-form-field class="example-full-width" *ngIf="selectedOptionAC === 'MatriculeFiscal'">
-
-                <input matInput placeholder="MatriculeFiscal" placeholder="Entrez le MatriculeFiscal"
-                  [(ngModel)]="matriculeFiscalValue3" formControlName="MatriculeFiscal">
-
-
-              </mat-form-field>
-            </div>
-
-            <!-- Input field for "Identifiant" -->
-            <div class="row">
-              <mat-form-field class="example-full-width" *ngIf="selectedOptionAC=== 'Identifiant'">
-                <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
-
-
-              </mat-form-field>
-            </div>
-
-
-            <div class="row" *ngIf="selectedOptionAC === 'EtatTerritoire'">
+          </div>
+          
+          <!-- Input field for "MatriculeFiscal" -->
+          <div class="row" *ngIf="selectedOptionAC === 'MatriculeFiscal'">
               <mat-form-field class="example-full-width">
-                <mat-select placeholder="Nationalite" formControlName="EtatTerritoire">
-                  <mat-option *ngFor="let country of countries3" [value]="country.code">
-                    {{ country.name }}
-                  </mat-option>
-                </mat-select>
+                  <input matInput placeholder="Entrez le MatriculeFiscal"  formControlName="MatriculeFiscal">
               </mat-form-field>
-            </div>
-
+          </div>
+          
+          <!-- Input fields for "Identifiant" and "EtatTerritoire" -->
+          <div *ngIf="selectedOptionAC === 'Identifiant'">
+              <div class="row">
+                  <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Entrez l'Identifiant" formControlName="Identifiant">
+                  </mat-form-field>
+              </div>
+              <div class="row">
+                  <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Etat/Territoire" formControlName="EtatTerritoire">
+                          <mat-option *ngFor="let country of countries3" [value]="country.code">
+                              {{ country.name }}
+                          </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+          </div>
 
 
 
@@ -480,13 +492,13 @@
               <div class="col-md-6">
                 <mat-form-field class="example-full-width">
                   <mat-label>Qualité</mat-label>
-                  <mat-select formControlName="qualiteEntreprise" (selectionChange)="onQualiteChangeAI($event)">
-                    <mat-option *ngFor="let option of qualiteOptionsAI" [value]="option.value">{{ option.viewValue }}</mat-option>
+                  <mat-select formControlName="qualiteEntreprise" (selectionChange)="onQualiteChangeAC($event)">
+                    <mat-option *ngFor="let option of qualiteOptionsAC" [value]="option.value">{{ option.viewValue }}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
             
-              <div class="col-md-6" *ngIf="selectedQualiteAI === 'AutreQualite'">
+              <div class="col-md-6" *ngIf="selectedQualiteAC === 'AutreQualite'">
                 <mat-form-field class="example-full-width">
                   <input matInput placeholder="Autre Qualité" formControlName="AutreQualite">
                 </mat-form-field>

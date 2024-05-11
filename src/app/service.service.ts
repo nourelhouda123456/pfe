@@ -437,4 +437,10 @@ export class ServiceService {
   getXmlData(declarationId: number): Observable<string> {
     return this.http.get(`${this.baseUrl}/generateXml/${declarationId}`, { responseType: 'text' });
   }
+
+
+  generateXml(declarationId: number, xmlFile: string){
+    return this.http.post(`${this.baseUrl}/generateXml/${declarationId}`, xmlFile,{ responseType: 'text' });
+  }
+
 }

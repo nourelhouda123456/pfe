@@ -3453,7 +3453,7 @@ export class InfoOpComponent implements OnInit {
    defaultValueE = 'N'; 
    defaultValueCNM = 'N'; 
    defaultValueOAP = 'N'; 
-
+   defaultValueB= 'N'; 
   ngOnInit(): void {
      this.stepFourForm = this.formBuilder.group({
       Identifiant: [
@@ -3963,7 +3963,7 @@ export class InfoOpComponent implements OnInit {
         AutreNatureOperation: [''],  
  
     
-        affirmation: [this.defaultValueOAP],
+        affirmation: [this.defaultValueB],
      
       AutreQualite: [''],
       exerciceDebut: ['', [
@@ -4028,7 +4028,7 @@ export class InfoOpComponent implements OnInit {
           Validators.pattern('^[a-zA-Z ]*$')  
         ]],
     
-      affirmation: [this.defaultValueCNM],
+      affirmation: [this.defaultValueOAP],
       AutreNatureRelation: [''],
       AutreQualite: [''],
       
@@ -5319,13 +5319,11 @@ stepFourSubmit(): void {
    }
  }else if(this.selectedOptionVExploitation === "Identifiant"){
    this.identifiantEntrepriseVE = {
-     Identifiant : this.stepFourForm.get('Identifiant')?.value
-   }
- }else if(this.selectedOptionVExploitation === "EtatTerritoire"){
-   this.identifiantEntrepriseVE = {
+     Identifiant : this.stepFourForm.get('Identifiant')?.value,
      EtatTerritoire : this.stepFourForm.get('EtatTerritoire')?.value
+
    }
- }
+ } 
 
   const newValeurExploitation: ValeurExploitation = {
     identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseVE),
@@ -5351,7 +5349,7 @@ stepFourSubmit(): void {
 }
 
 resetForm(): void {
-  // Reset form fields and set submitted to false
+ 
   this.submitted = false;
   this.stepFourForm.reset();
 }
@@ -5423,13 +5421,11 @@ if (this.selectedChangementMethodePrixTransfertRB === "AutreChangementMethodeDet
    }
  }else if(this.selectedOptionRBiens === "Identifiant"){
    this.identifiantEntrepriseRB = {
-     Identifiant : this.step5Form.get('Identifiant')?.value
-   }
- }else if(this.selectedOptionRBiens === "EtatTerritoire"){
-   this.identifiantEntrepriseRB = {
+     Identifiant : this.step5Form.get('Identifiant')?.value,
      EtatTerritoire : this.step5Form.get('EtatTerritoire')?.value
+
    }
- }
+ } 
   console.log(this.identifiantEntrepriseRB);
 
   const newRemunerationsBiens: RemunerationsBiens = {
@@ -5536,13 +5532,11 @@ if (this.selectedChangementMethodePrixTransfertService === "AutreChangementMetho
    }
  }else if(this.selectedOptionS === "Identifiant"){
    this.identifiantEntrepriseService = {
-     Identifiant : this.step6Form.get('Identifiant')?.value
-   }
- }else if(this.selectedOptionS === "EtatTerritoire"){
-   this.identifiantEntrepriseService = {
+     Identifiant : this.step6Form.get('Identifiant')?.value,
      EtatTerritoire : this.step6Form.get('EtatTerritoire')?.value
+
    }
- }
+ } 
 
   const newService: Service = {
     identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseService),
@@ -5653,13 +5647,11 @@ if (this.selectedChangementMethodePrixTransfertFinanciere === "AutreChangementMe
    }
  }else if(this.selectedOptionF === "Identifiant"){
    this.identifiantEntrepriseFinanciere = {
-     Identifiant : this.step7Form.get('Identifiant')?.value
-   }
- }else if(this.selectedOptionF === "EtatTerritoire"){
-   this.identifiantEntrepriseFinanciere = {
+     Identifiant : this.step7Form.get('Identifiant')?.value,
      EtatTerritoire : this.step7Form.get('EtatTerritoire')?.value
+
    }
- }
+ } 
   console.log(this.identifiantEntrepriseFinanciere);
 
   const newFinanciere: Financiere = {
@@ -5828,13 +5820,11 @@ if (this.selectedChangementMethodePrixTransfertCessionAcquisitionActif === "Autr
    }
  }else if(this.selectedOptionC === "Identifiant"){
    this.identifiantEntrepriseCessionAcquisitionActif = {
-     Identifiant : this.step8Form.get('Identifiant')?.value
-   }
- }else if(this.selectedOptionC === "EtatTerritoire"){
-   this.identifiantEntrepriseCessionAcquisitionActif = {
+     Identifiant : this.step8Form.get('Identifiant')?.value,
      EtatTerritoire : this.step8Form.get('EtatTerritoire')?.value
+
    }
- }
+ } 
   console.log(this.identifiantEntrepriseCessionAcquisitionActif);
 
   const newCessionAcquisitionActif: CessionAcquisitionActif = {
@@ -5941,13 +5931,11 @@ if (this.selectedChangementMethodePrixTransfertAutreOperation === "AutreChangeme
    }
  }else if(this.selectedOptionA === "Identifiant"){
    this.identifiantEntrepriseAutreOperation = {
-     Identifiant : this.step9Form.get('Identifiant')?.value
-   }
- }else if(this.selectedOptionA === "EtatTerritoire"){
-   this.identifiantEntrepriseAutreOperation = {
+     Identifiant : this.step9Form.get('Identifiant')?.value,
      EtatTerritoire : this.step9Form.get('EtatTerritoire')?.value
+
    }
- }
+ } 
   console.log(this.identifiantEntrepriseAutreOperation);
 
  
@@ -6038,13 +6026,11 @@ step10Submit(): void {
    }
  }else if(this.selectedOptionP === "Identifiant"){
    this.identifiantEntreprisePretAccorde = {
-     Identifiant : this.step10Form.get('Identifiant')?.value
-   }
- }else if(this.selectedOptionP === "EtatTerritoire"){
-   this.identifiantEntreprisePretAccorde = {
+     Identifiant : this.step10Form.get('Identifiant')?.value,
      EtatTerritoire : this.step10Form.get('EtatTerritoire')?.value
+
    }
- }
+ } 
   console.log(this.identifiantEntreprisePretAccorde);
 
   const newPretAccorde: PretAccorde = {
@@ -6116,21 +6102,21 @@ step11Submit(): void {
       AutreQualite: this.step11Form.get('AutreQualite').value
   }}
   
+ 
 
+  if(this.selectedOptionE === "MatriculeFiscal"){
+    this.identifiantEntrepriseEmpruntContracte = {
+     MatriculeFiscal : this.step11Form.get('MatriculeFiscal')?.value
+   }
+ }else if(this.selectedOptionE === "Identifiant"){
+   this.identifiantEntrepriseEmpruntContracte = {
+     Identifiant : this.step11Form.get('Identifiant')?.value,
+     EtatTerritoire : this.step11Form.get('EtatTerritoire')?.value
 
-  let identifiantEntrepriseEmpruntContracteValue: any;
-  if (this.selectedOptionE === "MatriculeFiscal") {
-    identifiantEntrepriseEmpruntContracteValue = { MatriculeFiscal: this.step11Form.get('MatriculeFiscal')?.value };
-  } else if (this.selectedOptionE === "Identifiant") {
-    identifiantEntrepriseEmpruntContracteValue = { Identifiant: this.step11Form.get('Identifiant')?.value };
-  } else if (this.selectedOptionE === "EtatTerritoire") {
-    identifiantEntrepriseEmpruntContracteValue = { EtatTerritoire: this.step11Form.get('EtatTerritoire')?.value };
-  }
-
-  console.log(identifiantEntrepriseEmpruntContracteValue);
-
+   }
+ } 
   const newEmpruntContracte: EmpruntContracte = {
-    identifiantEntreprise: JSON.stringify(identifiantEntrepriseEmpruntContracteValue),
+    identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseEmpruntContracte),
     raisonSociale: this.step11Form.get('raisonSociale')?.value,
     qualiteEntreprise: (this.step11Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step11Form.get('qualiteEntreprise')?.value,    
     devise: this.step11Form.get('devise')?.value,
@@ -6204,13 +6190,11 @@ step12Submit(): void {
    }
  }else if(this.selectedOptionCNM === "Identifiant"){
    this.identifiantEntrepriseContrepartieNonMonetaire = {
-     Identifiant : this.step12Form.get('Identifiant')?.value
-   }
- }else if(this.selectedOptionCNM === "EtatTerritoire"){
-   this.identifiantEntrepriseContrepartieNonMonetaire = {
+     Identifiant : this.step12Form.get('Identifiant')?.value,
      EtatTerritoire : this.step12Form.get('EtatTerritoire')?.value
+
    }
- }
+ } 
   console.log(this.identifiantEntrepriseContrepartieNonMonetaire);
 
   const newContrepartieNonMonetaire: ContrepartieNonMonetaire = {
@@ -6287,13 +6271,11 @@ step14Submit(): void {
    }
  }else if(this.selectedOptionBSC === "Identifiant"){
    this.identifiantEntrepriseBiensOuServicesSansContrePartie = {
-     Identifiant : this.step14Form.get('Identifiant')?.value
-   }
- }else if(this.selectedOptionBSC === "EtatTerritoire"){
-   this.identifiantEntrepriseBiensOuServicesSansContrePartie = {
+     Identifiant : this.step14Form.get('Identifiant')?.value,
      EtatTerritoire : this.step14Form.get('EtatTerritoire')?.value
+
    }
- }
+ } 
   console.log(this.identifiantEntrepriseBiensOuServicesSansContrePartie);
 
   const newBiensOuServicesSansContrePartie: BiensOuServicesSansContrePartie = {
@@ -6380,13 +6362,11 @@ step13Submit(): void {
    }
  }else if(this.selectedOptionOAP === "Identifiant"){
    this.identifiantEntrepriseOperationsAccordsPrealables = {
-     Identifiant : this.step13Form.get('Identifiant')?.value
-   }
- }else if(this.selectedOptionOAP === "EtatTerritoire"){
-   this.identifiantEntrepriseOperationsAccordsPrealables = {
+     Identifiant : this.step13Form.get('Identifiant')?.value,
      EtatTerritoire : this.step13Form.get('EtatTerritoire')?.value
+
    }
- }
+ } 
   console.log(this.identifiantEntrepriseOperationsAccordsPrealables);
 
   const newOperationsAccordsPrealables: OperationsAccordsPrealables = {

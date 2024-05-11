@@ -12,7 +12,7 @@ export class SharedServiveService {
   data:any
   infoEDdata:any
   infoGEdata:any
-
+  xmlContent:any
   setData(data) {
     this.data = data;
   }
@@ -43,5 +43,14 @@ export class SharedServiveService {
 
   getinfoGEdata(){
     return this.infoGEdata
+  }
+
+  setxmlContent(xmlContent) {
+    this.xmlContent = xmlContent;
+  }
+
+
+  getxmlContent(){
+    return this.xmlContent
   }
 }

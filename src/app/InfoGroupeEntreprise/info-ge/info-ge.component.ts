@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActifIncorporel } from 'app/models/AcrifIncorporel';
 import { ActifCorporel } from 'app/models/ActifCorporel';
 import { InfoGE } from 'app/models/InfoGE';
@@ -308,18 +308,71 @@ export class InfoGEComponent implements OnInit {
   ngOnInit(): void {
 
     this.stepThreeForm = this.formBuilder.group({
-      identifiantEntreprise: [''],
-      RaisonSociale: [''],
-      AdresseSiegeSocial: [''],
-      descriptionPrincipalesActivites: [''],
-      DescriptionPolitique: [''],
-      MatriculeFiscal: [''],
-      Identifiant: [''],
-      EtatTerritoire: [''],
+     
+      
+      AdresseSiegeSocial: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern('^[a-zA-Z ]*$')
+        ]
+      ],
+
+      RaisonSociale: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern('^[a-zA-Z ]*$')
+        ]
+      ],
+
+
+
+
+      DescriptionPolitique: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern('^[a-zA-Z ]*$')
+        ]
+      ],
+      descriptionPrincipalesActivites: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.pattern('^[a-zA-Z ]*$')
+        ]
+      ],
     
 
      
 
+      Identifiant: [
+        '',
+        [
+          Validators.maxLength(20),
+          Validators.pattern('^[a-zA-Z ]*$')
+        ]
+      ],
+      MatriculeFiscal: [
+        '',
+        [
+          Validators.minLength(7),
+          Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
+        ]
+      ],
+
+
+      EtatTerritoire: [
+        '',
+        [
+          
+        ]
+      ],
     });
 
     this.step4Form = this.formBuilder.group({
@@ -357,14 +410,24 @@ export class InfoGEComponent implements OnInit {
   }
  
   stepThreeForm: FormGroup = new FormGroup({
-
+    MatriculeFiscal: new FormControl('', [
+     
+      Validators.minLength(7),
+      Validators.pattern('[0-9]{7}[ABCDEFGHJKLMNPQRSTVWXYZ]')
+    ]),
+    Identifiant: new FormControl('', [
+     
+      Validators.maxLength(20),
+      Validators.pattern('^[a-zA-Z ]*$')
+    ]),
+    EtatTerritoire: new FormControl(''),
     RaisonSociale: new FormControl(''),
     AdresseSiegeSocial: new FormControl(''),
     descriptionPrincipalesActivites: new FormControl(''),
     DescriptionPolitique: new FormControl(''),
-    Identifiant: new FormControl(''),
-    EtatTerritoire: new FormControl(''),
+    
     NatureRelation: new FormControl(''),
+    identifiantEntreprise: new FormControl(''),
     
 
 
@@ -372,7 +435,7 @@ export class InfoGEComponent implements OnInit {
 
 
   step4Form: FormGroup = new FormGroup({
-
+  identifiantEntreprise: new FormControl(''),
     RaisonSociale: new FormControl(''),
     onereuxGratuit: new FormControl(''),
     NatureActifIncorporel: new FormControl(''),
@@ -455,6 +518,21 @@ export class InfoGEComponent implements OnInit {
 
 
 
+  selectedQualiteAC: string;
+  
+  qualiteOptionsAC = [
+    { value: '1', viewValue: 'Entité mère ultime' },
+    { value: '2', viewValue: 'Entité mère non ultime' },
+    { value: '3', viewValue: 'Entreprise holding' },
+    { value: '4', viewValue: 'Entreprise filiale' },
+    { value: '5', viewValue: 'Établissement stable' },
+    { value: 'AutreQualite', viewValue: 'Autre Qualité' }
+  ];
+  onQualiteChangeAC(event: any) {
+    this.selectedQualiteAC = event.value;
+  }
+
+
 
 
   selectedNatureNR: string;
@@ -479,8 +557,16 @@ export class InfoGEComponent implements OnInit {
 
 
   goToNextForm() {
-    this.currentForm++;
-    this.stepThreeSubmit()
+    if(this.stepThreeForm.invalid){
+      Object.keys(this.stepThreeForm.controls).forEach(key => {
+        this.stepThreeForm.get(key).markAsTouched();
+      });
+      console.log("invalid");
+      return
+    }else{
+      this.currentForm++;
+      this.stepThreeSubmit()
+    }
 
   }
 
@@ -490,7 +576,7 @@ export class InfoGEComponent implements OnInit {
 
 
 
-  selectedOption: string = 'MatriculeFiscal'; // Default to 'MatriculeFiscal'
+  selectedOption: string = 'MatriculeFiscal';  
   
 onOptionChange(event: any) {
     this.selectedOption= event.value;
@@ -498,7 +584,7 @@ onOptionChange(event: any) {
 
 
   
-  selectedOptionAI: string = 'MatriculeFiscal'; // Default to 'MatriculeFiscal'
+  selectedOptionAI: string = 'MatriculeFiscal'; 
   
 onOptionChangeAI(event: any) {
     this.selectedOptionAI= event.value;
@@ -765,35 +851,13 @@ onOptionChangeAI(event: any) {
  
 
 
-  qualiteEntrepriseAI: QualiteEntreprise = {
-    key1: null,
-    key2: null,
-    key3: null,
-    key4: null,
-    key5: null,
-    key6: {
-      key: null,
-      value: ''
-    },
-  };
-
+ 
   showInput: boolean = false;
-  onCheckboxChange(event: any) {
-    this.qualiteEntrepriseAI.key1 = (event.source.checked && event.source.value === '1') ? event.source.value : (!event.source.checked && event.source.value === '1' ? null : this.qualiteEntrepriseAI.key1);
-    this.qualiteEntrepriseAI.key2 = (event.source.checked && event.source.value === '2') ? event.source.value : (!event.source.checked && event.source.value === '2' ? null : this.qualiteEntrepriseAI.key2);
-    this.qualiteEntrepriseAI.key3 = (event.source.checked && event.source.value === '3') ? event.source.value : (!event.source.checked && event.source.value === '3' ? null : this.qualiteEntrepriseAI.key3);
-    this.qualiteEntrepriseAI.key4 = (event.source.checked && event.source.value === '4') ? event.source.value : (!event.source.checked && event.source.value === '4' ? null : this.qualiteEntrepriseAI.key4);
-    this.qualiteEntrepriseAI.key5 = (event.source.checked && event.source.value === '5') ? event.source.value : (!event.source.checked && event.source.value === '5' ? null : this.qualiteEntrepriseAI.key5);
-    this.qualiteEntrepriseAI.key6.key = (event.source.checked && event.source.value === '6') ? event.source.value : (!event.source.checked && event.source.value === '6' ? null : this.qualiteEntrepriseAI.key6.key);
-
-    if (event.source.value === '6') {
-      this.showInput = event.checked;
-    }
-  }
+  
   
   declarationId: number; 
   submitted = false;
-  identifiantEntreprise : any
+  identifiantEntrepriseGE : any
   stepThreeSubmit(): void {
     const idDeclaration = this.shared.getData(); 
     console.log(idDeclaration)
@@ -802,35 +866,31 @@ onOptionChangeAI(event: any) {
     
     
     if (this.stepThreeForm.invalid) {
-     
-      Object.keys(this.stepThreeForm.controls).forEach(key => {
-        this.stepThreeForm.get(key).markAsTouched();
-      });
+      console.log(this.stepThreeForm.controls);
+      
+       
       console.log("Form is invalid");
       return;
     }
   
-     
-    switch (this.selectedOption) {
-      case "MatriculeFiscal":
-        this.identifiantEntreprise = { MatriculeFiscal: this.stepThreeForm.get('MatriculeFiscal')?.value };
-        break;
-      case "Identifiant":
-        this.identifiantEntreprise = { Identifiant: this.stepThreeForm.get('Identifiant')?.value };
-        break;
-      case "EtatTerritoire":
-        this.identifiantEntreprise = { EtatTerritoire: this.stepThreeForm.get('EtatTerritoire')?.value };
-        break;
-      default:
-        console.error("No valid option selected");
-        return;
-    }
   
-    console.log("Identifiant Entreprise:", this.identifiantEntreprise);
+
+    if(this.selectedOption === "MatriculeFiscal"){
+      this.identifiantEntrepriseGE = {
+       MatriculeFiscal : this.stepThreeForm.get('MatriculeFiscal')?.value
+     }
+   }else if(this.selectedOption === "Identifiant"){
+     this.identifiantEntrepriseGE = {
+       Identifiant : this.stepThreeForm.get('Identifiant')?.value,
+       EtatTerritoire : this.stepThreeForm.get('EtatTerritoire')?.value
+     }
+   } 
+  
+    console.log("Identifiant Entreprise:", this.identifiantEntrepriseGE);
     console.log("test1" +idDeclaration)
 
     const newInfoGE: InfoGE = {
-      identifiantEntreprise: JSON.stringify(this.identifiantEntreprise),
+      identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseGE),
       raisonSociale: this.stepThreeForm.get('RaisonSociale')?.value,
       adresseSiegeSocial: this.stepThreeForm.get('AdresseSiegeSocial')?.value,
       descriptionPrincipalesActivites: this.stepThreeForm.get('descriptionPrincipalesActivites')?.value,
@@ -839,7 +899,7 @@ onOptionChangeAI(event: any) {
     console.log(newInfoGE);
     console.log("test2" +idDeclaration)
 
-    // Call the service to create new InfoGE
+    
     this.InfoGEService.createInfoGE(newInfoGE, idDeclaration).subscribe(
       data => {
         console.log('Info groupe entreprise created:', data);
@@ -873,13 +933,11 @@ onOptionChangeAI(event: any) {
      }
    }else if(this.selectedOptionAI === "Identifiant"){
      this.identifiantEntrepriseAI = {
-       Identifiant : this.step4Form.get('Identifiant')?.value
-     }
-   }else if(this.selectedOptionAI === "EtatTerritoire"){
-     this.identifiantEntrepriseAI = {
+       Identifiant : this.step4Form.get('Identifiant')?.value,
        EtatTerritoire : this.step4Form.get('EtatTerritoire')?.value
+
      }
-   }
+   } 
 
    console.log(this.identifiantEntrepriseAI); 
 const newActifIncorporel: ActifIncorporel = {
@@ -917,33 +975,30 @@ this.ActifIncorporelService.createActifIncorporel(newActifIncorporel, idInfoGE).
     const idInfoGE = this.shared.getinfoGEdata(); 
     this.submitted5 = true;
   
-    if (this.step5Form.invalid) {
-      Object.keys(this.step5Form.controls).forEach(key => {
-        this.step5Form.get(key).markAsTouched();
-      });
-      return;
-    }
+   
   
-    let identifiantEntrepriseACValue: any;
-    switch (this.selectedOptionAC) {
-      case "MatriculeFiscal":
-        identifiantEntrepriseACValue = { MatriculeFiscal: this.step5Form.get('MatriculeFiscal')?.value };
-        break;
-      case "Identifiant":
-        identifiantEntrepriseACValue = { Identifiant: this.step5Form.get('Identifiant')?.value };
-        break;
-      case "EtatTerritoire":
-        identifiantEntrepriseACValue = { EtatTerritoire: this.step5Form.get('EtatTerritoire')?.value };
-        break;
-    }
-  
-    // Adjust this based on actual object structure and requirement
-    this.qualiteEntrepriseAC.key6.value = this.qualiteEntrepriseAC.key6.key === '6' ? this.step5Form.get('qualiteEntreprise').value : null;
-  
+    if (this.selectedQualiteAC === "AutreQualite"){
+   
+      
+      this.jsonObject = {
+        AutreQualite: this.step5Form.get('AutreQualite').value
+    }}
+    if(this.selectedOptionAC === "MatriculeFiscal"){
+      this.identifiantEntrepriseAC = {
+       MatriculeFiscal : this.step5Form.get('MatriculeFiscal')?.value
+     }
+   }else if(this.selectedOptionAC === "Identifiant"){
+     this.identifiantEntrepriseAC = {
+       Identifiant : this.step5Form.get('Identifiant')?.value,
+       EtatTerritoire : this.step5Form.get('EtatTerritoire')?.value
+
+     }
+   } 
+    
     const newActifCorporel: ActifCorporel = {
-      identifiantEntreprise: JSON.stringify(identifiantEntrepriseACValue),
+      identifiantEntreprise: JSON.stringify(this.identifiantEntrepriseAC),
       nature_ActifCorporel: this.step5Form.get('NatureActifCorporel').value,
-      qualiteEntreprise: JSON.stringify(this.qualiteEntrepriseAC),
+      qualiteEntreprise: (this.step5Form.get('qualiteEntreprise')?.value === 'AutreQualite') ? JSON.stringify(this.jsonObject) : this.step5Form.get('qualiteEntreprise')?.value,
       raisonSociale: this.step5Form.get('RaisonSociale').value,
       natureRelationEntreprise: this.step5Form.get('NatureRelation').value,
     };
@@ -955,8 +1010,7 @@ this.ActifIncorporelService.createActifIncorporel(newActifIncorporel, idInfoGE).
       },
       error => {
         console.error('Error creating Actif corporel:', error);
-        // Display an error message to the user
-      }
+       }
     );
   }
   
